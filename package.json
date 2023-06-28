@@ -23,8 +23,7 @@
   },
   "scripts": {
     "cleandist": "rimraf dist",
-    "distpackage": "node tools/distPackage.js",
-    "dist": "rimraf dist && cross-env NODE_ENV=production babel src/js --out-dir dist --copy-files && cpx \"./src/scss/**\" \"./dist/scss\" && cpx \"./src/img/**\" \"./dist/img\" && cpx \"./package.json\" \"./dist\""
+    "dist": "rimraf dist && cross-env NODE_ENV=production babel src/js --out-dir dist --copy-files && cpx \"./src/scss/**\" \"./dist/scss\" && cpx \"./src/img/**\" \"./dist/img\" && node tools/distPackage.js"
   },
   "peerDependencies": {
     "react": "16.8.6",
