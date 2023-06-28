@@ -328,7 +328,7 @@ Box.propTypes = {
       })
     ]
   ),
-    // remove in 1.0?
+  // remove in 1.0?
   onClick: PropTypes.func,
   justify: PropTypes.oneOf(['start', 'center', 'between', 'end', 'around']),
   margin: PropTypes.oneOfType([

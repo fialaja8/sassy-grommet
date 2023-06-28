@@ -500,8 +500,8 @@ export default class Article extends Component {
     let totalDistance = (direction === 'column')
       ? window.innerHeight
       : this._getChildrenWidth(
-          this._componentRef.boxContainerRef.childNodes
-        );
+        this._componentRef.boxContainerRef.childNodes
+      );
     let objectDistance = (direction === 'column')
       ? articleRect.height
       : articleRect.width;
@@ -563,7 +563,7 @@ export default class Article extends Component {
         controls.push(
           <Button key='next' plain={true} a11yTitle={a11yTitle.next}
             className={`${CONTROL_CLASS_PREFIX}-down`} onClick={this._onNext}>
-            <DownIcon a11yTitle='article-down'/ >
+            <DownIcon a11yTitle='article-down'/>
           </Button>
         );
       }
@@ -572,7 +572,7 @@ export default class Article extends Component {
     return controls;
   }
 
-  render () {
+  render() {
     const { className, primary, scrollStep } = this.props;
     const { selectedIndex } = this.state;
     const classes = classnames(
@@ -638,7 +638,7 @@ export default class Article extends Component {
       </Box>
     );
   }
-}
+};
 
 Article.propTypes = {
   controls: PropTypes.bool,

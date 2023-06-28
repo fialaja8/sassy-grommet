@@ -186,7 +186,7 @@ export default class Chart extends Component {
       if (child && (
         child.type === Axis || child.type.name === 'Axis' ||
         child.type === MarkerLabel || child.type.name === 'MarkerLabel'
-        )) {
+      )) {
 
         if (vertical) {
           child = React.cloneElement(child, {

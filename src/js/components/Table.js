@@ -514,7 +514,7 @@ export default class Table extends Component {
     if (onMoreAbove) {
       moreAbove = (
         <div ref={ref => this.moreAboveRef = ref}
-             className={`${CLASS_ROOT}__more`}>
+          className={`${CLASS_ROOT}__more`}>
           <SpinningIcon/>
         </div>
       );
@@ -578,7 +578,7 @@ export default class Table extends Component {
         {mirror}
         {moreAbove}
         <table ref={ref => this.tableRef = ref} {...selectableProps}
-               className={tableClasses}>
+          className={tableClasses}>
           {children}
         </table>
         {more}

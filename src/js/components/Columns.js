@@ -117,8 +117,8 @@ export default class Columns extends Component {
           // create array of breakpoints for 1 through this.props.maxCount
           // number of columns of minColumnWidth width.
           const columnBreakpoints = Array.apply(
-              undefined, Array(this.props.maxCount)
-            ).map((currentMaxCount, index) => (index + 1) * minColumnWidth);
+            undefined, Array(this.props.maxCount)
+          ).map((currentMaxCount, index) => (index + 1) * minColumnWidth);
 
           this.setState({
             columnBreakpoints: columnBreakpoints,

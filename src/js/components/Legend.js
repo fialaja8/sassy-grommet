@@ -70,8 +70,8 @@ export default class Legend extends Component {
     const colorIndex = this._itemColorIndex(item, index);
     return (
       <svg className={
-          `${CLASS_ROOT}__item-swatch ${COLOR_INDEX}-${colorIndex}`
-        } viewBox="0 0 12 12">
+        `${CLASS_ROOT}__item-swatch ${COLOR_INDEX}-${colorIndex}`
+      } viewBox="0 0 12 12">
         <path className={item.className} d="M 5 0 l 0 12" />
       </svg>
     );
@@ -130,7 +130,7 @@ export default class Legend extends Component {
     let total = 0;
     series.forEach(item =>
       total += (typeof item.value === 'number' ?
-       item.value : 0));
+        item.value : 0));
     return parseFloat(total.toFixed(maxDecimalDigits));
   }
 

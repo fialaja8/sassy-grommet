@@ -143,7 +143,7 @@ class LayerContents extends Component {
         <div className={`${CLASS_ROOT}__closer`}>
           <Button plain={true} icon={<CloseIcon
             a11yTitle={closeIconTitle} />}
-            onClick={onClose} />
+          onClick={onClose} />
         </div>
       );
     }

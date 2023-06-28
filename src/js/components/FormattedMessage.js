@@ -12,8 +12,8 @@ import { FormattedMessage } from 'react-intl';
 const GrommetFormattedMessage = (props, context) => (
   context.intl ? <FormattedMessage {...props} />
     : <span>
-        {props.defaultMessage || props.id}
-      </span>
+      {props.defaultMessage || props.id}
+    </span>
 );
 
 GrommetFormattedMessage.contextTypes = {

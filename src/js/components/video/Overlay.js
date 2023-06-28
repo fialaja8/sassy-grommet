@@ -19,7 +19,7 @@ export default class Overlay extends Component {
     this.state = {
       iconSize: props.size &&
         (props.size === 'small' || props.size === 'medium') ?
-          'large' : 'xlarge'
+        'large' : 'xlarge'
     };
   }
 
@@ -28,7 +28,7 @@ export default class Overlay extends Component {
       this.setState({
         iconSize: newProps.size &&
           (newProps.size === 'small' || newProps.size === 'medium') ?
-            'large' : 'xlarge'
+          'large' : 'xlarge'
       });
     }
   }

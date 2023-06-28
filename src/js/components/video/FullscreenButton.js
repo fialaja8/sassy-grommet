@@ -26,8 +26,8 @@ export default class FullscreenButton extends Component {
     return (
       <Button plain={true} className={BUTTON_CLASS} onClick={this.props.onClick}
         a11yTitle={a11yExpandButtonTitle}>
-          <ExpandIcon className={`${BUTTON_CLASS}__icon`}
-            colorIndex='brand' />
+        <ExpandIcon className={`${BUTTON_CLASS}__icon`}
+          colorIndex='brand' />
       </Button>
     );
   }

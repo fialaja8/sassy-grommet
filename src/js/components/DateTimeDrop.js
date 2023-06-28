@@ -390,9 +390,9 @@ export default class DateTimeDrop extends Component {
           {value.format('MMMM YYYY')}
         </Title>
         <Button className={`${CLASS_ROOT}__next`} icon={<LinkNextIcon
-          />}
-          a11yTitle={nextMonthMessage}
-          onClick={this._onNext.bind(this, 'month', false)} />
+        />}
+        a11yTitle={nextMonthMessage}
+        onClick={this._onNext.bind(this, 'month', false)} />
       </Header>,
       grid,
       <Box key='today' alignSelf='center' pad={{vertical: 'small'}}>

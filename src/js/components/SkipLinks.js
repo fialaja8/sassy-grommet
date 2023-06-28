@@ -115,11 +115,11 @@ export default class SkipLinks extends Component {
       let a11yLabel = `${skipToLabel} ${anchor.label}`;
       return (
         <a href={'#' + anchor.id}
-           onFocus={this._onFocus}
-           onClick={this._onClick.bind(this, anchor.id)}
-           id={`skipLayer_${anchor.id}`}
-           key={`skipLayerItem_${index}`}
-           aria-label={a11yLabel}>
+          onFocus={this._onFocus}
+          onClick={this._onClick.bind(this, anchor.id)}
+          id={`skipLayer_${anchor.id}`}
+          key={`skipLayerItem_${index}`}
+          aria-label={a11yLabel}>
           {anchor.label}
         </a>
       );

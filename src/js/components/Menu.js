@@ -180,7 +180,7 @@ class MenuDrop extends Component {
 
     if(showControl) {
       contents.unshift(
-                  React.cloneElement(control, {key: 'control', fill: true}));
+        React.cloneElement(control, {key: 'control', fill: true}));
     }
 
 

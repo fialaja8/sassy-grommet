@@ -25,7 +25,7 @@ export var propTypes = {
 };
 
 export function buildPath (itemIndex, commands, classes, onActivate,
-    onClick, a11yTitle, role) {
+  onClick, a11yTitle, role) {
   if (onActivate) {
     const onOver = onActivate.bind(null, itemIndex);
     const onOut = onActivate.bind(null, undefined);

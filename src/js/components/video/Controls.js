@@ -141,7 +141,7 @@ export default class Controls extends Component {
             {allowFullScreen ?
               <VideoFullscreenButton onClick={fullscreen} /> : undefined}
           </Box>
-       </Box>
+        </Box>
       </Box>
     );
 
