@@ -26,3 +26,4 @@ grommet*.tgz
 grommet*licenses.json
 .eslintcache
 .vscode
+/dist/

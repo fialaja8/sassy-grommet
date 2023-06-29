@@ -2,7 +2,10 @@
 
 import Cookies from './Cookies';
 
-let currentLocale = 'en-US';
+const MOMENT_LOCALE_EXCEPTIONS = { zh: 'zh-CN', pa: 'pa-IN', hy: 'hy-AM' };
+const documentLocale = document.documentElement.lang;
+const localeFromDocument = documentLocale && MOMENT_LOCALE_EXCEPTIONS[documentLocale] || documentLocale;
+let currentLocale = localeFromDocument || 'en-US';
 
 function normalizeLocale(locale) {
   let locales = locale.replace(/_/g, '-').split('-');
@@ -19,6 +22,9 @@ export function setLocale(locale) {
 }
 
 export function getCurrentLocale() {
+  if (localeFromDocument) {
+    return currentLocale;
+  }
   try {
     let cookieLanguages = Cookies.get('languages');
     let locale = cookieLanguages ? JSON.parse(cookieLanguages)[0] : undefined;
