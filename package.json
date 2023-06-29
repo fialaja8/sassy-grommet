@@ -11,11 +11,13 @@
     "Jan Fiala"
   ],
   "homepage": "https://v1.grommet.io/",
-  "bugs": "https://github.com/fialaja8/sassy-grommet/issues",
+  "bugs": {
+    "url": "https://github.com/fialaja8/sassy-grommet/issues"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fialaja8/sassy-grommet.git"
+    "url": "git+https://github.com/fialaja8/sassy-grommet.git"
   },
   "engine-strict": true,
   "engines": {
@@ -23,7 +25,7 @@
   },
   "scripts": {
     "cleandist": "rimraf dist",
-    "dist": "rimraf dist && cross-env NODE_ENV=production babel src/js --out-dir dist --copy-files && cpx \"./src/scss/**\" \"./dist/scss\" && cpx \"./src/img/**\" \"./dist/img\" && node tools/distPackage.js"
+    "dist": "rimraf dist && cross-env NODE_ENV=production babel src/js --out-dir dist --copy-files && cpx \"./src/scss/**\" \"./dist/scss\" && cpx \"./src/img/**\" \"./dist/img\" && node tools/distPackage.js && cpx \"./README.md\" \"./dist\""
   },
   "peerDependencies": {
     "react": "16.8.6",
@@ -71,6 +73,8 @@
     "react-test-renderer": "^16.0.0",
     "rimraf": "^5.0.1"
   },
-  "resolutions": {
-  }
+  "resolutions": {},
+  "keywords": [
+    "grommet"
+  ]
 }
