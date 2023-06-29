@@ -34,9 +34,10 @@ export function findScrollParents (element, horizontal) {
   }
   // last scrollable element will be the document
   // if nothing else is scrollable in the page
-  if (result.length === 0) {
-    result.push(document);
-  }
+  // FIXED: Always add document to fix infinite scrolling
+  // if (result.length === 0) {
+  result.push(document);
+  // }
   return result;
 }
 
