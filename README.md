@@ -9,7 +9,7 @@ The goal for this fork of Grommet is to be compatible with React 17 and possibly
 ### Versions
 
  * `1.14.0` - No changes, equivalent to Grommet 1.13.0
- * `1.14.1` to `1.15.0` - Minor fixes
+ * `1.14.1` to `1.15.0` - Minor fixes, preparations for React 17
  * `1.15.0` and higher - Compatible with React 17
 
 ### Links
