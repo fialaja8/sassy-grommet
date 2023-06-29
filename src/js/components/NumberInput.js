@@ -35,7 +35,12 @@ export default class NumberInput extends Component {
     // We use dispatchEvent to have the browser fill out the event fully.
     this._inputRef.dispatchEvent(event);
     // Manually dispatched events aren't delivered by React, so we notify too.
-    this.props.onChange(event);
+    if (this.props.onChange) {
+      this.props.onChange(event);
+    }
+    if (this.props.onInput) {
+      this.props.onInput(event);
+    }
   }
 
   _onAdd () {
@@ -46,7 +51,7 @@ export default class NumberInput extends Component {
     } catch (e) {
       // IE11 workaround. See known issue #5 at
       // http://caniuse.com/#search=number
-      let value = (parseFloat(input.value) || 0) + (step || 1);
+      let value = (parseFloat(input.value) || 0) + ((typeof step === 'number' && step) || 1);
       if (max !== undefined) {
         value = Math.min(value, max);
       }
@@ -63,7 +68,7 @@ export default class NumberInput extends Component {
     } catch (e) {
       // IE11 workaround. See known issue #5 at
       // http://caniuse.com/#search=number
-      let value = (parseFloat(input.value) || 0) - (step || 1);
+      let value = (parseFloat(input.value) || 0) - ((typeof step === 'number' && step) || 1);
       if (min !== undefined) {
         value = Math.max(value, min);
       }
@@ -112,6 +117,7 @@ NumberInput.propTypes = {
   min: PropTypes.number,
   name: PropTypes.string,
   onChange: PropTypes.func,
-  step: PropTypes.number,
+  onInput: PropTypes.func,
+  step: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
