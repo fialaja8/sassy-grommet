@@ -1,6 +1,6 @@
 {
   "name": "sassy-grommet",
-  "version": "1.14.0",
+  "version": "1.14.1",
   "main": "src/js/index.js",
   "description": "Once the most advanced UX framework for enterprise applications. Now kept alive to work with the latest React.",
   "authors": [
