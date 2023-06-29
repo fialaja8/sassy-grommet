@@ -16,6 +16,8 @@ const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
  * their initiating controls.
  */
 
+// TODO: fix scroll reset on parent scroll
+
 const VERTICAL_ALIGN_OPTIONS = ['top', 'bottom'];
 const HORIZONTAL_ALIGN_OPTIONS = ['right', 'left'];
 
@@ -242,7 +244,7 @@ export default class Drop {
     const {
       control, container, initialFocusNeeded, options: { align, responsive }
     } = this.state;
-    const windowWidth = window.innerWidth;
+    const windowWidth = document.body.getBoundingClientRect().width;
     const windowHeight = window.innerHeight;
 
     // clear prior styling
