@@ -408,6 +408,7 @@ export default class Drop {
       originalFocusedElement.focus();
     }
 
+    this.place = function () {};
     this.state = undefined;
   }
 }

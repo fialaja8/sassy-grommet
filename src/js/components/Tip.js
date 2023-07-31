@@ -67,6 +67,7 @@ export default class Tip extends Component {
     // if the drop was created successfully, remove it
     if (this._drop) {
       this._drop.remove();
+      this._drop = null;
     }
     if (target) {
       target.removeEventListener('click', onClose);
