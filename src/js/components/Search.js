@@ -13,6 +13,7 @@ import SearchIcon from './icons/base/Search';
 import CSSClassnames from '../utils/CSSClassnames';
 import Intl from '../utils/Intl';
 import { announce } from '../utils/Announcer';
+import InputPaste from "../utils/InputPaste";
 
 const CLASS_ROOT = CSSClassnames.SEARCH;
 const INPUT = CSSClassnames.INPUT;
@@ -460,7 +461,8 @@ export default class Search extends Component {
             onFocus={this._onFocusInput}
             onChange={this._onChangeInput}
             onMouseUp={this._onMouseUp}
-            onKeyDown={this._onInputKeyDown} />
+            onKeyDown={this._onInputKeyDown}
+            onPaste={InputPaste.getInputOnPaste('search')} />
           <SearchIcon />
         </div>
       );

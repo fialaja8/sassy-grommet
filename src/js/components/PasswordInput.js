@@ -7,6 +7,7 @@ import CSSClassnames from '../utils/CSSClassnames';
 import Button from './Button';
 import ViewIcon from './icons/base/View';
 import Intl from '../utils/Intl';
+import InputPaste from "../utils/InputPaste";
 
 const CLASS_ROOT = CSSClassnames.PASSWORD_INPUT;
 const INPUT = CSSClassnames.INPUT;
@@ -33,7 +34,8 @@ export default class PasswordInput extends Component {
       <div className={classes}>
         <input {...rest} ref={ref => this.inputRef = ref}
           type={showPassword ? 'text' : 'password'}
-          className={`${INPUT} ${CLASS_ROOT}__input`} />
+          className={`${INPUT} ${CLASS_ROOT}__input`}
+          onPaste={InputPaste.getInputOnPaste('password')} />
         <Button className={`${CLASS_ROOT}__control`}
           a11yTitle={Intl.getMessage(intl, 'Show Password')}
           icon={

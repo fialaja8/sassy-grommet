@@ -5,3 +5,4 @@ src/js/index.js
 src/js/index-icons.js
 src/js/messages/**
 src/js/mixins/**
+dist/**

@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
 import Drop from '../utils/Drop';
 import Intl from '../utils/Intl';
+import InputPaste from '../utils/InputPaste';
 import { announce } from '../utils/Announcer';
 
 import CSSClassnames from '../utils/CSSClassnames';
@@ -324,7 +325,8 @@ export default class TextInput extends Component {
         value={this._renderLabel(value)}
         placeholder={placeHolder}
         onChange={this._onInputChange} onFocus={this._onFocus}
-        onKeyDown={this._onInputKeyDown} />
+        onKeyDown={this._onInputKeyDown}
+        onPaste={InputPaste.getInputOnPaste('text')} />
     );
   }
 
