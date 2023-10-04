@@ -36,11 +36,11 @@ export default class Anchor extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { path } = nextProps;
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { path } = this.props;
     const { router } = this.context;
 
-    if (path && path !== this.props.path) {
+    if (path && path !== prevProps.path) {
       this._attachUnlisten(router.history || router);
     }
   }
