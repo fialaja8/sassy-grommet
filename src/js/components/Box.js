@@ -39,23 +39,16 @@ export default class Box extends Component {
     this._setDarkBackground();
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.colorIndex !== this.props.colorIndex) {
-      if (nextProps.colorIndex) {
-        this.setState({ updateDarkBackground: true });
-      } else {
-        this.setState({ darkBackground: undefined });
-      }
-    }
-  }
-
-  componentDidUpdate () {
+  componentDidUpdate (prevProps, prevState, snapshot) {
     if (this.props.announce) {
       announce(this.boxContainerRef.textContent);
     }
-    if (this.state.updateDarkBackground) {
-      this.setState({ updateDarkBackground: false });
-      this._setDarkBackground();
+    if (prevProps.colorIndex !== this.props.colorIndex) {
+      if (this.props.colorIndex) {
+        this._setDarkBackground();
+      } else {
+        this.setState({ darkBackground: undefined });
+      }
     }
   }
 
