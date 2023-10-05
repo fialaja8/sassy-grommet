@@ -63,28 +63,28 @@ export default class Article extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (! nextProps.scrollStep && this.props.scrollStep) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (! this.props.scrollStep && prevProps.scrollStep) {
       KeyboardAccelerators.stopListeningToKeyboard(this, this._keys);
       document.removeEventListener('wheel', this._onWheel);
       window.removeEventListener('resize', this._onResize);
     }
-    if (! nextProps.onProgress && this.props.onProgress) {
+    if (! this.props.onProgress && prevProps.onProgress) {
       if (this._responsive) {
         this._responsive.stop();
       }
-      if (this.props.onProgress) {
-        window.removeEventListener('scroll', this._updateProgress);
-      }
+      window.removeEventListener('scroll', this._updateProgress);
     }
 
-    this._propsSetup(nextProps);
+    if (this.props.scrollStep !== prevProps.scrollStep ||  this.props.onProgress !== prevProps.onProgress) {
+      this._propsSetup(this.props);
+    }
 
     // allow updates to selected props to trigger new chapter select
-    if ((typeof nextProps.selected !== 'undefined') &&
-      (nextProps.selected !== null) &&
-      (nextProps.selected !== this.state.selectedIndex)) {
-      this._onSelect(nextProps.selected);
+    if ((typeof this.props.selected !== 'undefined') &&
+      (this.props.selected !== null) &&
+      (this.props.selected !== this.state.selectedIndex)) {
+      this._onSelect(this.props.selected);
     }
   }
 
