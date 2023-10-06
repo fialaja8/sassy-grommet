@@ -30,11 +30,16 @@ export default class List extends Component {
 
     this.state = {
       activeItem: undefined,
-      mouseActive: false,
-      selected: Selection.normalizeIndexes(props.selected)
+      mouseActive: false
     };
   }
 
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      selected: Selection.normalizeIndexes(nextProps.selected)
+    };
+  }
+  
   componentDidMount () {
     const { onMore, selectable } = this.props;
     this._setSelection();
@@ -56,18 +61,6 @@ export default class List extends Component {
       KeyboardAccelerators.startListeningToKeyboard(
         this, this._keyboardHandlers
       );
-    }
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (this._scroll) {
-      InfiniteScroll.stopListeningForScroll(this._scroll);
-      this._scroll = undefined;
-    }
-    if (nextProps.hasOwnProperty('selected')) {
-      this.setState({
-        selected: Selection.normalizeIndexes(nextProps.selected)
-      });
     }
   }
 

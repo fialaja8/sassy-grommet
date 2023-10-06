@@ -97,9 +97,14 @@ export default class Table extends Component {
     this.state = {
       activeRow: undefined,
       mouseActive: false,
-      selected: Selection.normalizeIndexes(props.selected),
       columnMode: false,
       small: false
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      selected: Selection.normalizeIndexes(nextProps.selected)
     };
   }
 
@@ -138,18 +143,6 @@ export default class Table extends Component {
     this._responsive = Responsive.start(this._onViewPortChange);
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this._scroll) {
-      InfiniteScroll.stopListeningForScroll(this._scroll);
-      this._scroll = undefined;
-    }
-    if (nextProps.selected !== undefined) {
-      this.setState({
-        selected: Selection.normalizeIndexes(nextProps.selected)
-      });
-    }
-  }
-
   componentDidUpdate (prevProps, prevState) {
     const { onMore, onMoreAbove, selectable, scrollable } = this.props;
     const { columnMode, selected, small } = this.state;
@@ -160,6 +153,7 @@ export default class Table extends Component {
     if (scrollable && !columnMode && !small) {
       this._alignMirror();
     }
+
     if ((onMore || onMoreAbove) && !this._scroll) {
       this._scroll = InfiniteScroll.startListeningForScroll(
         this.moreRef, onMore,
