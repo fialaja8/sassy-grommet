@@ -46,6 +46,61 @@ const UNITS = {
   A: 'ampm'
 };
 
+
+const _buildDateRows =  (state) => {
+  const { timeOfDay, value } = state;
+  const start = moment(value).startOf('month').startOf('week').add(timeOfDay);
+  // Always display 6 weeks in the calendar, to keep the date/time
+  // change controls from jumping around.
+  const end = moment(start).add(41, 'days').add(timeOfDay);
+  let date = moment(start);
+  const dateRows = [];
+  let activeCell;
+
+  let rowIndex = 0;
+  while (date.valueOf() <= end.valueOf()) {
+    const days = [];
+    for (let i = 0; i < 7; i += 1) {
+      if (date.isSame(value, 'day')) {
+        activeCell = [rowIndex, i];
+      }
+      days.push(moment(date));
+      date = date.add(1, 'days');
+    }
+    dateRows.push(days);
+    rowIndex++;
+  }
+
+  state.dateRows = dateRows;
+  state.activeCell = activeCell;
+  state.originalActiveCell = activeCell.slice();
+};
+
+const _stateFromProps =  (props)=> {
+  const { format } = props;
+  let result = {};
+  const value = moment(props.value);
+  if (value.isValid()) {
+    result.value = value;
+    result.timeOfDay = {
+      hours: value.hours(),
+      minutes: value.minutes(),
+      seconds: value.seconds()
+    };
+  } else {
+    result.value = moment();
+  }
+  // figure out which scope the step should apply to
+  if (format.indexOf('s') !== -1) {
+    result.stepScope = 'second';
+  } else if (format.indexOf('m') !== -1) {
+    result.stepScope = 'minute';
+  } else if (format.indexOf('h') !== -1) {
+    result.stepScope = 'hour';
+  }
+  return result;
+};
+
 export default class DateTimeDrop extends Component {
 
   constructor(props, context) {
@@ -62,13 +117,15 @@ export default class DateTimeDrop extends Component {
     this._onNextDay = this._onNextDay.bind(this);
     this._onNextRow = this._onNextRow.bind(this);
     this._onSelectDay = this._onSelectDay.bind(this);
-
-    this.state = this._stateFromProps(props);
+    this.state = {};
     this.state.mouseActive = false;
-
-    this._buildDateRows(this.state);
   }
 
+  static getDerivedStateFromProps(newProps) {
+    let stateFromProps = _stateFromProps(newProps);
+    _buildDateRows(stateFromProps);
+    return stateFromProps;
+  }
   componentDidMount () {
     this._keyboardHandlers = {
       up: this._onPreviousRow,
@@ -80,69 +137,11 @@ export default class DateTimeDrop extends Component {
     KeyboardAccelerators.startListeningToKeyboard(this, this._keyboardHandlers);
   }
 
-  componentWillReceiveProps (nextProps) {
-    const state = this._stateFromProps(nextProps);
-    this._buildDateRows(state);
-    this.setState(state);
-  }
 
   componentWillUnmount () {
     KeyboardAccelerators.stopListeningToKeyboard(this, this._keyboardHandlers);
   }
 
-  _buildDateRows (state) {
-    const { timeOfDay, value } = state;
-    const start = moment(value).startOf('month').startOf('week').add(timeOfDay);
-    // Always display 6 weeks in the calendar, to keep the date/time
-    // change controls from jumping around.
-    const end = moment(start).add(41, 'days').add(timeOfDay);
-    let date = moment(start);
-    const dateRows = [];
-    let activeCell;
-
-    let rowIndex = 0;
-    while (date.valueOf() <= end.valueOf()) {
-      const days = [];
-      for (let i = 0; i < 7; i += 1) {
-        if (date.isSame(value, 'day')) {
-          activeCell = [rowIndex, i];
-        }
-        days.push(moment(date));
-        date = date.add(1, 'days');
-      }
-      dateRows.push(days);
-      rowIndex++;
-    }
-
-    state.dateRows = dateRows;
-    state.activeCell = activeCell;
-    state.originalActiveCell = activeCell.slice();
-  }
-
-  _stateFromProps (props) {
-    const { format } = props;
-    let result = {};
-    const value = moment(props.value);
-    if (value.isValid()) {
-      result.value = value;
-      result.timeOfDay = {
-        hours: value.hours(),
-        minutes: value.minutes(),
-        seconds: value.seconds()
-      };
-    } else {
-      result.value = moment();
-    }
-    // figure out which scope the step should apply to
-    if (format.indexOf('s') !== -1) {
-      result.stepScope = 'second';
-    } else if (format.indexOf('m') !== -1) {
-      result.stepScope = 'minute';
-    } else if (format.indexOf('h') !== -1) {
-      result.stepScope = 'hour';
-    }
-    return result;
-  }
 
   _announceActiveCell () {
     const { activeCell, dateRows } = this.state;
