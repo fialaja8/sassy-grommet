@@ -30,6 +30,27 @@ const FORMATS = {
 };
 const TIME_REGEXP = new RegExp('[Hhmsa]');
 
+const _stateFromProps = (props) => {
+  const { value, format } = props;
+  let result = { current: undefined };
+  const date = moment(value, format);
+  if (date.isValid()) {
+    result.current = date;
+    result.textValue = undefined;
+  } else {
+    result.current = moment().startOf('hour').add(1, 'hour');
+  }
+  // figure out which scope the step should apply to
+  if (format.indexOf('s') !== -1) {
+    result.stepScope = 'second';
+  } else if (format.indexOf('m') !== -1) {
+    result.stepScope = 'minute';
+  } else if (format.indexOf('h') !== -1) {
+    result.stepScope = 'hour';
+  }
+  return result;
+};
+
 export default class DateTime extends Component {
 
   constructor(props, context) {
@@ -45,17 +66,17 @@ export default class DateTime extends Component {
     this._cursorScope = this._cursorScope.bind(this);
     this._notify = this._notify.bind(this);
 
-    this.state = this._stateFromProps(props);
+    this.state = {};
     this.state.cursor = -1;
     this.state.dropActive = false;
   }
 
-  componentDidMount () {
-    this._activation(this.state.dropActive);
+  static getDerivedStateFromProps(nextProps) {
+    return _stateFromProps(nextProps);
   }
 
-  componentWillReceiveProps (newProps) {
-    this.setState(this._stateFromProps(newProps));
+  componentDidMount () {
+    this._activation(this.state.dropActive);
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -76,27 +97,6 @@ export default class DateTime extends Component {
 
   componentWillUnmount () {
     this._activation(false);
-  }
-
-  _stateFromProps (props) {
-    const { value, format } = props;
-    let result = { current: undefined };
-    const date = moment(value, format);
-    if (date.isValid()) {
-      result.current = date;
-      result.textValue = undefined;
-    } else {
-      result.current = moment().startOf('hour').add(1, 'hour');
-    }
-    // figure out which scope the step should apply to
-    if (format.indexOf('s') !== -1) {
-      result.stepScope = 'second';
-    } else if (format.indexOf('m') !== -1) {
-      result.stepScope = 'minute';
-    } else if (format.indexOf('h') !== -1) {
-      result.stepScope = 'hour';
-    }
-    return result;
   }
 
   _onInputChange (event) {
