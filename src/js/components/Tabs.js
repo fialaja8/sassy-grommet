@@ -16,32 +16,19 @@ export default class Tabs extends Component {
     this._activateTab = this._activateTab.bind(this);
 
     this.state = {
-      activeIndex: props.activeIndex || 0,
       justify: props.justify
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if ((nextProps.activeIndex || 0 === nextProps.activeIndex) &&
-      this.state.activeIndex !== nextProps.activeIndex) {
-      this.setState({ activeIndex: nextProps.activeIndex });
-    }
-  }
-
   _activateTab (index) {
-    if (! this.props.hasOwnProperty('activeIndex')) {
-      this.setState({ activeIndex: index });
-    }
     if (this.props.onActive) {
       this.props.onActive(index);
     }
   }
 
   render () {
-    const { children, className, justify, responsive, ...props } = this.props;
-    delete props.activeIndex;
+    const { children, className, justify, activeIndex, responsive, ...props } = this.props;
     delete props.onActive;
-    const { activeIndex } = this.state;
     const { intl } = this.context;
     const classes = classnames(
       CLASS_ROOT,
