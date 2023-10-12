@@ -33,8 +33,10 @@ export default class Timestamp extends Component {
     this._formatForLocale(this.props);
   }
 
-  componentWillReceiveProps (nextProps) {
-    this._formatForLocale(nextProps);
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.value !== prevProps.value ) {
+      this._formatForLocale(this.props);
+    }
   }
 
   _formatForLocale ({value, fields}) {
