@@ -24,14 +24,14 @@ export default class Split extends Component {
     this._layout();
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentDidUpdate (prevProps ) {
     // If we change the number of visible children, trigger a resize event
     // so things like Table header can adjust. This will go away once
     // CSS supports per element media queries.
     // The 500ms delay is loosely tied to the CSS animation duration.
     // We want any animations to finish before triggering the resize.
     // TODO: consider using an animation end event instead of a timer.
-    if (this._nonNullChildCount(nextProps) !==
+    if (this._nonNullChildCount(prevProps) !==
       this._nonNullChildCount(this.props)) {
       clearTimeout(this._resizeTimer);
       this._resizeTimer = setTimeout(function () {
@@ -40,12 +40,7 @@ export default class Split extends Component {
         window.dispatchEvent(event);
       }, 500);
     }
-    this.setState({ relayout: true });
-  }
-
-  componentDidUpdate () {
-    if (this.state.relayout) {
-      this.setState({ relayout: false });
+    if (prevProps.showOnResponsive !== this.props.showOnResponsive) {
       this._layout();
     }
   }
