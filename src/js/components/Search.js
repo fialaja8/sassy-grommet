@@ -60,24 +60,22 @@ export default class Search extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { dropActive, inline, small } = this.state;
-    if (nextProps.suggestions && nextProps.suggestions.length > 0 &&
-      ! dropActive && this._inputRef === document.activeElement) {
-      this.setState({ dropActive: true });
-    } else if ((! nextProps.suggestions || nextProps.suggestions.length === 0)
-      && inline) {
-      this.setState({ dropActive: false });
-    }
-    if (! small && nextProps.inline !== this.props.inline) {
-      this.setState({ inline: nextProps.inline });
-    }
-  }
-
   componentDidUpdate (prevProps, prevState) {
     const { dropAlign, suggestions } = this.props;
-    const { announceChange, dropActive, inline } = this.state;
+    const { announceChange, dropActive, inline, small } = this.state;
     const { intl } = this.context;
+
+    if (suggestions && suggestions.length > 0 &&
+      ! dropActive && this._inputRef === document.activeElement) {
+      this.setState({ dropActive: true });
+    } else if ((! suggestions || suggestions.length === 0)
+      && inline && dropActive) {
+      this.setState({ dropActive: false });
+    }
+    if (! small && prevProps.inline !== this.props.inline) {
+      this.setState({ inline: this.props.inline });
+    }
+
     // Set up keyboard listeners appropriate to the current state.
     const activeKeyboardHandlers = {
       esc: this._onRemoveDrop,
