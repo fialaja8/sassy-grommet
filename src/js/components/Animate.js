@@ -14,20 +14,22 @@ class AnimateChild extends Component {
 
   constructor(props, context) {
     super(props, context);
-    const { enter, leave } = props;
-    // leave will reuse enter if leave is not defined
     this.state = {
-      enter: enter,
-      leave: leave || enter,
       state: 'inactive'
     };
   }
 
-  componentWillReceiveProps (nextProps) {
+  static getDerivedStateFromProps(nextProps) {
+    // leave will reuse enter if leave is not defined
     const { enter, leave } = nextProps;
-    this.setState({ enter: enter, leave: leave || enter });
-    if (nextProps.visible !== this.props.visible) {
-      const [ nextState, lastState ] = nextProps.visible ?
+    return {
+      enter: enter,
+      leave: leave || enter
+    };
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.visible !== this.props.visible) {
+      const [ nextState, lastState ] = this.props.visible ?
         [ 'enter', 'active' ] : [ 'leave', 'inactive' ];
       this._delay(nextState, this._done.bind(this, lastState));
     }
@@ -128,7 +130,13 @@ export default class Animate extends Component {
   constructor(props, context) {
     super(props, context);
     this._checkScroll = this._checkScroll.bind(this);
-    this.state = { visible: true === props.visible };
+    this.state = {};
+  }
+
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      visible: true === nextProps.visible
+    };
   }
 
   componentDidMount () {
@@ -137,15 +145,14 @@ export default class Animate extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     const { visible } = this.props;
-    if (visible !== nextProps.visible) {
-      if ('scroll' === visible) {
+    if (prevProps.visible !== visible) {
+      if ('scroll' === prevProps.visible) {
         this._unlistenForScroll();
-      } else if ('scroll' === nextProps.visible) {
+      } else if ('scroll' === visible) {
         this._listenForScroll();
       }
-      this.setState({ visible: true === nextProps.visible });
     }
   }
 
