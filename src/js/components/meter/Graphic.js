@@ -25,11 +25,6 @@ export default class Graphic extends Component {
     this._onBandClick = this._onBandClick.bind(this);
   }
 
-  componentWillReceiveProps (newProps) {
-    let state = this._stateFromProps(newProps);
-    this.setState(state);
-  }
-
   componentWillUnmount () {
     if (this._keyboardHandlers) {
       this._onGraphicBlur();
