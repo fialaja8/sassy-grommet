@@ -16,21 +16,15 @@ export default class Overlay extends Component {
     super(props, context);
 
     this._onResponsive = this._onResponsive.bind(this);
-    this.state = {
-      iconSize: props.size &&
-        (props.size === 'small' || props.size === 'medium') ?
-        'large' : 'xlarge'
-    };
+    this.state = {};
   }
 
-  componentWillReceiveProps (newProps) {
-    if (newProps.size !== this.props.size) {
-      this.setState({
-        iconSize: newProps.size &&
-          (newProps.size === 'small' || newProps.size === 'medium') ?
-          'large' : 'xlarge'
-      });
-    }
+  static getDerivedStateFromProps(props) {
+    return {
+      iconSize: props.size &&
+     (props.size === 'small' || props.size === 'medium') ?
+        'large' : 'xlarge'
+    };
   }
 
   _onResponsive (small) {
