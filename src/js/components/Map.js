@@ -29,10 +29,6 @@ export default class ResourceMap extends Component {
     this._layout();
   }
 
-  componentWillReceiveProps (nextProps) {
-    this.setState(this._stateFromProps(nextProps), this._layout);
-  }
-
   componentWillUnmount () {
     window.removeEventListener('resize', this._onResize);
   }
