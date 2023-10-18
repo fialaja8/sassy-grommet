@@ -61,18 +61,16 @@ export default class Carousel extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if ((nextProps.activeIndex || 0 === nextProps.activeIndex) &&
-      this.state.activeIndex !== nextProps.activeIndex) {
+  componentDidUpdate (prevProps, prevState) {
+    const { autoplay, activeIndex } = this.props;
+    if ((activeIndex || 0 === activeIndex) &&
+      prevState.activeIndex !== activeIndex) {
       this.setState(
-        { activeIndex: nextProps.activeIndex, animate: true },
+        { activeIndex: activeIndex, animate: true },
         this._announce
       );
     }
-  }
 
-  componentDidUpdate () {
-    const { autoplay } = this.props;
     this._updateHammer();
     if (autoplay) {
       this._startAutoplay();
