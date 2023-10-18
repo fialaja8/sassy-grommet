@@ -37,17 +37,10 @@ export default class Notification extends Component {
     this._setDarkBackground();
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.status !== this.props.status) {
-      this.setState({ updateDarkBackground: true });
-    }
-  }
-
-  componentDidUpdate () {
+  componentDidUpdate (prevProps) {
     this._announce();
-    if (this.state.updateDarkBackground) {
-      this.setState({ updateDarkBackground: false });
-      this._setDarkBackground();
+    if (prevProps.status !== this.props.status) {
+      this._setDarkBackground();  
     }
   }
 
