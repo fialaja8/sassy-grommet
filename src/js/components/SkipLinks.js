@@ -36,16 +36,6 @@ export default class SkipLinks extends Component {
     document.addEventListener('DOMNodeInserted', this._checkForSkipLink);
   }
 
-  componentWillReceiveProps () {
-    this.setState({routeChanged: true});
-  }
-
-  componentDidUpdate () {
-    if (this.state.routeChanged) {
-      this.setState({routeChanged: false}, this._updateAnchors);
-    }
-  }
-
   componentWillUnmount () {
     KeyboardAccelerators.stopListeningToKeyboard(
       this, this._keyboardHandlers
@@ -73,7 +63,7 @@ export default class SkipLinks extends Component {
         };
       });
 
-    this.setState({anchors: anchors, routeChanged: false});
+    this.setState({anchors: anchors });
   }
 
   _onFocus () {
