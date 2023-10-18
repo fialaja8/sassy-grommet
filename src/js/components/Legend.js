@@ -38,16 +38,17 @@ export default class Legend extends Component {
     this._renderTotal = this._renderTotal.bind(this);
     this._seriesTotal = this._seriesTotal.bind(this);
 
-    this.state = {activeIndex: this.props.activeIndex};
+    this.state = {};
   }
 
-  componentWillReceiveProps (newProps) {
-    if (newProps.activeIndex !== this.state.activeIndex) {
-      this.setState({activeIndex: newProps.activeIndex});
+  static getDerivedStateFromProps(props, state) {
+    if (props.activeIndex !== state.activeIndex) {
+      return {activeIndex: props.activeIndex};
     }
+    return null;
   }
 
-  componentDidUpdate () {
+  componentDidUpdate (prevProps, prevState) {
     const { announce } = this.props;
     if (announce) {
       Announcer.announce(this.legendRef.textContent);
