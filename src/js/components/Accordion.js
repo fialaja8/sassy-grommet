@@ -10,28 +10,31 @@ import Props from '../utils/Props';
 
 const CLASS_ROOT = CSSClassnames.ACCORDION;
 
+const areActiveArraysEqual = (a1, a2) => {
+  if (a1.length !== a2.length) {
+    return false;
+  }
+  a1.sort();
+  a2.sort();
+  return a1.every((a1El, index) => (a1El === a2[index]));
+};
+
 export default class Accordion extends Component {
 
   constructor(props, context) {
     super(props, context);
     this._onPanelChange = this._onPanelChange.bind(this);
-
-    let active;
-    // active in state should always be an array
-    if (typeof this.props.active === 'number') {
-      active = [this.props.active];
-    } else {
-      active = this.props.active || [];
-    }
-    this.state = {
-      active: active
-    };
+    this.state = {active: [].concat(props.active || [])};
   }
 
-  componentWillReceiveProps (newProps) {
-    if (newProps.active !== this.props.active) {
-      this.setState({ active: newProps.active || [] });
+  static getDerivedStateFromProps(props, state) {
+    const propsActive = [].concat(props.active || []);
+    const stateActive = [].concat(props.active || []);
+    if (!areActiveArraysEqual(propsActive, stateActive)) {
+      return {active: propsActive};
+
     }
+    return null;
   }
 
   _onPanelChange (index) {
