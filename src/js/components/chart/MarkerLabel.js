@@ -10,38 +10,40 @@ import { announce } from '../../utils/Announcer';
 const CLASS_ROOT = CSSClassnames.CHART_MARKER_LABEL;
 const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 
+const _valueBasis =  (props) => {
+  const { count, index, max, min, value } = props;
+  let valueBasis;
+  if (count) {
+    valueBasis = (index / Math.max(1, (count - 1))) * 100.0;
+  } else {
+    valueBasis = ((value - min) / Math.max(1, (max - min))) * 100.0;
+  }
+  return valueBasis;
+};
+
 export default class MarkerLabel extends Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      valueBasis: this._valueBasis(props)
-    };
+    this.state = {};
   }
-
-  componentWillReceiveProps (nextProps) {
-    const nextValueBasis = this._valueBasis(nextProps);
-    if (nextValueBasis !== this.state.valueBasis) {
-      this.setState({
-        valueBasis: nextValueBasis
-      }, () => {
-        if (typeof nextProps.label === 'string' ||
-          typeof nextProps.label === 'number') {
-          announce(nextProps.label);
-        }
-      });
+  static getDerivedStateFromProps(props, state) {
+    const nextValueBasis = _valueBasis(props);
+    if (nextValueBasis !== state.valueBasis) {
+      return {
+        valueBasis: nextValueBasis,
+        announceLabel: true
+      };
     }
+    return null;
   }
-
-  _valueBasis (props) {
-    const { count, index, max, min, value } = props;
-    let valueBasis;
-    if (count) {
-      valueBasis = (index / Math.max(1, (count - 1))) * 100.0;
-    } else {
-      valueBasis = ((value - min) / Math.max(1, (max - min))) * 100.0;
+ 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.announceLabel && typeof this.props.label === 'string' ||
+     typeof this.props.label === 'number') {
+      announce(this.props.label);
+      this.setState({announceLabel: false});
     }
-    return valueBasis;
   }
 
   _renderPlaceholder (basis) {

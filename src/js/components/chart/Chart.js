@@ -67,19 +67,6 @@ export default class Chart extends Component {
     setTimeout(this._layout, 150);
   }
 
-  componentWillReceiveProps (nextProps) {
-    // Always layout when new props come. This takes care of a contained
-    // Base having children that change.
-    this.setState({ layoutNeeded: true });
-  }
-
-  componentDidUpdate () {
-    if (this.state.layoutNeeded) {
-      this._layout();
-      this.setState({ layoutNeeded: false });
-    }
-  }
-
   componentWillUnmount () {
     window.removeEventListener('resize', this._onResize);
   }

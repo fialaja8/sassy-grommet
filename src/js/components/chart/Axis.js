@@ -18,10 +18,6 @@ export default class Axis extends Component {
     };
   }
 
-  componentWillReceiveProps (nextProps) {
-    this.setState({ items: this._buildItems(nextProps) });
-  }
-
   _buildItems (props) {
     const { count, labels } = props;
     let items = [];

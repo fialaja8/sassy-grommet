@@ -12,16 +12,9 @@ const CLASS_ROOT = CSSClassnames.CHART_BASE;
 
 export default class Base extends Component {
 
-  componentWillReceiveProps (nextProps) {
+  componentDidUpdate (prevProps) {
     const { height, width } = this.props;
-    if (nextProps.width !== width || nextProps.height !== height) {
-      this._notifySizeChange = true;
-    }
-  }
-
-  componentDidUpdate () {
-    if (this._notifySizeChange) {
-      this._notifySizeChange = false;
+    if (prevProps.width !== width || prevProps.height !== height) {
       let event = document.createEvent('HTMLEvents');
       event.initEvent('resize', true, false);
       window.dispatchEvent(event);
