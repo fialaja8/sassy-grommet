@@ -27,15 +27,8 @@ export default class Hero extends Component {
     this._setDarkBackground();
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.backgroundColorIndex !== this.props.backgroundColorIndex) {
-      this.setState({ updateDarkBackground: true });
-    }
-  }
-
-  componentDidUpdate () {
-    if (this.state.updateDarkBackground) {
-      this.setState({ updateDarkBackground: false });
+  componentDidUpdate (prevProps, prevState) {
+    if (prevProps.backgroundColorIndex !== this.props.backgroundColorIndex) {
       this._setDarkBackground();
     }
   }
