@@ -224,6 +224,11 @@ MenuDrop.childContextTypes = {
   store: PropTypes.any
 };
 
+const inlineFromProps = (props) => {
+  return props.hasOwnProperty('inline') ? props.inline
+    : (!props.label && !props.icon);
+};
+
 export default class Menu extends Component {
 
   constructor(props, context) {
@@ -236,13 +241,7 @@ export default class Menu extends Component {
     this._onResponsive = this._onResponsive.bind(this);
     this._onFocusControl = this._onFocusControl.bind(this);
     this._onBlurControl = this._onBlurControl.bind(this);
-
-    let inline;
-    if (props.hasOwnProperty('inline')) {
-      inline = props.inline;
-    } else {
-      inline = (! props.label && ! props.icon);
-    }
+    const inline = inlineFromProps(props);
     let responsive;
     if (props.hasOwnProperty('responsive')) {
       responsive = props.responsive;
@@ -264,18 +263,14 @@ export default class Menu extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.props.inline !== nextProps.inline ||
-      this.props.icon !== nextProps.icon) {
+  componentDidUpdate (prevProps, prevState) {
+    const { dropContainer, inline, icon } = this.props;
+    if (inline !== prevProps.inline ||
+      icon !== prevProps.icon) {
       this.setState({
-        inline: nextProps.hasOwnProperty('inline') ? nextProps.inline
-          : (!nextProps.label && !nextProps.icon)
+        inline: inlineFromProps(this.props)
       });
     }
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    const { dropContainer } = this.props;
 
     if (this.state.state !== prevState.state) {
       let activeKeyboardHandlers = {
