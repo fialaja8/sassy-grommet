@@ -63,20 +63,19 @@ class LayerContents extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     const { hidden } = this.props;
-
-    if (nextProps.hidden !== hidden) {
+    if (prevProps.hidden !== hidden) {
       KeyboardAccelerators.stopListeningToKeyboard(
         this, this._keyboardHandlers
       );
 
-      if (!nextProps.hidden) {
+      if (!hidden) {
         KeyboardAccelerators.startListeningToKeyboard(
           this, this._keyboardHandlers
         );
       }
-    };
+    }
   }
 
   componentWillUnmount () {
