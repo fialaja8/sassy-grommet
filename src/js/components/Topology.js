@@ -250,9 +250,6 @@ export default class Topology extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    this._layout();
-  }
 
   componentWillUnmount () {
     clearTimeout(this._resizeTimer);

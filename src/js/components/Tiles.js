@@ -78,18 +78,6 @@ export default class Tiles extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.selected !== undefined) {
-      this.setState({
-        selected: Selection.normalizeIndexes(nextProps.selected)
-      });
-    }
-    if (this._scroll) {
-      InfiniteScroll.stopListeningForScroll(this._scroll);
-      this._scroll = undefined;
-    }
-  }
-
   componentDidUpdate (prevProps, prevState) {
     const { direction, onMore, selectable } = this.props;
     if (onMore && !this._scroll) {

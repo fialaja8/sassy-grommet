@@ -178,21 +178,6 @@ export default class WorldMap extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ ...this._updateState(nextProps) });
-
-    const { clickable } = this.state;
-    const nextClickable = clickableSeries(nextProps);
-    if (nextClickable !== clickable) {
-      if (nextClickable) {
-        this._startKeyboardListening();
-      } else {
-        this._stopKeyboardListening();
-      }
-      this.setState({ clickable: nextClickable });
-    }
-  }
-
   componentDidUpdate() {
     // place flags
     const { series } = this.props;
