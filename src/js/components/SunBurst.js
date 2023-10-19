@@ -43,10 +43,6 @@ export default class SunBurst extends Component {
     this._onResize();
   }
 
-  componentWillReceiveProps (nextProps) {
-    this._onResize();
-  }
-
   componentWillUnmount () {
     clearTimeout(this._resizeTimer);
     window.removeEventListener('resize', this._onResize);
