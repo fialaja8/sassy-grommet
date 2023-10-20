@@ -15,9 +15,25 @@ import Search from './Search';
 import CaretDownIcon from './icons/base/CaretDown';
 import Intl from '../utils/Intl';
 import { announce } from '../utils/Announcer';
+import _isEqual from 'lodash/isEqual';
 
 const CLASS_ROOT = CSSClassnames.SELECT;
 const INPUT = CSSClassnames.INPUT;
+
+const _normalizeValue = (props) => {
+  const {multiple, value} = props;
+  let normalizedValue = value;
+  if (multiple) {
+    if (value) {
+      if (!Array.isArray(value)) {
+        normalizedValue = [value];
+      }
+    } else {
+      normalizedValue = [];
+    }
+  }
+  return normalizedValue;
+};
 
 export default class Select extends Component {
 
@@ -39,16 +55,21 @@ export default class Select extends Component {
       announceChange: false,
       activeOptionIndex: -1,
       dropActive: false,
-      searchText: '',
-      value: this._normalizeValue(props, {})
+      searchText: ''
     };
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.hasOwnProperty('value')) {
-      this.setState({ value: this._normalizeValue(nextProps, this.state) });
+  static getDerivedStateFromProps(props, state) {
+    if (props.hasOwnProperty('value')) {
+      if (!_isEqual(_normalizeValue(props), state.value)) {
+        return {
+          value: _normalizeValue(props)
+        };
+      }
     }
+    return null;
   }
+
 
   componentDidUpdate (prevProps, prevState) {
     const { inline, options } = this.props;
@@ -130,21 +151,6 @@ export default class Select extends Component {
     if (this._drop) {
       this._drop.remove();
     }
-  }
-
-  _normalizeValue (props, state) {
-    const { multiple, value } = props;
-    let normalizedValue = value;
-    if (multiple) {
-      if (value) {
-        if (! Array.isArray(value)) {
-          normalizedValue = [value];
-        }
-      } else {
-        normalizedValue = [];
-      }
-    }
-    return normalizedValue;
   }
 
   _announceOptions (index) {
