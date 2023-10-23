@@ -1,13 +1,14 @@
 const pasteConfig = {
   trimPaste: {
     text: false,
+    textarea: false,
     search: false,
     password: false
   }
 };
 
 export default {
-  setConfig (newPasteConfig) {
+  setConfig(newPasteConfig) {
     Object.keys(newPasteConfig).forEach(npcKey => {
       pasteConfig[npcKey] = newPasteConfig[npcKey];
     });
@@ -27,8 +28,11 @@ export default {
       const rFrom = Math.min(inputElement.selectionStart, inputElement.selectionEnd);
       const rTo = Math.max(inputElement.selectionStart, inputElement.selectionEnd);
       const newValueArray = (inputElement.value || '').split('');
-      newValueArray.splice(rFrom,rTo-rFrom,paste);
-      const nivSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+      newValueArray.splice(rFrom, rTo - rFrom, paste);
+      const nivSetter = Object.getOwnPropertyDescriptor(
+        Object.getPrototypeOf(inputElement),
+        "value"
+      ).set;
       nivSetter.call(inputElement, newValueArray.join(''));
       const endPositionPasted = rFrom + paste.length;
       inputElement.setSelectionRange(endPositionPasted, endPositionPasted);
