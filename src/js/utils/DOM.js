@@ -17,25 +17,23 @@ function hash(input) {
 
 export function findScrollParents (element, horizontal) {
   var result = [];
-  var parent = element.parentElement;
+  var parent = element.parentNode;
   while (parent) {
-    var pcs = getComputedStyle(parent);
-    if (horizontal) {
-      if (pcs.overflowX === 'scroll' || pcs.overflowX === 'auto') {
-        result.push(parent);
-      }
-    } else {
-      if (pcs.overflowY === 'scroll' || pcs.overflowY === 'auto') {
-        result.push(parent);
+    if (parent.nodeType === Node.ELEMENT_NODE) {
+      var pcs = getComputedStyle(parent);
+      if (horizontal) {
+        if (pcs.overflowX === 'scroll' || pcs.overflowX === 'auto') {
+          result.push(parent);
+        }
+      } else {
+        if (pcs.overflowY === 'scroll' || pcs.overflowY === 'auto') {
+          result.push(parent);
+        }
       }
     }
-    parent = parent.parentElement;
+    parent = parent.parentNode;
   }
-  // last scrollable element will be the document
-  // if nothing else is scrollable in the page
-  if (result.length === 0) {
-    result.push(document);
-  }
+  result.push(document);
   return result;
 }
 
