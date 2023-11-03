@@ -17,27 +17,25 @@ function hash(input) {
 
 export function findScrollParents (element, horizontal) {
   var result = [];
-  var parent = element.parentNode;
-  while (parent && parent.getBoundingClientRect) {
-    var rect = parent.getBoundingClientRect();
-    // 10px is to account for borders and scrollbars in a lazy way
+  var parent = element.parentElement;
+  while (parent) {
+    var pcs = getComputedStyle(parent);
     if (horizontal) {
-      if (rect.width && parent.scrollWidth > (rect.width + 10)) {
+      if (pcs.overflowX === 'scroll' || pcs.overflowX === 'auto') {
         result.push(parent);
       }
     } else {
-      if (rect.height && parent.scrollHeight > (rect.height + 10)) {
+      if (pcs.overflowY === 'scroll' || pcs.overflowY === 'auto') {
         result.push(parent);
       }
     }
-    parent = parent.parentNode;
+    parent = parent.parentElement;
   }
   // last scrollable element will be the document
   // if nothing else is scrollable in the page
-  // FIXED: Always add document to fix infinite scrolling
-  // if (result.length === 0) {
-  result.push(document);
-  // }
+  if (result.length === 0) {
+    result.push(document);
+  }
   return result;
 }
 
