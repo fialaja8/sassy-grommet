@@ -253,6 +253,9 @@ export default class Drop {
     container.style.top = '';
     container.style.maxHeight = '';
 
+    // Set overflow to scroll for size calculations
+    container.style.overflow = 'scroll';
+
     // get bounds
     const controlRect = findVisibleParent(control).getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
@@ -351,6 +354,9 @@ export default class Drop {
     // is presenting issues with desktop scroll flickering
     container.style.top = `${top}px`;
     container.style.maxHeight = `${windowHeight - (top)}px`;
+
+    // Return default overflow value
+    container.style.overflow = '';
 
     if (initialFocusNeeded) {
       // Now that we've placed it, focus on it
