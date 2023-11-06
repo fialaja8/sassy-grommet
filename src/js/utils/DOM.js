@@ -17,7 +17,7 @@ function hash(input) {
 
 export function findScrollParents (element, horizontal) {
   var result = [];
-  var parent = element.parentNode;
+  var parent = element && element.parentNode;
   while (parent) {
     if (parent.nodeType === Node.ELEMENT_NODE) {
       var pcs = getComputedStyle(parent);

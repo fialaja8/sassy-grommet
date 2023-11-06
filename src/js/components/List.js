@@ -30,14 +30,18 @@ export default class List extends Component {
 
     this.state = {
       activeItem: undefined,
-      mouseActive: false
+      mouseActive: false,
+      selected: Selection.normalizeIndexes(props.selected)
     };
   }
 
   static getDerivedStateFromProps(nextProps) {
-    return {
-      selected: Selection.normalizeIndexes(nextProps.selected)
-    };
+    if (nextProps.selected !== undefined) {
+      return {
+        selected: Selection.normalizeIndexes(nextProps.selected)
+      };
+    }
+    return {};
   }
   
   componentDidMount () {
@@ -71,9 +75,15 @@ export default class List extends Component {
       JSON.stringify(prevState.selected)) {
       this._setSelection();
     }
-    if (onMore && !this._scroll) {
-      this._scroll = InfiniteScroll.startListeningForScroll(this.moreRef,
-        onMore);
+    if (onMore !== prevProps.onMore) {
+      if (this._scroll) {
+        InfiniteScroll.stopListeningForScroll(this._scroll);
+        this._scroll = undefined;
+      }
+      if (onMore) {
+        this._scroll = InfiniteScroll.startListeningForScroll(this.moreRef,
+          onMore);
+      }
     }
     if (selectable) {
       // only listen for navigation keys if the list row can be selected

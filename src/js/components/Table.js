@@ -98,14 +98,18 @@ export default class Table extends Component {
       activeRow: undefined,
       mouseActive: false,
       columnMode: false,
-      small: false
+      small: false,
+      selected: Selection.normalizeIndexes(props.selected)
     };
   }
 
   static getDerivedStateFromProps(nextProps) {
-    return {
-      selected: Selection.normalizeIndexes(nextProps.selected)
-    };
+    if (nextProps.selected !== undefined) {
+      return {
+        selected: Selection.normalizeIndexes(nextProps.selected)
+      };
+    }
+    return {};
   }
 
   componentDidMount () {
@@ -153,12 +157,17 @@ export default class Table extends Component {
     if (scrollable && !columnMode && !small) {
       this._alignMirror();
     }
-
-    if ((onMore || onMoreAbove) && !this._scroll) {
-      this._scroll = InfiniteScroll.startListeningForScroll(
-        this.moreRef, onMore,
-        this.moreAboveRef, onMoreAbove
-      );
+    if (onMore !== prevProps.onMore || onMoreAbove !== prevProps.onMoreAbove) {
+      if (this._scroll) {
+        InfiniteScroll.stopListeningForScroll(this._scroll);
+        this._scroll = undefined;
+      }
+      if (onMore || onMoreAbove) {
+        this._scroll = InfiniteScroll.startListeningForScroll(
+          this.moreRef, onMore,
+          this.moreAboveRef, onMoreAbove
+        );
+      }
     }
     this._adjustBodyCells();
     this._layout();

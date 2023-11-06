@@ -253,8 +253,12 @@ export default class Drop {
     container.style.top = '';
     container.style.maxHeight = '';
 
-    // Set overflow to scroll for size calculations
-    container.style.overflow = 'scroll';
+    const containerOY = getComputedStyle(container).overflowY;
+    const canContentYScroll = containerOY === 'scroll' || containerOY === 'auto';
+    if (canContentYScroll) {
+      // Set overflow to scroll for size calculations
+      container.style.overflow = 'scroll';
+    }
 
     // get bounds
     const controlRect = findVisibleParent(control).getBoundingClientRect();

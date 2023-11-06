@@ -9,7 +9,7 @@ function _evaluate(scrollState) {
   (scrollState.scrollParents || []).forEach((scrollParent) => {
     // are we at the bottom?
     let bottom;
-    if (scrollParent === document) {
+    if (scrollParent === document || scrollParent === document.body) {
       bottom = window.innerHeight;
     } else {
       bottom = scrollParent.getBoundingClientRect().bottom;
@@ -20,7 +20,7 @@ function _evaluate(scrollState) {
       // Only if bottom isn't zero. This can happen when content hasn't
       // arrived yet.
       // 10px offset is to ensure onEnd() gets called
-      if (bottom && indicatorRect.bottom <= (bottom + 10)) {
+      if (bottom && indicatorRect.height && indicatorRect.bottom <= (bottom + 10)) {
         scrollState.onEnd();
       }
     }
@@ -29,7 +29,7 @@ function _evaluate(scrollState) {
         scrollState.startIndicatorElement.getBoundingClientRect();
       // If the bottom position is 0 we're right at it. Below it its negative
       // and scrolling too far up its positive.
-      if (indicatorRect.bottom > 0  ) {
+      if (indicatorRect.height && indicatorRect.bottom > 0  ) {
         scrollState.onTop();
       }
     }
