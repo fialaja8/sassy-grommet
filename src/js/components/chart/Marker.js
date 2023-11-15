@@ -27,6 +27,17 @@ export default class Marker extends Component {
     this._size.start(this.svgRef);
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const {
+      width,
+      height
+    } = this.props;
+
+    if (prevProps.width !== width || prevProps.height !== height) {
+      this._size.reset(this.props);
+    }
+  }
+
   componentWillUnmount () {
     this._size.stop();
   }
