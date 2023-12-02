@@ -66,7 +66,7 @@ export default class Marker extends Component {
     );
 
     let path;
-    if ((count > 1 && index >= 1 && index < count) ||
+    if ((count > 1 && index >= 0 && index < count) ||
       (value >= min && value <= max)) {
       let commands = '';
 
