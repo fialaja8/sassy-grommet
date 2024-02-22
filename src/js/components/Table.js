@@ -381,8 +381,9 @@ export default class Table extends Component {
     // IMPORTANT: non-text header cells, such as icon, are rendered as empty
     // headers.
     if (this.tableRef) {
+      // TODO: handle multiple table head rows (used for column groups etc.)
       let headerCells = immediateTableChildOnly(
-        this.tableRef.querySelectorAll('thead th'), this.tableRef
+        this.tableRef.querySelectorAll('thead tr:last-child th'), this.tableRef
       );
       const totalHeaderCells = getTotalCellCount(headerCells);
       if (headerCells.length > 0) {
