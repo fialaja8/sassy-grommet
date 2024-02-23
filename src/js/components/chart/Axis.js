@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../../utils/CSSClassnames';
 import Intl from '../../utils/Intl';
+import { withRouter } from 'react-router';
 
 const CLASS_ROOT = CSSClassnames.CHART_AXIS;
 const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 
-export default class Axis extends Component {
+class Axis extends Component {
 
   constructor(props, context) {
     super(props, context);
@@ -53,7 +54,7 @@ export default class Axis extends Component {
     delete props.count;
     delete props.labels;
     const { items } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT, {
@@ -99,10 +100,6 @@ export default class Axis extends Component {
 
 }
 
-Axis.contextTypes = {
-  intl: PropTypes.object
-};
-
 Axis.propTypes = {
   a11yTitle: PropTypes.string,
   align: PropTypes.oneOf(['start', 'end']), // only from Chart
@@ -115,5 +112,8 @@ Axis.propTypes = {
   reverse: PropTypes.bool,
   ticks: PropTypes.bool,
   tickAlign: PropTypes.oneOf(['start', 'end']),
-  vertical: PropTypes.bool
+  vertical: PropTypes.bool,
+  intl: PropTypes.object
 };
+
+export default withRouter(Axis);

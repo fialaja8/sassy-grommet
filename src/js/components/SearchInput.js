@@ -44,7 +44,7 @@ export default class SearchInput extends Component {
   componentDidUpdate (prevProps, prevState) {
     const { suggestions } = this.props;
     const { announceChange, dropActive } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     // Set up keyboard listeners appropriate to the current state.
     let activeKeyboardHandlers = {
       esc: this._onRemoveDrop,
@@ -144,7 +144,7 @@ export default class SearchInput extends Component {
   }
 
   _announceSuggestion (index) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const labelMessage = this._renderLabel(this.props.suggestions[index]);
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     announce(`${labelMessage} ${enterSelectMessage}`);
@@ -188,7 +188,7 @@ export default class SearchInput extends Component {
   _onEnter (event) {
     const { suggestions, onSelect } = this.props;
     const { activeSuggestionIndex } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     this.setState({ dropActive: false });
     if (activeSuggestionIndex >= 0) {
       event.preventDefault(); // prevent submitting forms

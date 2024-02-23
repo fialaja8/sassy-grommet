@@ -15,7 +15,7 @@ export default class Title extends Component {
     const {
       a11yTitle, children, className, responsive, truncate, ...props
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       CLASS_ROOT,
       {

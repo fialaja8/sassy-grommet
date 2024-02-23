@@ -64,7 +64,7 @@ export default class ResourceMap extends Component {
   }
 
   _buildAriaLabels (data, items) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     let labels = {};
     data.categories.forEach(category => {
       category.items.forEach(item => {

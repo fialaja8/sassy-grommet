@@ -19,7 +19,7 @@ export default class PlayButton extends Component {
     const {
       ended, iconSize, playing, primary, togglePlay
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const PIcon = primary ? CirclePlayIcon : PlayIcon;
     const Icon = (playing ? PauseIcon : (ended ? RefreshIcon : PIcon));

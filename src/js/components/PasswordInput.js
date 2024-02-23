@@ -24,7 +24,7 @@ export default class PasswordInput extends Component {
   render () {
     const { className, ...rest } = this.props;
     const { showPassword } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let classes = classnames(
       CLASS_ROOT,
       className

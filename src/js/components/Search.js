@@ -63,7 +63,7 @@ export default class Search extends Component {
   componentDidUpdate (prevProps, prevState) {
     const { dropAlign, suggestions } = this.props;
     const { announceChange, dropActive, inline, small } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     if (suggestions && suggestions.length > 0 &&
       ! dropActive && this._inputRef === document.activeElement) {
@@ -244,7 +244,7 @@ export default class Search extends Component {
   }
 
   _announceSuggestion (index) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const labelMessage = this._renderLabel(this.props.suggestions[index]);
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     announce(`${labelMessage} ${enterSelectMessage}`);
@@ -273,7 +273,7 @@ export default class Search extends Component {
   _onEnter (event) {
     const { inline, onSelect, suggestions } = this.props;
     const { activeSuggestionIndex } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     // for not inline search the enter should NOT submit the form
     // in this case double enter is required
     if (!inline) {

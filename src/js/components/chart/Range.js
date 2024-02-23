@@ -216,7 +216,7 @@ export default class Range extends Component {
     const {
       focus, dragSource, dragStartIndex, dragEndIndex
     } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT, {

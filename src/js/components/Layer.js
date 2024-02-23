@@ -127,7 +127,7 @@ class LayerContents extends Component {
 
   render () {
     const { a11yTitle, children, closer, onClose } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     let closerNode;
     if (typeof closer === 'object') {

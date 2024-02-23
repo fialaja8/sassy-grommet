@@ -114,7 +114,7 @@ export default class List extends Component {
   }
 
   _announceItem (label) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     announce(`${label} ${enterSelectMessage}`);
   }
@@ -207,7 +207,7 @@ export default class List extends Component {
 
   _onEnter (event) {
     const { activeItem } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (this.listRef.contains(document.activeElement) &&
       activeItem !== undefined) {
       const rows = this.listRef.querySelectorAll('ul li');
@@ -249,7 +249,7 @@ export default class List extends Component {
       onMouseDown, onMouseUp, selectable, ...props
     } = this.props;
     const { activeItem, focus, mouseActive } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT,

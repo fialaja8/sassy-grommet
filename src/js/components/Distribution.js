@@ -265,7 +265,7 @@ export default class Distribution extends Component {
   }
 
   _onActivate (index) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     this.setState({ activeIndex: index }, () => {
       let activeMessage = this.activeDistributionRef.getAttribute('aria-label');
       const clickable = this.state.items[this.state.activeIndex].datum.onClick;
@@ -451,7 +451,7 @@ export default class Distribution extends Component {
     } = this.props;
     delete props.series;
     delete props.units;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { allIcons, focus, height, items, mouseActive, width } = this.state;
     const classes = classnames(
       CLASS_ROOT,

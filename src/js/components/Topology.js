@@ -27,7 +27,7 @@ class Part extends Component {
       a11yTitle, align, children, className, demarcate, direction, justify,
       label, reverse, status, ...props
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let realChildren = 0;
     Children.forEach(children, (child) => {
       if (child) {
@@ -155,7 +155,7 @@ class Parts extends Component {
 
   render () {
     const { a11yTitle, align, children, className, direction } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       `${CLASS_ROOT}__parts`,
       {
@@ -209,7 +209,7 @@ export default class Topology extends Component {
 
   componentDidMount () {
     const { links } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     window.addEventListener('resize', this._onResize);
     this._layout();
     if (links && links.length > 0) {
@@ -387,7 +387,7 @@ export default class Topology extends Component {
     } = this.props;
     delete props.linkOffset;
     const { focus, height, mouseActive, paths, width } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames( CLASS_ROOT, {
       [`${CLASS_ROOT}--focus`]: focus
     }, className );

@@ -62,7 +62,7 @@ export default class Graph extends Component {
 
   _renderA11YTitle () {
     const { a11yTitle, max, min, type, values } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     if (a11yTitle) {
       return a11yTitle;

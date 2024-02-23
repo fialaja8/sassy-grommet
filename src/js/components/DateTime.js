@@ -209,7 +209,7 @@ export default class DateTime extends Component {
   }
 
   _activation (dropActive) {
-    const { onDropChange } =  this.context;
+    const { onDropChange, intl } =  this.props;
 
     var listeners = {
       esc: this._onForceClose,
@@ -230,7 +230,7 @@ export default class DateTime extends Component {
         this._renderDrop(), {
           align: {top: 'bottom', left: 'left'},
           focusControl: true,
-          context: this.context
+          context: {intl}
         });
 
     } else {
@@ -263,7 +263,7 @@ export default class DateTime extends Component {
     delete props.onChange;
     delete props.step;
     const { dropActive, textValue } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let classes = classnames(
       CLASS_ROOT,
       {
@@ -298,17 +298,14 @@ export default class DateTime extends Component {
 
 }
 
-DateTime.contextTypes = {
-  intl: PropTypes.object,
-  onDropChange: PropTypes.func
-};
-
 DateTime.defaultProps = {
   format: 'M/D/YYYY h:mm a',
   step: 1
 };
 
 DateTime.propTypes = {
+  intl: PropTypes.object,
+  onDropChange: PropTypes.func,
   format: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,

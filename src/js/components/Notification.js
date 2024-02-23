@@ -62,7 +62,7 @@ export default class Notification extends Component {
 
   _announce () {
     const { announce, message } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (announce) {
       const notificationMessage = Intl.getMessage(intl, 'Notification');
       Announcer.announce(`${notificationMessage}: ${message}`);
@@ -86,7 +86,7 @@ export default class Notification extends Component {
       children, className, closer, context, percentComplete, message,
       onClose, timestamp, size, state, status
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { darkBackground } = this.state;
     const classes = classnames(
       CLASS_ROOT,

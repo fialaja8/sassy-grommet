@@ -48,7 +48,8 @@ export default class App extends Component {
   render() {
     const { centered, children, className, inline, ...props } = this.props;
     const { lang } = this.state;
-
+    //TODO: SkipLinks uses deprecated context
+    const useSkipLinks = false;
     const classes = classnames(
       'grommet',
       CLASS_ROOT, {
@@ -61,7 +62,7 @@ export default class App extends Component {
     return (
       <div lang={lang} className={classes} {...props}>
         {children}
-        <SkipLinks />
+        {useSkipLinks ? <SkipLinks /> : null}
         <div className={`${CLASS_ROOT}__announcer`} aria-live='polite' />
       </div>
     );

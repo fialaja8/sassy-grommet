@@ -14,7 +14,7 @@ export default class Icon extends Component {
   render () {
     const { className, colorIndex } = this.props;
     let { a11yTitle, size, responsive } = this.props;
-    let { intl } = this.context;
+    let { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT,

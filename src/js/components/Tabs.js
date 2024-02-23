@@ -29,7 +29,7 @@ export default class Tabs extends Component {
   render () {
     const { children, className, justify, activeIndex, responsive, ...props } = this.props;
     delete props.onActive;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       CLASS_ROOT,
       {

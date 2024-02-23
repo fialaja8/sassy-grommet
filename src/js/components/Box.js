@@ -110,7 +110,7 @@ export default class Box extends Component {
       a11yTitle, appCentered, backgroundImage, children, className,
       colorIndex, containerClassName, focusable, full, id, onClick, onBlur,
       onFocus, onMouseDown, onMouseUp, pad, primary, role, size, tabIndex,
-      tag, texture
+      tag, texture, intl
     } = this.props;
     const { darkBackground, mouseActive } = this.state;
     let classes = [CLASS_ROOT];
@@ -222,7 +222,7 @@ export default class Box extends Component {
           classes.push(`${CLASS_ROOT}--focus`);
         }
         let boxLabel = (typeof a11yTitle !== 'undefined') ?
-          a11yTitle : Intl.getMessage(this.context.intl, 'Box');
+          a11yTitle : Intl.getMessage(intl, 'Box');
         a11yProps.tabIndex = tabIndex || 0;
         a11yProps["aria-label"] = this.props['aria-label'] || boxLabel;
         a11yProps.role = role || 'group';
@@ -232,7 +232,7 @@ export default class Box extends Component {
     let skipLinkAnchor;
     if (primary) {
       let mainContentLabel = (
-        Intl.getMessage(this.context.intl, 'Main Content')
+        Intl.getMessage(intl, 'Main Content')
       );
       skipLinkAnchor = <SkipLinkAnchor label={mainContentLabel} />;
     }

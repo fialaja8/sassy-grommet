@@ -80,7 +80,7 @@ export default class HotSpots extends Component {
     delete props.height;
     delete props.width;
 
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT,

@@ -33,7 +33,7 @@ export default class AccordionPanel extends Component {
     const {
       a11yTitle, active, animate, className, children, heading, pad
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT,
@@ -77,9 +77,6 @@ AccordionPanel.propTypes = {
   animate: PropTypes.bool,
   heading: PropTypes.node.isRequired,
   onChange: PropTypes.func,
-  pad: Header.propTypes.pad
-};
-
-AccordionPanel.contextTypes = {
+  pad: Header.propTypes.pad,
   intl: PropTypes.object
 };

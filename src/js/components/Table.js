@@ -210,7 +210,7 @@ export default class Table extends Component {
   }
 
   _announceRow (label) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     announce(`${label} ${enterSelectMessage}`);
   }
@@ -341,7 +341,7 @@ export default class Table extends Component {
 
   _onEnter (event) {
     const { activeRow } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (this.tableRef.contains(document.activeElement) &&
       activeRow !== undefined) {
       const rows = immediateTableChildOnly(
@@ -483,7 +483,7 @@ export default class Table extends Component {
     delete props.onSelect;
     delete props.selected;
     const { activeRow, columnMode, focus, mouseActive, small } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let classes = classnames(
       CLASS_ROOT,
       {

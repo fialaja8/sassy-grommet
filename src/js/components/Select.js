@@ -74,7 +74,7 @@ export default class Select extends Component {
   componentDidUpdate (prevProps, prevState) {
     const { inline, options } = this.props;
     const { announceChange, dropActive } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     // Set up keyboard listeners appropriate to the current state.
     let activeKeyboardHandlers = {
@@ -154,7 +154,7 @@ export default class Select extends Component {
   }
 
   _announceOptions (index) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const labelMessage = this._renderValue(this.props.options[index]);
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     announce(`${labelMessage} ${enterSelectMessage}`);
@@ -257,7 +257,7 @@ export default class Select extends Component {
   _onEnter (event) {
     const { onChange, options } = this.props;
     const { activeOptionIndex } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (activeOptionIndex >= 0) {
       event.preventDefault(); // prevent submitting forms
       const option = options[activeOptionIndex];
@@ -300,7 +300,7 @@ export default class Select extends Component {
   }
 
   _renderValue (option) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (Array.isArray(option)) {
       // Could be an Array when !inline+multiple
       if (1 === option.length) {
@@ -349,7 +349,7 @@ export default class Select extends Component {
   }
 
   _renderOptions (className, restProps={}) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const {
       id, inline, multiple, options, onSearch, value,
       searchPlaceHolder = Intl.getMessage(intl, 'Search')
@@ -435,7 +435,7 @@ export default class Select extends Component {
   render () {
     const { className, inline, placeHolder, value } = this.props;
     const { active } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let classes = classnames(
       CLASS_ROOT,
       {

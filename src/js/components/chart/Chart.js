@@ -154,7 +154,7 @@ export default class Chart extends Component {
     delete props.verticalAlignWith;
     const { alignBottom, alignHeight, alignLeft, alignRight, alignTop,
       alignWidth, padAlign } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       CLASS_ROOT,
       {

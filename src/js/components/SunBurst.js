@@ -188,7 +188,7 @@ export default class SunBurst extends Component {
 
     const { active, onActive, onClick } = this.props;
     const { width } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const unit = width / UNIT_FACTOR;
     const ringPad = width / PAD_FACTOR;
     if (! total) {
@@ -262,7 +262,7 @@ export default class SunBurst extends Component {
     delete props.onActive;
     delete props.onClick;
     const { focus, height, width } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       CLASS_ROOT,
       {

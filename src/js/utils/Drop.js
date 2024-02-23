@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { render, unmountComponentAtNode } from 'react-dom';
+import { IntlProvider } from 'react-intl';
 import classnames from 'classnames';
 import { filterByFocusable, findScrollParents, findVisibleParent } from './DOM';
 import CSSClassnames from './CSSClassnames';
@@ -23,14 +24,9 @@ const HORIZONTAL_ALIGN_OPTIONS = ['right', 'left'];
 
 class DropContents extends Component {
 
-  constructor (props, context) {
-    super(props, context);
+  constructor (props) {
+    super(props);
     this._processTab = this._processTab.bind(this);
-  }
-
-  getChildContext () {
-    const { context } = this.props;
-    return { ...context };
   }
 
   componentDidMount () {
@@ -82,27 +78,21 @@ class DropContents extends Component {
           className={`${CLASS_ROOT}__anchor`} />
       );
     }
-    return (
+    const result = (
       <div ref={(ref) => this._containerRef = ref}>
         {anchorStep}
         {content}
       </div>
     );
+    return intl ?
+      <IntlProvider locale={intl.locale} messages={intl.messages}>{result}</IntlProvider> : result;
   }
 }
 
 DropContents.propTypes = {
   content: PropTypes.node.isRequired,
-  context: PropTypes.any,
-  focusControl: PropTypes.bool
-};
-
-DropContents.childContextTypes = {
-  history: PropTypes.object,
-  intl: PropTypes.object,
-  onDropChange: PropTypes.func,
-  router: PropTypes.any,
-  store: PropTypes.object
+  focusControl: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 const _normalizeOptions = (options) => {
@@ -155,8 +145,6 @@ const _normalizeOptions = (options) => {
 // className: PropTypes.string
 // colorIndex: PropTypes.string
 //    Background color
-// context: PropTypes.object
-//    React context to pass through
 // focusControl: PropTypes.bool
 //    Whether to focus inside the dropped content when added
 // responsive: PropTypes.bool
@@ -167,7 +155,8 @@ export default class Drop {
 
   constructor (control, content, opts) {
     const options = _normalizeOptions(opts);
-    const { context, focusControl } = options;
+    const { focusControl } = options;
+    const intl = opts?.context?.intl;
 
     // bind functions to instance
     this.render = this.render.bind(this);
@@ -202,8 +191,8 @@ export default class Drop {
     };
 
     render(
-      <DropContents content={content} context={context}
-        focusControl={focusControl} />,
+      <DropContents content={content}
+        focusControl={focusControl} intl={intl}/>,
       container, () => this.place()
     );
 
@@ -382,11 +371,12 @@ export default class Drop {
   }
 
   render (content) {
-    const { container, options: { context, focusControl } } = this.state;
+    const { container, options: { focusControl } } = this.state;
+    const intl = this.state.options?.context?.intl;
     const originalScrollPosition = container.scrollTop;
     render(
-      <DropContents content={content} context={context}
-        focusControl={focusControl}/>,
+      <DropContents content={content}
+        focusControl={focusControl} intl={intl}/>,
       container,
       () => {
         this.place();

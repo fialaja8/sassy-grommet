@@ -53,7 +53,7 @@ export default class TextInput extends Component {
   componentDidUpdate (prevProps, prevState) {
     const { suggestions } = this.props;
     const { announceChange, dropActive, focused } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { activeKeyboardHandlers, focusedKeyboardHandlers } = this;
     // the order here is important, need to turn off keys before turning on
 
@@ -145,7 +145,7 @@ export default class TextInput extends Component {
 
   _announceSuggestion (index) {
     const { suggestions } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (suggestions && suggestions.length > 0) {
       const labelMessage = this._renderLabel(suggestions[index]);
       const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
@@ -195,7 +195,7 @@ export default class TextInput extends Component {
   _onEnter (event) {
     const { onSelect, suggestions } = this.props;
     const { activeSuggestionIndex } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     this.setState({ dropActive: false });
     if (activeSuggestionIndex >= 0) {
       event.preventDefault(); // prevent submitting forms

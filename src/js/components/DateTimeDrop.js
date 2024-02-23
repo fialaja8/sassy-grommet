@@ -145,7 +145,7 @@ export default class DateTimeDrop extends Component {
 
   _announceActiveCell () {
     const { activeCell, dateRows } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const weekDay = WEEK_DAYS[activeCell[1]];
     const day = dateRows[activeCell[0]][activeCell[1]].date();
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
@@ -211,7 +211,7 @@ export default class DateTimeDrop extends Component {
       event.nativeEvent.stopImmediatePropagation();
     }
     const { format, onChange } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     this.setState({
       value: moment(date)
     }, () => {
@@ -225,7 +225,7 @@ export default class DateTimeDrop extends Component {
   _onToday () {
     const { format, onChange } = this.props;
     const { timeOfDay } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const today = moment().startOf('day').add(timeOfDay);
     this.setState({ value: today }, () => {
       const dateFormatted = today.format(format);
@@ -290,7 +290,7 @@ export default class DateTimeDrop extends Component {
   _renderGrid () {
     const { value: propsValue } = this.props;
     const { activeCell, dateRows, focus, mouseActive, value } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const dateSelectorMessage = Intl.getMessage(intl, 'Date Selector');
     const navigationHelpMessage = Intl.getMessage(intl, 'Navigation Help');
@@ -369,7 +369,7 @@ export default class DateTimeDrop extends Component {
   _renderCalendar () {
     const { format } = this.props;
     const { value } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const previousMonthMessage = Intl.getMessage(intl, 'Previous Month');
     const nextMonthMessage = Intl.getMessage(intl, 'Next Month');
@@ -404,7 +404,7 @@ export default class DateTimeDrop extends Component {
   _renderCounters (includeDate) {
     const { format } = this.props;
     const { value } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     // break the format up into chunks
     let chunks = [];

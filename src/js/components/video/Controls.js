@@ -51,7 +51,7 @@ export default class Controls extends Component {
 
   _renderMuteButton () {
     const { muted, toggleMute } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let buttonMessage = Intl.getMessage(intl, 'Mute');
     let Icon = VolumeMuteIcon;
     if (muted) {
@@ -149,6 +149,6 @@ export default class Controls extends Component {
   }
 }
 
-Controls.contextTypes = {
+Controls.propTypes = {
   intl: PropTypes.object
 };

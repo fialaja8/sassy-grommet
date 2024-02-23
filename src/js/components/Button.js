@@ -42,7 +42,7 @@ export default class Button extends Component {
 
   _onClick (event) {
     const { method, onClick, path} = this.props;
-    const { router } = this.context;
+    const { history } = this.props;
     const modifierKey = event.ctrlKey || event.metaKey;
 
     if (modifierKey && !onClick) {
@@ -52,9 +52,9 @@ export default class Button extends Component {
     event.preventDefault();
 
     if ('push' === method) {
-      (router.history || router).push(path);
+      (history).push(path);
     } else if ('replace' === method) {
-      (router.history || router).replace(path);
+      (history).replace(path);
     }
 
     if (onClick) {
@@ -104,7 +104,7 @@ export default class Button extends Component {
       secondary, type, ...props
     } = this.props;
     delete props.method;
-    const { router } = this.context;
+    const { history } = this.props;
 
     let buttonIcon;
     if (icon) {
@@ -117,15 +117,15 @@ export default class Button extends Component {
     }
 
     let adjustedHref;
-    if (router && router.createPath) {
-      adjustedHref = (path && router) ?
-        router.createPath(path) : href;
-    } else {
-      adjustedHref = (path && router && router.history) ?
-        router.history.createHref(
-          { pathname: path }
-        ) : href;
-    }
+    //if (router && router.createPath) {
+    //  adjustedHref = (path && router) ?
+    //    router.createPath(path) : href;
+    //} else {
+    //}
+    adjustedHref = (path && history) ?
+      history.createHref(
+        { pathname: path }
+      ) : href;
 
     const classes = classnames(
       CLASS_ROOT,
@@ -150,7 +150,7 @@ export default class Button extends Component {
       className
     );
 
-    let adjustedOnClick = (path && router ? this._onClick : onClick);
+    let adjustedOnClick = (path && history ? this._onClick : onClick);
 
     let Tag = adjustedHref ? 'a' : 'button';
     let buttonType;
@@ -215,14 +215,11 @@ Button.propTypes = {
   primary: PropTypes.bool,
   reverse: PropTypes.bool,
   secondary: PropTypes.bool,
-  type: PropTypes.oneOf(['button', 'reset', 'submit'])
+  type: PropTypes.oneOf(['button', 'reset', 'submit']),
+  history: PropTypes.object
 };
 
 Button.defaultProps = {
   method: 'push',
   type: 'button'
-};
-
-Button.contextTypes = {
-  router: PropTypes.object
 };

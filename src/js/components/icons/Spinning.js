@@ -13,7 +13,7 @@ export default class Spinning extends Component {
     const {
       a11yTitle, className, small, size, responsive, ...props
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     let sizeOverride = small ? 'small' : size;
 
@@ -36,10 +36,6 @@ export default class Spinning extends Component {
   }
 }
 
-Spinning.contextTypes = {
-  intl: PropTypes.object
-};
-
 Spinning.defaultProps = {
   responsive: true
 };
@@ -47,6 +43,7 @@ Spinning.defaultProps = {
 Spinning.propTypes = {
   a11yTitle: PropTypes.string,
   className: PropTypes.string,
+  intl: PropTypes.object,
   small: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'xlarge', 'huge']),
   responsive: PropTypes.bool

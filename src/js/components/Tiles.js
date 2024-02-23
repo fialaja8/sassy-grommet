@@ -129,7 +129,7 @@ export default class Tiles extends Component {
   }
 
   _announceTile (label) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     // avoid a long text to be read by the screen reader
     const labelMessage = label.length > 15 ?
@@ -214,7 +214,7 @@ export default class Tiles extends Component {
 
   _onEnter (event) {
     const { activeTile } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (findDOMNode(this.tilesRef).contains(document.activeElement) &&
       activeTile !== undefined) {
       const rows = findDOMNode(this.tilesRef).querySelectorAll(`.${TILE}`);
@@ -368,7 +368,7 @@ export default class Tiles extends Component {
     const {
       activeTile, focus, mouseActive, overflow, overflowEnd, overflowStart
     } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT,
