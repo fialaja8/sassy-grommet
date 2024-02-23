@@ -1,8 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
-import { injectIntl } from 'react-intl';
-import { IntlProvider } from 'react-intl';
+import { injectIntl, IntlProvider } from 'react-intl';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
@@ -159,9 +159,7 @@ LayerContents.propTypes = {
   history: PropTypes.object,
   intl: PropTypes.object,
   onClose: PropTypes.func,
-  overlayClose: PropTypes.bool,
-  router: PropTypes.any,
-  store: PropTypes.any
+  overlayClose: PropTypes.bool
 };
 
 // Because Layer creates a new DOM render context, the context
@@ -341,4 +339,4 @@ Layer.defaultProps = {
   align: 'center'
 };
 
-export default injectIntl(Layer);
+export default withRouter(injectIntl(Layer));

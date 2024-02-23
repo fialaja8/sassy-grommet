@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
@@ -189,7 +190,8 @@ Toast.propTypes = {
   onClose: PropTypes.func,
   duration: PropTypes.number,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  status: PropTypes.string
+  status: PropTypes.string,
+  history: PropTypes.object
 };
 
 Toast.defaultProps = {
@@ -197,4 +199,4 @@ Toast.defaultProps = {
   size: 'medium'
 };
 
-export default injectIntl(Toast);
+export default withRouter(injectIntl(Toast));

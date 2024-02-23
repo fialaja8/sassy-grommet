@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Children, Component } from 'react';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames, { namespace } from '../utils/CSSClassnames';
@@ -25,7 +26,7 @@ function getHoverModifier(hoverIndicator) {
   }
 }
 
-export default class Button extends Component {
+class Button extends Component {
 
   constructor () {
     super();
@@ -223,3 +224,5 @@ Button.defaultProps = {
   method: 'push',
   type: 'button'
 };
+
+export default withRouter(Button);

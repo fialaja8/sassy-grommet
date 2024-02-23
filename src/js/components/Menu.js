@@ -1,8 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
-import { injectIntl } from 'react-intl';
-import { IntlProvider } from 'react-intl';
+import { injectIntl, IntlProvider } from 'react-intl';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
@@ -533,4 +533,4 @@ Menu.defaultProps = {
   dropContainer: undefined
 };
 
-export default injectIntl(Menu);
+export default withRouter(injectIntl(Menu));

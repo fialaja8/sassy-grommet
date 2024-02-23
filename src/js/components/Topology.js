@@ -97,11 +97,8 @@ class Part extends Component {
   }
 }
 
-Part.contextTypes = {
-  intl: PropTypes.object
-};
-
 Part.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   align: PropTypes.oneOf(['start', 'center', 'between', 'end', 'stretch']),
   demarcate: PropTypes.bool,
@@ -175,11 +172,8 @@ class Parts extends Component {
   }
 }
 
-Parts.contextTypes = {
-  intl: PropTypes.object
-};
-
 Parts.propTypes = {
+  intl: PropTypes.object,
   align: PropTypes.oneOf(['start', 'center', 'between', 'end', 'stretch']),
   direction: PropTypes.oneOf(['row', 'column']).isRequired,
   uniform: PropTypes.bool
@@ -471,8 +465,8 @@ Topology.defaultProps = {
   linkOffset: 18
 };
 
-Topology.Parts = Parts;
-Topology.Part = Part;
-Topology.Label = Label;
+Topology.Parts = injectIntl(Parts);
+Topology.Part = injectIntl(Part);
+Topology.Label = injectIntl(Label);
 
 export default injectIntl(Topology);

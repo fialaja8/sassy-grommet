@@ -16,9 +16,6 @@ const GrommetFormattedMessage = ({intl, ...props}) => (
     </span>
 );
 
-GrommetFormattedMessage.contextTypes = {
-};
-
 GrommetFormattedMessage.propTypes = {
   id: PropTypes.string.isRequired,
   defaultMessage: PropTypes.string,
