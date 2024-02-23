@@ -1,8 +1,10 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import Graph from './Graph';
+import composeKeepPropTypes from "../../utils/composeKeepPropTypes";
+import {injectIntl} from "react-intl";
 
-export default class Line extends Graph {};
+class Line extends Graph {}
 
 Line.defaultProps = {
   ...Graph.defaultProps,
@@ -10,3 +12,4 @@ Line.defaultProps = {
 };
 
 Line.displayName = 'Line';
+export default composeKeepPropTypes(Line, injectIntl);

@@ -3,13 +3,15 @@
 import { baseUnit } from '../../utils/Graphics';
 import { baseDimension } from './utils';
 import Graphic from './Graphic';
+import composeKeepPropTypes from "../../utils/composeKeepPropTypes";
+import {injectIntl} from "react-intl";
 
 const BAR_LENGTH = baseDimension;
 const BAR_THICKNESS = baseUnit;
 const MID_BAR_THICKNESS = BAR_THICKNESS / 2;
 // const MINIMUM_THICKNESS = BAR_THICKNESS / 6;
 
-export default class Bar extends Graphic {
+class Bar extends Graphic {
 
   constructor(props) {
     super(props);
@@ -75,3 +77,5 @@ export default class Bar extends Graphic {
 
 //needed in Graphic.js to fix minification issues
 Bar.displayName = 'Bar';
+
+export default composeKeepPropTypes(Bar, injectIntl);

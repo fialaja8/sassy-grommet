@@ -1,7 +1,6 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
-import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
@@ -321,4 +320,5 @@ Graphic.defaultProps = {
   tabIndex: '0'
 };
 
-export default injectIntl(Graphic);
+//NOTE: No HOC, other components extend this one
+export default Graphic;

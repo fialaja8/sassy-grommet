@@ -1,7 +1,6 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
-import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../../utils/CSSClassnames';
@@ -274,4 +273,5 @@ Graph.propTypes = {
   width: PropTypes.number // only from Chart
 };
 
-export default injectIntl(Graph);
+//NOTE: No HOC, other components extend this one
+export default Graph;

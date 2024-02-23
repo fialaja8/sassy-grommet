@@ -5,6 +5,8 @@ const composeKeepPropTypes = (WrappedComponent,...injectors) => {
     ...injectors
   )(WrappedComponent);
   result.propTypes = WrappedComponent.propTypes;
+  result.defaultProps = WrappedComponent.defaultProps;
+  result.displayName = WrappedComponent.displayName;
   return result;
 };
 

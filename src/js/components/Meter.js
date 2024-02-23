@@ -10,6 +10,7 @@ import Bar from './meter/Bar';
 import Spiral from './meter/Spiral';
 import Circle from './meter/Circle';
 import Arc from './meter/Arc';
+import composeKeepPropTypes from '../utils/composeKeepPropTypes';
 
 const CLASS_ROOT = CSSClassnames.METER;
 
@@ -341,4 +342,4 @@ Meter.defaultProps = {
 };
 
 
-export default injectIntl(Meter);
+export default composeKeepPropTypes(Meter, injectIntl);
