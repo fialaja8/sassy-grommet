@@ -35,8 +35,8 @@ function singleIndicatorCommands (centerX, centerY, radius, startAngle,
 
 export default class Arc extends Graphic {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     //needed in Graphic.js to fix minification issues
     this.displayName = 'Arc';
   }

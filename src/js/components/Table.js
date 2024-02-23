@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Children, Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import SpinningIcon from './icons/Spinning';
@@ -78,10 +79,10 @@ function findHead(children) {
   return head;
 }
 
-export default class Table extends Component {
+class Table extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onClick = this._onClick.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -591,11 +592,9 @@ export default class Table extends Component {
   }
 }
 
-Table.contextTypes = {
-  intl: PropTypes.object
-};
 
 Table.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   onMore: PropTypes.func,
   onMoreAbove: PropTypes.func,
@@ -615,3 +614,5 @@ Table.propTypes = {
 Table.defaultProps = {
   responsive: true
 };
+
+export default injectIntl(Table);

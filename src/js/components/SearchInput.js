@@ -1,6 +1,7 @@
 // (C) Copyright 2014 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
@@ -15,10 +16,10 @@ import CSSClassnames from '../utils/CSSClassnames';
 const CLASS_ROOT = CSSClassnames.SEARCH_INPUT;
 const INPUT = CSSClassnames.INPUT;
 
-export default class SearchInput extends Component {
+class SearchInput extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onInputChange = this._onInputChange.bind(this);
     this._onAddDrop = this._onAddDrop.bind(this);
@@ -301,11 +302,9 @@ export default class SearchInput extends Component {
 
 }
 
-SearchInput.contextTypes = {
-  intl: PropTypes.object
-};
 
 SearchInput.propTypes = {
+  intl: PropTypes.object,
   defaultValue: PropTypes.oneOfType([
     PropTypes.shape({
       label: PropTypes.string,
@@ -335,3 +334,5 @@ SearchInput.propTypes = {
     PropTypes.string
   ])
 };
+
+export default injectIntl(SearchInput);

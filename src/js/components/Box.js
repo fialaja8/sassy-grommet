@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
@@ -14,7 +15,7 @@ import { announce } from '../utils/Announcer';
 const CLASS_ROOT = CSSClassnames.BOX;
 const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
 
-export default class Box extends Component {
+class Box extends Component {
 
   constructor (props) {
     super(props);
@@ -296,6 +297,7 @@ const MARGIN_SIZES = ['small', 'medium', 'large', 'none'];
 const PAD_SIZES = ['small', 'medium', 'large', 'xlarge', 'none'];
 
 Box.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   announce: PropTypes.bool,
   align: PropTypes.oneOf(['start', 'center', 'end', 'baseline', 'stretch']),
@@ -378,9 +380,6 @@ Box.propTypes = {
   wrap: PropTypes.bool
 };
 
-Box.contextTypes = {
-  intl: PropTypes.object
-};
 
 Box.defaultProps = {
   announce: false,
@@ -390,3 +389,5 @@ Box.defaultProps = {
   responsive: true,
   focusable: true
 };
+
+export default injectIntl(Box);

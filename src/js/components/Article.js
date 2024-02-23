@@ -23,8 +23,8 @@ const DEFAULT_PLAY_INTERVAL = 10000; // 10s
 
 export default class Article extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onScroll = this._onScroll.bind(this);
     this._onWheel = this._onWheel.bind(this);

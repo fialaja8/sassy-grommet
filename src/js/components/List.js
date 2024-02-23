@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import SpinningIcon from './icons/Spinning';
@@ -16,10 +17,10 @@ const LIST_ITEM = CSSClassnames.LIST_ITEM;
 const SELECTED_CLASS = `${CLASS_ROOT}-item--selected`;
 const ACTIVE_CLASS = `${CLASS_ROOT}-item--active`;
 
-export default class List extends Component {
+class List extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onClick = this._onClick.bind(this);
     this._fireClick = this._fireClick.bind(this);
@@ -335,11 +336,9 @@ export default class List extends Component {
   }
 }
 
-List.contextTypes = {
-  intl: PropTypes.object
-};
 
 List.propTypes = {
+  intl: PropTypes.object,
   emptyIndicator: PropTypes.node,
   onMore: PropTypes.func,
   onSelect: PropTypes.func,
@@ -356,3 +355,5 @@ List.propTypes = {
 List.defaultProps = {
   role: 'list'
 };
+
+export default injectIntl(List);

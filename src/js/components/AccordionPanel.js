@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Header from './Header';
@@ -14,7 +15,7 @@ import Intl from '../utils/Intl';
 
 const CLASS_ROOT = CSSClassnames.ACCORDION_PANEL;
 
-export default class AccordionPanel extends Component {
+class AccordionPanel extends Component {
   constructor() {
     super();
 
@@ -80,3 +81,5 @@ AccordionPanel.propTypes = {
   pad: Header.propTypes.pad,
   intl: PropTypes.object
 };
+
+export default injectIntl(AccordionPanel);

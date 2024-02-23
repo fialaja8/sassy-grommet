@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../../utils/CSSClassnames';
@@ -10,10 +11,10 @@ import { padding, pointSize } from './utils';
 const CLASS_ROOT = CSSClassnames.CHART_GRAPH;
 const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 
-export default class Graph extends Component {
+class Graph extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._renderA11YTitle = this._renderA11YTitle.bind(this);
   }
 
@@ -249,9 +250,6 @@ export default class Graph extends Component {
 
 }
 
-Graph.contextTypes = {
-  intl: PropTypes.object
-};
 
 Graph.defaultProps = {
   min: 0,
@@ -259,6 +257,7 @@ Graph.defaultProps = {
 };
 
 Graph.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   activeIndex: PropTypes.number,
   colorIndex: PropTypes.string,
@@ -274,3 +273,5 @@ Graph.propTypes = {
   vertical: PropTypes.bool,
   width: PropTypes.number // only from Chart
 };
+
+export default injectIntl(Graph);

@@ -1,6 +1,7 @@
 // (C) Copyright 2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { padding } from './utils';
@@ -12,7 +13,7 @@ const CLASS_ROOT = CSSClassnames.CHART_HOT_SPOTS;
 
 // Interactive regions.
 
-export default class HotSpots extends Component {
+class HotSpots extends Component {
 
   constructor () {
     super();
@@ -131,11 +132,9 @@ export default class HotSpots extends Component {
 
 }
 
-HotSpots.contextTypes = {
-  intl: PropTypes.object
-};
 
 HotSpots.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   activeIndex: PropTypes.number,
   count: PropTypes.number.isRequired,
@@ -143,3 +142,5 @@ HotSpots.propTypes = {
   onClick: PropTypes.func,
   vertical: PropTypes.bool
 };
+
+export default injectIntl(HotSpots);

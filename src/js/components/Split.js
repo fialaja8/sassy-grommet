@@ -10,8 +10,8 @@ const CLASS_ROOT = CSSClassnames.SPLIT;
 
 export default class Split extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onResize = this._onResize.bind(this);
     this._layout = this._layout.bind(this);

@@ -1,6 +1,7 @@
 // (C) Copyright 2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { baseUnit, translateEndAngle, arcCommands } from '../utils/Graphics';
@@ -14,10 +15,10 @@ const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 const UNIT_FACTOR = baseUnit * 0.75;
 const PAD_FACTOR = baseUnit * 8;
 
-export default class SunBurst extends Component {
+class SunBurst extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._layout = this._layout.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -313,6 +314,7 @@ export default class SunBurst extends Component {
 }
 
 SunBurst.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   active: PropTypes.arrayOf(PropTypes.number),
   data: PropTypes.arrayOf(PropTypes.shape({
@@ -331,6 +333,5 @@ SunBurst.defaultProps = {
   size: 'medium'
 };
 
-SunBurst.contextTypes = {
-  intl: PropTypes.object
-};
+
+export default injectIntl(SunBurst);

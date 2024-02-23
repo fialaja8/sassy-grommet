@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Children, Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
@@ -188,10 +189,10 @@ Parts.defaultProps = {
   direction: 'column'
 };
 
-export default class Topology extends Component {
+class Topology extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._layout = this._layout.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -452,11 +453,9 @@ export default class Topology extends Component {
 
 }
 
-Topology.contextTypes = {
-  intl: PropTypes.object
-};
 
 Topology.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   links: PropTypes.arrayOf(
     PropTypes.shape({
@@ -475,3 +474,5 @@ Topology.defaultProps = {
 Topology.Parts = Parts;
 Topology.Part = Part;
 Topology.Label = Label;
+
+export default injectIntl(Topology);

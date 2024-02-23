@@ -28,8 +28,8 @@ if (! localesSupported()) {
 }
 
 export default class App extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.state = {
       lang: 'en-US'

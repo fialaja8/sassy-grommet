@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import classnames from 'classnames';
@@ -51,10 +52,10 @@ const _stateFromProps = (props) => {
   return result;
 };
 
-export default class DateTime extends Component {
+class DateTime extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onInputChange = this._onInputChange.bind(this);
     this._onOpen = this._onOpen.bind(this);
@@ -313,3 +314,5 @@ DateTime.propTypes = {
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };
+
+export default injectIntl(DateTime);

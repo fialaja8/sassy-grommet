@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Intl from '../utils/Intl';
@@ -8,10 +9,10 @@ import CSSClassnames from '../utils/CSSClassnames';
 
 const CLASS_ROOT = CSSClassnames.TABS;
 
-export default class Tabs extends Component {
+class Tabs extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._activateTab = this._activateTab.bind(this);
 
@@ -80,17 +81,17 @@ export default class Tabs extends Component {
 }
 
 Tabs.propTypes = {
+  intl: PropTypes.object,
   activeIndex: PropTypes.number,
   justify: PropTypes.oneOf(['start', 'center', 'end']),
   responsive: PropTypes.bool,
   onActive: PropTypes.func
 };
 
-Tabs.contextTypes = {
-  intl: PropTypes.object
-};
 
 Tabs.defaultProps = {
   justify: 'center',
   responsive: true
 };
+
+export default injectIntl(Tabs);

@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
@@ -20,7 +21,7 @@ import { formatTime } from '../../utils/FormatTime';
 const CLASS_ROOT = CSSClassnames.VIDEO;
 const BUTTON_CLASS = `${CLASS_ROOT}__button`;
 
-export default class Controls extends Component {
+class Controls extends Component {
 
   constructor () {
     super();
@@ -152,3 +153,5 @@ export default class Controls extends Component {
 Controls.propTypes = {
   intl: PropTypes.object
 };
+
+export default injectIntl(Controls);

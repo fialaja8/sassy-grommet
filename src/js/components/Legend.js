@@ -27,8 +27,8 @@ function getMaxDecimalDigits(series) {
 
 export default class Legend extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onActive = this._onActive.bind(this);
     this._renderSeries = this._renderSeries.bind(this);

@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
@@ -22,15 +23,6 @@ class ToastContents extends Component {
     super();
     this._onClose = this._onClose.bind(this);
     this.state = {};
-  }
-
-  getChildContext () {
-    return {
-      history: this.props.history,
-      intl: this.props.intl,
-      router: this.props.router,
-      store: this.props.store
-    };
   }
 
   componentDidMount () {
@@ -114,9 +106,7 @@ ToastContents.propTypes = {
   history: PropTypes.object,
   intl: PropTypes.object,
   onClose: PropTypes.func,
-  router: PropTypes.any,
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-  store: PropTypes.any
+  size: PropTypes.oneOf(['small', 'medium', 'large'])
 };
 
 // Because Toast creates a new DOM render context, the context
@@ -124,14 +114,8 @@ ToastContents.propTypes = {
 // TODO: Either figure out how to introspect the context and transfer
 // whatever we find or have callers explicitly indicate which parts
 // of the context to transfer somehow.
-ToastContents.childContextTypes = {
-  history: PropTypes.object,
-  intl: PropTypes.object,
-  router: PropTypes.any,
-  store: PropTypes.object
-};
 
-export default class Toast extends Component {
+class Toast extends Component {
 
   componentDidMount () {
     this._addLayer();
@@ -174,10 +158,8 @@ export default class Toast extends Component {
       const contents = (
         <ToastContents
           {...this.props}
-          history={this.context.history}
-          intl={this.context.intl}
-          router={this.context.router}
-          store={this.context.store}
+          history={this.props.history}
+          intl={this.props.intl}
           onClose={() => this._removeLayer()}
         />
       );
@@ -214,3 +196,5 @@ Toast.defaultProps = {
   duration: DURATION,
   size: 'medium'
 };
+
+export default injectIntl(Toast);

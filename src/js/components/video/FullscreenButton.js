@@ -7,11 +7,12 @@ import Intl from '../../utils/Intl';
 import CSSClassnames from '../../utils/CSSClassnames';
 import Button from '../Button';
 import ExpandIcon from '../icons/base/Expand';
+import { injectIntl } from 'react-intl';
 
 const CLASS_ROOT = CSSClassnames.VIDEO;
 const BUTTON_CLASS = `${CLASS_ROOT}__button`;
 
-export default class FullscreenButton extends Component {
+class FullscreenButton extends Component {
 
   // prevents unnecessarily updates/re-renders
   // only update component if the onClick prop changes
@@ -21,7 +22,7 @@ export default class FullscreenButton extends Component {
 
   render () {
     let a11yExpandButtonTitle =
-      Intl.getMessage(this.context.intl, 'Toggle Fullscreen');
+      Intl.getMessage(this.props.intl, 'Toggle Fullscreen');
 
     return (
       <Button plain={true} className={BUTTON_CLASS} onClick={this.props.onClick}
@@ -34,5 +35,8 @@ export default class FullscreenButton extends Component {
 }
 
 FullscreenButton.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  intl: PropTypes.object
 };
+
+export default injectIntl(FullscreenButton);

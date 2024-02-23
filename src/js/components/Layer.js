@@ -1,6 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
+import { IntlProvider } from 'react-intl';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
@@ -16,26 +18,14 @@ const APP = CSSClassnames.APP;
 
 class LayerContents extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onClickOverlay = this._onClickOverlay.bind(this);
     this._processTab = this._processTab.bind(this);
 
     this.state = {
       dropActive: false
-    };
-  }
-
-  getChildContext () {
-    return {
-      history: this.props.history,
-      intl: this.props.intl,
-      onDropChange: (active) => {
-        this.setState({ dropActive: active });
-      },
-      router: this.props.router,
-      store: this.props.store
     };
   }
 
@@ -147,7 +137,7 @@ class LayerContents extends Component {
       );
     }
 
-    return (
+    const res = (
       <div ref={ref => this.containerRef = ref}
         className={`${CLASS_ROOT}__container`}>
         <a tabIndex="-1" aria-hidden='true' style={{ outline: 'none' }}
@@ -156,6 +146,7 @@ class LayerContents extends Component {
         {children}
       </div>
     );
+    return intl ? <IntlProvider locale={intl.locale} messages={intl.messages}>{res}</IntlProvider> : res;
   }
 }
 
@@ -178,15 +169,8 @@ LayerContents.propTypes = {
 // TODO: Either figure out how to introspect the context and transfer
 // whatever we find or have callers explicitly indicate which parts
 // of the context to transfer somehow.
-LayerContents.childContextTypes = {
-  history: PropTypes.object,
-  intl: PropTypes.object,
-  onDropChange: PropTypes.func,
-  router: PropTypes.any,
-  store: PropTypes.object
-};
 
-export default class Layer extends Component {
+class Layer extends Component {
 
   componentDidMount () {
     this._originalFocusedElement = document.activeElement;
@@ -304,10 +288,8 @@ export default class Layer extends Component {
       this._element.className = this._classesFromProps();
       const contents = (
         <LayerContents {...this.props}
-          history={this.context.history}
-          intl={this.context.intl}
-          router={this.context.router}
-          store={this.context.store} />
+          history={this.props.history}
+          intl={this.props.intl} />
       );
       ReactDOM.render(contents, this._element, () => {
         const { hidden } = this.props;
@@ -340,6 +322,8 @@ export default class Layer extends Component {
 }
 
 Layer.propTypes = {
+  history: PropTypes.object,
+  intl: PropTypes.object,
   align: PropTypes.oneOf(['center', 'top', 'bottom', 'left', 'right']),
   closer: PropTypes.oneOfType([
     PropTypes.node,
@@ -352,13 +336,9 @@ Layer.propTypes = {
   onClose: PropTypes.func
 };
 
-Layer.contextTypes = {
-  router: PropTypes.any,
-  history: PropTypes.object,
-  intl: PropTypes.object,
-  store: PropTypes.object
-};
 
 Layer.defaultProps = {
   align: 'center'
 };
+
+export default injectIntl(Layer);

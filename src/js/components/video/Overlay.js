@@ -12,8 +12,8 @@ const CLASS_ROOT = CSSClassnames.VIDEO;
 
 export default class Overlay extends Component {
 
-  constructor (props, context) {
-    super(props, context);
+  constructor (props) {
+    super(props);
 
     this._onResponsive = this._onResponsive.bind(this);
     this.state = {};

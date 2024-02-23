@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
@@ -21,10 +22,10 @@ const THIN_HEIGHT = 72;
 
 const GUTTER_SIZE = 4;
 
-export default class Distribution extends Component {
+class Distribution extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onEnter = this._onEnter.bind(this);
     this._onPreviousDistribution = this._onPreviousDistribution.bind(this);
@@ -527,11 +528,9 @@ export default class Distribution extends Component {
 
 }
 
-Distribution.contextTypes = {
-  intl: PropTypes.object
-};
 
 Distribution.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   full: PropTypes.bool, // deprecated, use size='full'
   series: PropTypes.arrayOf(PropTypes.shape({
@@ -554,3 +553,5 @@ Distribution.propTypes = {
 Distribution.defaultProps = {
   size: 'medium'
 };
+
+export default injectIntl(Distribution);

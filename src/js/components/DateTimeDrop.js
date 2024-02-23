@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -101,10 +102,10 @@ const _stateFromProps =  (props)=> {
   return result;
 };
 
-export default class DateTimeDrop extends Component {
+class DateTimeDrop extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._announceActiveCell = this._announceActiveCell.bind(this);
     this._buildDateRows = this._buildDateRows.bind(this);
@@ -478,13 +479,13 @@ export default class DateTimeDrop extends Component {
 
 }
 
-DateTimeDrop.contextTypes = {
-  intl: PropTypes.object
-};
 
 DateTimeDrop.propTypes = {
+  intl: PropTypes.object,
   format: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   step: PropTypes.number.isRequired,
   value: PropTypes.object.isRequired
 };
+
+export default injectIntl(DateTimeDrop);

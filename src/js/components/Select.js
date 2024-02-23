@@ -1,6 +1,7 @@
 // (C) Copyright 2014 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
@@ -35,10 +36,10 @@ const _normalizeValue = (props) => {
   return normalizedValue;
 };
 
-export default class Select extends Component {
+class Select extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onAddDrop = this._onAddDrop.bind(this);
     this._onRemoveDrop = this._onRemoveDrop.bind(this);
@@ -486,6 +487,7 @@ const valueType = PropTypes.oneOfType([
 ]);
 
 Select.propTypes = {
+  intl: PropTypes.object,
   inline: PropTypes.bool,
   multiple: PropTypes.bool,
   onSearch: PropTypes.func,
@@ -496,6 +498,5 @@ Select.propTypes = {
   value: PropTypes.oneOfType([valueType, PropTypes.arrayOf(valueType)])
 };
 
-Select.contextTypes = {
-  intl: PropTypes.object
-};
+
+export default injectIntl(Select);

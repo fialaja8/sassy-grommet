@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component, Children } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
@@ -24,10 +25,10 @@ const TILE = CSSClassnames.TILE;
 const SELECTED_CLASS = `${TILE}--selected`;
 const ACTIVE_CLASS = `${TILE}--active`;
 
-export default class Tiles extends Component {
+class Tiles extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._onLeft = this._onLeft.bind(this);
     this._onRight = this._onRight.bind(this);
     this._onScrollHorizontal = this._onScrollHorizontal.bind(this);
@@ -492,11 +493,9 @@ export default class Tiles extends Component {
 
 }
 
-Tiles.contextTypes = {
-  intl: PropTypes.object
-};
 
 Tiles.propTypes = {
+  intl: PropTypes.object,
   fill: PropTypes.bool,
   flush: PropTypes.bool,
   onMore: PropTypes.func,
@@ -517,3 +516,5 @@ Tiles.defaultProps = {
   justify: 'start',
   pad: 'small'
 };
+
+export default injectIntl(Tiles);

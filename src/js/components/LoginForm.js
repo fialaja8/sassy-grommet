@@ -20,8 +20,8 @@ const CLASS_ROOT = CSSClassnames.LOGIN_FORM;
 
 export default class LoginForm extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onSubmit = this._onSubmit.bind(this);
     this._onUsernameChange = this._onUsernameChange.bind(this);

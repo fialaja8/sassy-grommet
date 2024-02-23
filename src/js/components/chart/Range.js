@@ -1,6 +1,7 @@
 // (C) Copyright 2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Intl from '../../utils/Intl';
@@ -17,10 +18,10 @@ const CLASS_ROOT = CSSClassnames.CHART_RANGE;
 // Press and Drag to select multiple.
 // Drag edges to adjust.
 
-export default class Range extends Component {
+class Range extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._onRangeMove = this._onRangeMove.bind(this);
     this._onDragFinish = this._onDragFinish.bind(this);
     this._onFocus = this._onFocus.bind(this);
@@ -356,6 +357,7 @@ export default class Range extends Component {
 }
 
 Range.propTypes = {
+  intl: PropTypes.object,
   active: PropTypes.shape({
     end: PropTypes.number.isRequired,
     start: PropTypes.number.isRequired
@@ -365,6 +367,5 @@ Range.propTypes = {
   vertical: PropTypes.bool
 };
 
-Range.contextTypes = {
-  intl: PropTypes.object
-};
+
+export default injectIntl(Range);

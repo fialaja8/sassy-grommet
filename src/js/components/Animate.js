@@ -12,8 +12,8 @@ const CLASS_ROOT = CSSClassnames.ANIMATE;
 
 class AnimateChild extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       state: 'inactive'
     };
@@ -127,8 +127,8 @@ AnimateChild.defaultProps = {
 
 export default class Animate extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._checkScroll = this._checkScroll.bind(this);
     this.state = {};
   }

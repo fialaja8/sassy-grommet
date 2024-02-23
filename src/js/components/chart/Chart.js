@@ -1,6 +1,7 @@
 // (C) Copyright 2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component, Children } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../../utils/CSSClassnames';
@@ -52,10 +53,10 @@ function traverseAndUpdateChildren (children) {
   });
 }
 
-export default class Chart extends Component {
+class Chart extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._onResize = this._onResize.bind(this);
     this._layout = this._layout.bind(this);
     this.state = { alignTop: 0, alignLeft: 0, alignHeight: 0, alignWidth: 0 };
@@ -257,11 +258,9 @@ export default class Chart extends Component {
 
 }
 
-Chart.contextTypes = {
-  intl: PropTypes.object
-};
 
 Chart.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   full: PropTypes.bool,
   horizontalAlignWith: PropTypes.string,
@@ -273,3 +272,5 @@ Chart.propTypes = {
 
 export { Axis, Layers, Base, Grid, Area, Line, Bar, Marker, MarkerLabel,
   HotSpots, Range };
+
+export default injectIntl(Chart);

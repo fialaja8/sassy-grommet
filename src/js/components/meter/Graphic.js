@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
@@ -12,10 +13,10 @@ import { propTypes, buildPath } from './utils';
 const CLASS_ROOT = CSSClassnames.METER;
 const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 
-export default class Graphic extends Component {
+class Graphic extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = this._stateFromProps(props);
 
     this._onNextBand = this._onNextBand.bind(this);
@@ -234,9 +235,9 @@ export default class Graphic extends Component {
     let a11yTitle = this.props.a11yTitle;
     if (!a11yTitle) {
       let graphicTitle = Intl.getMessage(
-        this.context.intl, this.displayName
+        this.props.intl, this.displayName
       );
-      let meterTitle = Intl.getMessage(this.context.intl, 'Meter');
+      let meterTitle = Intl.getMessage(this.props.intl, 'Meter');
 
       a11yTitle = `${graphicTitle} ${meterTitle}`;
     }
@@ -247,21 +248,21 @@ export default class Graphic extends Component {
   _renderA11YDesc () {
     let a11yDesc = this.props.a11yDesc;
     if (!a11yDesc) {
-      let valueLabel = Intl.getMessage(this.context.intl, 'Value');
+      let valueLabel = Intl.getMessage(this.props.intl, 'Value');
       a11yDesc = `, ${valueLabel}: ${this._renderTotal()}`;
 
       if (this.props.min) {
-        let minLabel = Intl.getMessage(this.context.intl, 'Min');
+        let minLabel = Intl.getMessage(this.props.intl, 'Min');
         a11yDesc += `, ${minLabel}: ${this.props.min}`;
       }
 
       if (this.props.max) {
-        let maxLabel = Intl.getMessage(this.context.intl, 'Max');
+        let maxLabel = Intl.getMessage(this.props.intl, 'Max');
         a11yDesc += `, ${maxLabel}: ${this.props.max}`;
       }
 
       if (this.props.thresholds) {
-        let thresholdLabel = Intl.getMessage(this.context.intl, 'Threshold');
+        let thresholdLabel = Intl.getMessage(this.props.intl, 'Threshold');
         this.props.thresholds.forEach((threshold) => {
           if (threshold.ariaLabel) {
             a11yDesc += `, ${thresholdLabel}: ${threshold.ariaLabel}`;
@@ -304,6 +305,7 @@ export default class Graphic extends Component {
 }
 
 Graphic.propTypes = {
+  intl: PropTypes.object,
   stacked: PropTypes.bool,
   tabIndex: PropTypes.string,
   thresholds: PropTypes.arrayOf(PropTypes.shape({
@@ -314,10 +316,9 @@ Graphic.propTypes = {
   ...propTypes
 };
 
-Graphic.contextTypes = {
-  intl: PropTypes.object
-};
 
 Graphic.defaultProps = {
   tabIndex: '0'
 };
+
+export default injectIntl(Graphic);

@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Box from './Box';
@@ -17,10 +18,10 @@ import Props from '../utils/Props';
 
 const CLASS_ROOT = CSSClassnames.CAROUSEL;
 
-export default class Carousel extends Component {
+class Carousel extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onSelect = this._onSelect.bind(this);
     this._stopAutoplay = this._stopAutoplay.bind(this);
@@ -400,3 +401,5 @@ Carousel.propTypes = {
   onActive: PropTypes.func,
   persistentNav: PropTypes.bool
 };
+
+export default injectIntl(Carousel);

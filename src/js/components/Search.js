@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
@@ -19,10 +20,10 @@ const CLASS_ROOT = CSSClassnames.SEARCH;
 const INPUT = CSSClassnames.INPUT;
 const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
 
-export default class Search extends Component {
+class Search extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onAddDrop = this._onAddDrop.bind(this);
     this._onRemoveDrop = this._onRemoveDrop.bind(this);
@@ -475,9 +476,6 @@ export default class Search extends Component {
   }
 }
 
-Search.contextTypes = {
-  intl: PropTypes.object
-};
 
 Search.defaultProps = {
   align: 'left',
@@ -487,6 +485,7 @@ Search.defaultProps = {
 };
 
 Search.propTypes = {
+  intl: PropTypes.object,
   align: PropTypes.string,
   defaultValue: PropTypes.string,
   dropAlign: dropAlignPropType,
@@ -514,3 +513,5 @@ Search.propTypes = {
   ),
   value: PropTypes.string
 };
+
+export default injectIntl(Search);

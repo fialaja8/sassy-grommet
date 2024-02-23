@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
@@ -21,7 +22,7 @@ import { checkDarkBackground } from '../utils/DOM';
 const CLASS_ROOT = CSSClassnames.NOTIFICATION;
 const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
 
-export default class Notification extends Component {
+class Notification extends Component {
 
   constructor () {
     super();
@@ -201,6 +202,7 @@ export default class Notification extends Component {
 }
 
 Notification.propTypes = {
+  intl: PropTypes.object,
   closer: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.bool
@@ -219,12 +221,11 @@ Notification.propTypes = {
   ...Box.propTypes
 };
 
-Notification.contextTypes = {
-  intl: PropTypes.object
-};
 
 Notification.defaultProps = {
   closer: false,
   status: 'unknown',
   pad: 'medium'
 };
+
+export default injectIntl(Notification);

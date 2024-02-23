@@ -1,6 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
+import { IntlProvider } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
@@ -26,21 +28,12 @@ function isFunction (obj) {
 // so we can transfer the router context.
 class MenuDrop extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onUpKeyPress = this._onUpKeyPress.bind(this);
     this._onDownKeyPress = this._onDownKeyPress.bind(this);
     this._processTab = this._processTab.bind(this);
-  }
-
-  getChildContext () {
-    return {
-      intl: this.props.intl,
-      history: this.props.history,
-      router: this.props.router,
-      store: this.props.store
-    };
   }
 
   componentDidMount () {
@@ -147,10 +140,9 @@ class MenuDrop extends Component {
 
   render () {
     const {
-      dropAlign, size, children, control, colorIndex, onClick, ...props
+      dropAlign, size, children, control, colorIndex, onClick, intl, ...props
     } = this.props;
     const restProps = Props.omit(props, [
-      ...Object.keys(MenuDrop.childContextTypes),
       ...Object.keys(MenuDrop.propTypes)
     ]);
 
@@ -197,12 +189,13 @@ class MenuDrop extends Component {
       }
     );
 
-    return (
+    const res = (
       <Box ref={ref => this.menuDropRef = ref} className={classes}
         colorIndex={colorIndex} onClick={onClick} focusable={false}>
         {contents}
       </Box>
     );
+    return intl ? <IntlProvider locale={intl.locale} messages={intl.messages}>{res}</IntlProvider> : res;
   }
 }
 
@@ -213,15 +206,8 @@ MenuDrop.propTypes = {
   onClick: PropTypes.func.isRequired,
   router: PropTypes.any,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  store: PropTypes.any,
+  intl: PropTypes.object,
   ...Box.propTypes
-};
-
-MenuDrop.childContextTypes = {
-  history: PropTypes.any,
-  intl: PropTypes.any,
-  router: PropTypes.any,
-  store: PropTypes.any
 };
 
 const inlineFromProps = (props) => {
@@ -229,10 +215,10 @@ const inlineFromProps = (props) => {
     : (!props.label && !props.icon);
 };
 
-export default class Menu extends Component {
+class Menu extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onOpen = this._onOpen.bind(this);
     this._onClose = this._onClose.bind(this);
@@ -423,8 +409,9 @@ export default class Menu extends Component {
   }
 
   _renderMenuDrop () {
-    let closeLabel = Intl.getMessage(this.context.intl, 'Close');
-    let menuLabel = Intl.getMessage(this.context.intl, 'Menu');
+    const { intl } = this.props;
+    let closeLabel = Intl.getMessage(intl, 'Close');
+    let menuLabel = Intl.getMessage(intl, 'Menu');
     let menuTitle = (
       `${closeLabel} ${this.props.a11yTitle || this.props.label || ''} ` +
       `${menuLabel}`
@@ -440,7 +427,8 @@ export default class Menu extends Component {
     let onClick = this.props.closeOnClick ? this._onClose : this._onSink;
 
     return (
-      <MenuDrop {...boxProps} {...this.context}
+      <MenuDrop {...boxProps}
+        intl={intl}
         className={this.props.className}
         dropAlign={this.props.dropAlign}
         size={this.props.size}
@@ -454,7 +442,7 @@ export default class Menu extends Component {
   render () {
     const {
       a11yTitle, children, className, direction, fill, label, primary, size,
-      pad, ...props
+      pad, intl, ...props
     } = this.props;
     delete props.closeOnClick;
     delete props.dropColorIndex;
@@ -496,8 +484,8 @@ export default class Menu extends Component {
       );
 
     } else {
-      const openLabel = Intl.getMessage(this.context.intl, 'Open');
-      const menuLabel = Intl.getMessage(this.context.intl, 'Menu');
+      const openLabel = Intl.getMessage(intl, 'Open');
+      const menuLabel = Intl.getMessage(intl, 'Menu');
       const menuTitle = (
         `${openLabel} ${a11yTitle || label || ''} ` +
         `${menuLabel}`
@@ -519,6 +507,10 @@ export default class Menu extends Component {
 }
 
 Menu.propTypes = {
+  history: PropTypes.any,
+  intl: PropTypes.any,
+  router: PropTypes.any,
+  store: PropTypes.any,
   closeOnClick: PropTypes.bool,
   dropAlign: dropAlignPropType,
   dropColorIndex: PropTypes.string,
@@ -532,12 +524,6 @@ Menu.propTypes = {
   ...Box.propTypes
 };
 
-Menu.contextTypes = {
-  history: PropTypes.any,
-  intl: PropTypes.any,
-  router: PropTypes.any,
-  store: PropTypes.any
-};
 
 Menu.defaultProps = {
   closeOnClick: true,
@@ -546,3 +532,5 @@ Menu.defaultProps = {
   pad: 'none',
   dropContainer: undefined
 };
+
+export default injectIntl(Menu);

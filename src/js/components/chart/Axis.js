@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../../utils/CSSClassnames';
 import Intl from '../../utils/Intl';
-import { withRouter } from 'react-router';
+import { injectIntl } from 'react-intl';
 
 const CLASS_ROOT = CSSClassnames.CHART_AXIS;
 const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 
 class Axis extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       items: this._buildItems(props)
     };
@@ -116,4 +116,4 @@ Axis.propTypes = {
   intl: PropTypes.object
 };
 
-export default withRouter(Axis);
+export default injectIntl(Axis);

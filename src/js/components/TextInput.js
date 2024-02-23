@@ -1,6 +1,7 @@
 // (C) Copyright 2014 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
@@ -14,7 +15,7 @@ import CSSClassnames from '../utils/CSSClassnames';
 const CLASS_ROOT = CSSClassnames.TEXT_INPUT;
 const INPUT = CSSClassnames.INPUT;
 
-export default class TextInput extends Component {
+class TextInput extends Component {
 
   activeKeyboardHandlers = {
     esc: this._onRemoveDrop,
@@ -28,8 +29,8 @@ export default class TextInput extends Component {
     down: this._onAddDrop
   };
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onInputChange = this._onInputChange.bind(this);
     this._onAddDrop = this._onAddDrop.bind(this);
@@ -332,11 +333,9 @@ export default class TextInput extends Component {
 
 }
 
-TextInput.contextTypes = {
-  intl: PropTypes.object
-};
 
 TextInput.propTypes = {
+  intl: PropTypes.object,
   defaultValue: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
@@ -354,3 +353,5 @@ TextInput.propTypes = {
   ),
   value: PropTypes.string
 };
+
+export default injectIntl(TextInput);

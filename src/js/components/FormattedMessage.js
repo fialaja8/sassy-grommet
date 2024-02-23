@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 // NOTE: This component is a temporary wrapper of react-intl FormattedMessage
@@ -7,24 +6,25 @@ import PropTypes from 'prop-types';
 // need for this component.
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
-const GrommetFormattedMessage = (props, context) => (
-  context.intl ? <FormattedMessage {...props} />
+const GrommetFormattedMessage = ({intl, ...props}) => (
+  intl ? <FormattedMessage {...props} />
     : <span>
       {props.defaultMessage || props.id}
     </span>
 );
 
 GrommetFormattedMessage.contextTypes = {
-  intl: PropTypes.object
 };
 
 GrommetFormattedMessage.propTypes = {
   id: PropTypes.string.isRequired,
-  defaultMessage: PropTypes.string
+  defaultMessage: PropTypes.string,
+  intl: PropTypes.object
 };
 
 GrommetFormattedMessage.displayName = 'GrommetFormattedMessage';
 
-export default GrommetFormattedMessage;
+export default injectIntl(GrommetFormattedMessage);

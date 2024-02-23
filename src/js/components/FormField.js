@@ -9,8 +9,8 @@ const CLASS_ROOT = CSSClassnames.FORM_FIELD;
 
 export default class FormField extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onFocus = this._onFocus.bind(this);
     this._onBlur = this._onBlur.bind(this);

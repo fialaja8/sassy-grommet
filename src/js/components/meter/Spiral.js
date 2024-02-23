@@ -16,8 +16,8 @@ const RING_THICKNESS = baseUnit;
 
 export default class Spiral extends Graphic {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     //needed in Graphic.js to fix minification issues
     this.displayName = 'Spiral';
   }

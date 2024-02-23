@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
@@ -10,10 +11,10 @@ import Intl from '../utils/Intl';
 const CLASS_ROOT = CSSClassnames.MAP;
 const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 
-export default class ResourceMap extends Component {
+class ResourceMap extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onResize = this._onResize.bind(this);
     this._layout = this._layout.bind(this);
@@ -299,11 +300,9 @@ export default class ResourceMap extends Component {
 
 }
 
-ResourceMap.contextTypes = {
-  intl: PropTypes.object
-};
 
 ResourceMap.propTypes = {
+  intl: PropTypes.object,
   active: PropTypes.string,
   data: PropTypes.shape({
     categories: PropTypes.arrayOf(PropTypes.shape({
@@ -329,3 +328,5 @@ ResourceMap.propTypes = {
 ResourceMap.defaultProps = {
   linkColorIndex: 'graph-1'
 };
+
+export default injectIntl(ResourceMap);
