@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import ReactDOM_client from 'react-dom/client';
 import classnames from 'classnames';
 import Button from './Button';
 import Status from './icons/Status';
@@ -164,14 +164,17 @@ class Toast extends Component {
           onClose={() => this._removeLayer()}
         />
       );
-      ReactDOM.render(contents, this._element);
+      this._elementRDRoot = ReactDOM_client.createRoot(this._element);
+      this._elementRDRoot.render(contents);
     }
   }
 
   _removeLayer () {
     const { onClose } = this.props;
     if (this._element) {
-      ReactDOM.unmountComponentAtNode(this._element);
+      if (this._elementRDRoot) {
+        this._elementRDRoot.unmount();
+      }
       this._element.parentNode.removeChild(this._element);
       this._element = undefined;
 

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { injectIntl, IntlProvider } from 'react-intl';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import ReactDOM_client from 'react-dom/client';
 import classnames from 'classnames';
 import Button from './Button';
 import CloseIcon from './icons/base/Close';
@@ -289,7 +289,8 @@ class Layer extends Component {
           history={this.props.history}
           intl={this.props.intl} />
       );
-      ReactDOM.render(contents, this._element, () => {
+      this._elementRDRoot = ReactDOM_client.createRoot(this._element);
+      this._elementRDRoot.render(contents, () => {
         const { hidden } = this.props;
         if (hidden) {
           this._handleAriaHidden(true);
@@ -303,8 +304,9 @@ class Layer extends Component {
   _removeLayer () {
     if (this._element) {
       this._element.removeEventListener('animationend', this._onAnimationEnd);
-
-      ReactDOM.unmountComponentAtNode(this._element);
+      if (this._elementRDRoot) {
+        this._elementRDRoot.unmount();
+      }
       this._element.parentNode.removeChild(this._element);
       this._element = undefined;
 
