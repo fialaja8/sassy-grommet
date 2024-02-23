@@ -6,20 +6,22 @@ import classnames from 'classnames';
 import Box from './Box';
 import CSSClassnames from '../utils/CSSClassnames';
 import Drop from '../utils/Drop';
+import composeKeepPropTypes from "../utils/composeKeepPropTypes";
+import { injectIntl } from 'react-intl';
 
 const CLASS_ROOT = CSSClassnames.TIP;
 
 
-export default class Tip extends Component {
+class Tip extends Component {
 
   constructor (props) {
-    super();
+    super(props);
     this._getTarget = this._getTarget.bind(this);
     this._onResize = this._onResize.bind(this);
   }
 
   componentDidMount () {
-    const { onClose, colorIndex } = this.props;
+    const { onClose, colorIndex, intl } = this.props;
     const target = this._getTarget();
     if (target) {
       const rect = target.getBoundingClientRect();
@@ -51,6 +53,7 @@ export default class Tip extends Component {
         align: align,
         className: classNames,
         colorIndex: colorIndex,
+        context: { intl },
         responsive: false
       });
 
@@ -111,9 +114,12 @@ export default class Tip extends Component {
 Tip.propTypes = {
   colorIndex: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  target: PropTypes.string.isRequired
+  target: PropTypes.string.isRequired,
+  intl: PropTypes.object
 };
 
 Tip.defaultProps = {
   colorIndex: 'accent-1'
 };
+
+export default composeKeepPropTypes(Tip, injectIntl);

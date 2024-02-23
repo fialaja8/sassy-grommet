@@ -11,6 +11,7 @@ import { checkDarkBackground } from '../utils/DOM';
 import SkipLinkAnchor from './SkipLinkAnchor';
 import CSSClassnames from '../utils/CSSClassnames';
 import { announce } from '../utils/Announcer';
+import composeKeepPropTypes from "../utils/composeKeepPropTypes";
 
 const CLASS_ROOT = CSSClassnames.BOX;
 const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
@@ -306,7 +307,7 @@ Box.propTypes = {
   alignSelf: PropTypes.oneOf(['start', 'center', 'end', 'stretch']),
   appCentered: PropTypes.bool,
   backgroundImage: PropTypes.string,
-  basis: PropTypes.oneOf(SIZES),
+  basis: PropTypes.oneOf([true, ...SIZES]),
   colorIndex: PropTypes.string,
   containerClassName: PropTypes.string,
   direction: PropTypes.oneOf(['row', 'column']),
@@ -390,4 +391,4 @@ Box.defaultProps = {
   focusable: true
 };
 
-export default injectIntl(Box);
+export default composeKeepPropTypes(Box, injectIntl);

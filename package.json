@@ -48,6 +48,7 @@
     "inuit-shared": "~0.1.5",
     "js-cookie": "^2.2.0",
     "lodash.zip": "^4.2.0",
+    "lodash": "^4.2.0",
     "markdown-to-jsx": "^6.1.3",
     "moment": "^2.29.4",
     "prop-types": "^15.5.8",

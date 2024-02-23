@@ -69,7 +69,7 @@ class DropContents extends Component {
   }
 
   render () {
-    const { content, focusControl } = this.props;
+    const { content, focusControl, intl } = this.props;
 
     let anchorStep;
     if (focusControl) {
