@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames, { namespace } from '../utils/CSSClassnames';
+import composeKeepPropTypes from "../utils/composeKeepPropTypes";
 
 import Box from './Box';
 
@@ -225,4 +226,4 @@ Button.defaultProps = {
   type: 'button'
 };
 
-export default withRouter(Button);
+export default composeKeepPropTypes(Button, withRouter);

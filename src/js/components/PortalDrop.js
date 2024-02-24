@@ -362,15 +362,17 @@ class PortalDrop extends Component {
   }
 
   render() {
-    const { content } = this.props;
+    const { content, afterRender } = this.props;
     const { container, options: { focusControl } } = this.state;
     const originalScrollPosition = container.scrollTop;
-    console.log({renderingPortal: {container, content}});
     return createPortal(<DropContents content={content}
       focusControl={focusControl} afterRender={() => {
         this.place();
         // reset container to its original scroll position
         container.scrollTop = originalScrollPosition;
+        if (afterRender) {
+          afterRender();
+        }
       }}/>, container);
   }
 
@@ -405,5 +407,12 @@ export var dropAlignPropType = PropTypes.shape({
   left: PropTypes.oneOf(HORIZONTAL_ALIGN_OPTIONS),
   right: PropTypes.oneOf(HORIZONTAL_ALIGN_OPTIONS)
 });
+
+PortalDrop.propTypes = {
+  content: PropTypes.any,
+  control: PropTypes.any,
+  opts: PropTypes.object,
+  afterRender: PropTypes.func
+};
 
 export default PortalDrop;

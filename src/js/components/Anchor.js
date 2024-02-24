@@ -7,6 +7,7 @@ import { matchPath, withRouter } from 'react-router';
 import LinkNextIcon from './icons/base/LinkNext';
 
 import CSSClassnames from '../utils/CSSClassnames';
+import composeKeepPropTypes from "../utils/composeKeepPropTypes";
 
 const CLASS_ROOT = CSSClassnames.ANCHOR;
 
@@ -250,4 +251,4 @@ schema(Anchor, {
   }
 });
 
-export default withRouter(Anchor);
+export default composeKeepPropTypes(Anchor, withRouter);
