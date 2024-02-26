@@ -247,7 +247,7 @@ class List extends Component {
   render () {
     const {
       a11yTitle, children, className, emptyIndicator, onBlur, onFocus, onMore,
-      onMouseDown, onMouseUp, selectable, ...props
+      onMouseDown, onMouseUp, selectable, innerRef, ...props
     } = this.props;
     const { activeItem, focus, mouseActive } = this.state;
     const { intl } = this.props;
@@ -326,8 +326,13 @@ class List extends Component {
     }
 
     return (
-      <ul {...props} ref={(ref) => this.listRef = ref} className={classes}
-        {...selectableProps}>
+      <ul {...props} ref={(ref) => {
+        this.listRef = ref;
+        if (innerRef) {
+          innerRef(ref);
+        }
+      }} className={classes}
+      {...selectableProps}>
         {empty}
         {children}
         {more}
@@ -342,6 +347,7 @@ List.propTypes = {
   emptyIndicator: PropTypes.node,
   onMore: PropTypes.func,
   onSelect: PropTypes.func,
+  innerRef: PropTypes.func,
   selectable: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.oneOf(['multiple'])

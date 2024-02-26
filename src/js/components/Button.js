@@ -106,6 +106,7 @@ class Button extends Component {
       secondary, type, innerRef, ...props
     } = this.props;
     delete props.method;
+    delete props.staticContext;
     const { history } = this.props;
 
     let buttonIcon;

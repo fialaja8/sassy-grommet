@@ -247,7 +247,7 @@ export default class Legend extends Component {
     }
 
     return (
-      <List ref={ref => this.legendRef = ref} {...props} className={classes}>
+      <List innerRef={ref => this.legendRef = ref} {...props} className={classes}>
         {items.reverse()}
         {totalNode}
       </List>
