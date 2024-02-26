@@ -108,7 +108,6 @@ class DateTimeDrop extends Component {
     super(props);
 
     this._announceActiveCell = this._announceActiveCell.bind(this);
-    this._buildDateRows = this._buildDateRows.bind(this);
     this._onDay = this._onDay.bind(this);
     this._onToday = this._onToday.bind(this);
     this._onPrevious = this._onPrevious.bind(this);
@@ -257,7 +256,7 @@ class DateTimeDrop extends Component {
     } else {
       // rebuild grid
       let state = { timeOfDay, value: newValue };
-      this._buildDateRows(state);
+      _buildDateRows(state);
       this.setState(state);
     }
   }
@@ -283,7 +282,7 @@ class DateTimeDrop extends Component {
     } else {
       // rebuild grid
       let state = { timeOfDay, value: newValue };
-      this._buildDateRows(state);
+      _buildDateRows(state);
       this.setState(state);
     }
   }

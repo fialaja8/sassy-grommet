@@ -125,6 +125,7 @@ class Anchor extends Component {
       label, onClick, path, primary, reverse, tag, history, ...props
     } = this.props;
     delete props.method;
+    delete props.staticContext;
     const { active } = this.state;
 
     let anchorIcon;
@@ -200,7 +201,7 @@ class Anchor extends Component {
       </Component>
     );
   }
-};
+}
 
 schema(Anchor, {
   description: `A text link. We have a separate component from the browser
