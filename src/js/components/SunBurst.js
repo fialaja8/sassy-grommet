@@ -59,7 +59,7 @@ class SunBurst extends Component {
       enter: this._onSunBurstClick
     };
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._containerRef, this._keyboardHandlers
     );
     if (mouseActive === false) {
       this.setState({ focus: true });
@@ -68,7 +68,7 @@ class SunBurst extends Component {
 
   _onSunBurstBlur () {
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._containerRef, this._keyboardHandlers
     );
 
     this.setState({ focus: false });

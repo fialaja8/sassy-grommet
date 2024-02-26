@@ -113,7 +113,8 @@ class Controls extends Component {
       seek,
       timeline,
       allowFullScreen,
-      fullscreen
+      fullscreen,
+      innerRef
     } = this.props;
 
     if (!hasPlayed) {
@@ -122,7 +123,7 @@ class Controls extends Component {
 
     let overlayContent = (
       <Box pad="none" className={`${CLASS_ROOT}__controls`}
-        direction="column" justify="start">
+        direction="column" justify="start" innerRef={innerRef}>
         <VideoProgressBar progress={percentagePlayed}
           onChapterHover={this._onChapterTickHover}
           duration={duration} onChange={seek} timeline={timeline} />
@@ -151,7 +152,8 @@ class Controls extends Component {
 }
 
 Controls.propTypes = {
-  intl: PropTypes.object
+  intl: PropTypes.object,
+  innerRef: PropTypes.func
 };
 
 export default injectIntl(Controls);

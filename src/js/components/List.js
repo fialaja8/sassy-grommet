@@ -64,7 +64,7 @@ class List extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.listRef, this._keyboardHandlers
       );
     }
   }
@@ -97,7 +97,7 @@ class List extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.listRef, this._keyboardHandlers
       );
     }
   }
@@ -109,7 +109,7 @@ class List extends Component {
     }
     if (selectable) {
       KeyboardAccelerators.stopListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.listRef, this._keyboardHandlers
       );
     }
   }

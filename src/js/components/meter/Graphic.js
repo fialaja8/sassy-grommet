@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import Intl from '../../utils/Intl';
 import KeyboardAccelerators from '../../utils/KeyboardAccelerators';
@@ -40,13 +39,13 @@ class Graphic extends Component {
       enter: this._onBandClick
     };
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.svgRef, this._keyboardHandlers
     );
   }
 
   _onGraphicBlur () {
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.svgRef, this._keyboardHandlers
     );
     this._keyboardHandlers = undefined;
   }
@@ -143,7 +142,7 @@ class Graphic extends Component {
     );
 
     var totalBands = (
-      ReactDOM.findDOMNode(this.meterValuesRef).childNodes.length
+      this.meterValuesRef.childNodes.length
     );
 
     if (activeIndex + 1 < totalBands) {
@@ -293,7 +292,8 @@ class Graphic extends Component {
         viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
         preserveAspectRatio="xMidYMid meet"
         aria-label={a11yTitle} onFocus={this._onGraphicFocus}
-        onBlur={this._onGraphicBlur}>
+        onBlur={this._onGraphicBlur}
+        ref={(ref) => this.svgRef = ref}>
         {tracks}
         {thresholds}
         {values}

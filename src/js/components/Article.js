@@ -2,7 +2,6 @@
 
 import React, { Component, Children } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import Box from './Box';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
@@ -65,7 +64,7 @@ export default class Article extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (! this.props.scrollStep && prevProps.scrollStep) {
-      KeyboardAccelerators.stopListeningToKeyboard(this, this._keys);
+      KeyboardAccelerators.stopListeningToKeyboard(this._componentRef, this._keys);
       document.removeEventListener('wheel', this._onWheel);
       window.removeEventListener('resize', this._onResize);
     }
@@ -90,7 +89,7 @@ export default class Article extends Component {
 
   componentWillUnmount () {
     if (this.props.scrollStep) {
-      KeyboardAccelerators.stopListeningToKeyboard(this, this._keys);
+      KeyboardAccelerators.stopListeningToKeyboard(this._componentRef, this._keys);
       document.removeEventListener('wheel', this._onWheel);
       window.removeEventListener('resize', this._onResize);
     }
@@ -121,7 +120,7 @@ export default class Article extends Component {
         }
       }
       //keys.space = this._onTogglePlay;
-      KeyboardAccelerators.startListeningToKeyboard(this, this._keys);
+      KeyboardAccelerators.startListeningToKeyboard(this._componentRef, this._keys);
 
       document.addEventListener('wheel', this._onWheel);
       window.addEventListener('resize', this._onResize);
@@ -143,7 +142,7 @@ export default class Article extends Component {
   }
 
   _childDOMNode (index) {
-    const componentElement = findDOMNode(this._componentRef);
+    const componentElement = this._componentRef;
     return componentElement.children[index];
   }
 
@@ -266,7 +265,7 @@ export default class Article extends Component {
     const { direction } = this.props;
     if ('row' === direction) {
       const { selectedIndex } = this.state;
-      const componentElement = findDOMNode(this._componentRef);
+      const componentElement = this._componentRef;
       const childElement = this._childDOMNode(selectedIndex);
       let rect = childElement.getBoundingClientRect();
       if (event.target === componentElement) {
@@ -399,7 +398,7 @@ export default class Article extends Component {
 
   _onSelect (selectedIndex) {
     const { direction, onSelect } = this.props;
-    const componentElement = findDOMNode(this._componentRef);
+    const componentElement = this._componentRef;
     const childElement = this._childDOMNode(selectedIndex);
     const windowHeight = window.innerHeight + 24;
 
@@ -476,7 +475,7 @@ export default class Article extends Component {
   }
 
   _updateHiddenElements () {
-    const component = findDOMNode(this._componentRef);
+    const component = this._componentRef;
     const children = component.children;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
@@ -491,7 +490,7 @@ export default class Article extends Component {
   _updateProgress(event) {
     const { direction, responsive } = this.props;
     const { narrow } = this.state;
-    const article = findDOMNode(this._componentRef);
+    const article = this._componentRef;
     const articleRect = article.getBoundingClientRect();
 
     let offset = (direction === 'column')
@@ -628,7 +627,7 @@ export default class Article extends Component {
     delete boxProps.a11yTitle;
 
     return (
-      <Box {...restProps} {...boxProps} ref={ref => this._componentRef = ref}
+      <Box {...restProps} {...boxProps} innerRef={ref => this._componentRef = ref}
         tag='article' className={classes} primary={primary}
         onScroll={this._onScroll} onTouchStart={this._onTouchStart}
         onTouchMove={this._onTouchMove}>

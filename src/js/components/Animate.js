@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import { TransitionGroup } from 'react-transition-group';
 import classnames from 'classnames';
 import CSSClassnames from '../utils/CSSClassnames';
@@ -166,7 +165,7 @@ export default class Animate extends Component {
     // add a timeout so that the findScrollParents function
     // get the right container sizes
     setTimeout(() => {
-      const scrollParents = findScrollParents(findDOMNode(this.animateRef));
+      const scrollParents = findScrollParents(this.animateRef);
       if (scrollParents.indexOf(document) === -1) {
         document.addEventListener('scroll', this._checkScroll);
       }
@@ -177,7 +176,7 @@ export default class Animate extends Component {
   }
 
   _unlistenForScroll () {
-    const scrollParents = findScrollParents(findDOMNode(this.animateRef));
+    const scrollParents = findScrollParents(this.animateRef);
     if (scrollParents.indexOf(document) === -1) {
       document.removeEventListener('scroll', this._checkScroll);
     }
@@ -188,7 +187,7 @@ export default class Animate extends Component {
 
   _checkScroll () {
     const { onAppear, onLeave } = this.props;
-    const group = findDOMNode(this.animateRef);
+    const group = this.animateRef;
     const rect = group.getBoundingClientRect();
 
     if (rect.top < window.innerHeight) {
@@ -228,14 +227,14 @@ export default class Animate extends Component {
     }
 
     return (
-      <TransitionGroup
-        {...props}
-        className={classes}
-        component={component}
-        ref={ref => this.animateRef = ref}
-      >
-        {animateChildren}
-      </TransitionGroup>
+      <div
+        ref={ref => this.animateRef = ref}>
+        <TransitionGroup
+          {...props}
+          className={classes}
+          component={component}>
+          {animateChildren}
+        </TransitionGroup></div>
     );
   }
 }

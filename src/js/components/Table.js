@@ -141,7 +141,7 @@ class Table extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.containerRef, this._keyboardHandlers
       );
     }
 
@@ -184,7 +184,7 @@ class Table extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.containerRef, this._keyboardHandlers
       );
     }
   }
@@ -199,7 +199,7 @@ class Table extends Component {
 
     if (selectable) {
       KeyboardAccelerators.stopListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.containerRef, this._keyboardHandlers
       );
     }
 

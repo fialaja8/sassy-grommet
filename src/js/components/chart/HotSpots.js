@@ -33,13 +33,13 @@ class HotSpots extends Component {
       enter: this._onHotSpotClick
     };
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.containerRef, this._keyboardHandlers
     );
   }
 
   _onHotSpotBlur () {
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.containerRef, this._keyboardHandlers
     );
   }
 
@@ -124,7 +124,8 @@ class HotSpots extends Component {
       <div {...props} className={classes} style={{ padding: padding }}
         tabIndex='0' onFocus={this._onHotSpotFocus}
         onBlur={this._onHotSpotBlur} role='group'
-        aria-label={hotSpotsLabel}>
+        aria-label={hotSpotsLabel}
+        ref={(ref) => this.containerRef = ref}>
         {items}
       </div>
     );

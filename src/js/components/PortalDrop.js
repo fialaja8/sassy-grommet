@@ -34,7 +34,7 @@ class DropContents extends Component {
         tab: this._processTab
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this._containerRef, this._keyboardHandlers
       );
     }
     if (afterRender) {
@@ -46,7 +46,7 @@ class DropContents extends Component {
     const { focusControl } = this.props;
     if (focusControl) {
       KeyboardAccelerators.stopListeningToKeyboard(
-        this, this._keyboardHandlers
+        this._containerRef, this._keyboardHandlers
       );
     }
   }

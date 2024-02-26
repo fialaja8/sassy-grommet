@@ -191,7 +191,7 @@ class Range extends Component {
         down: this._onRangeIncrease.bind(this, source)
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this._rangeRef, this._keyboardHandlers
       );
       if (onFocus) {
         onFocus(event);
@@ -202,7 +202,7 @@ class Range extends Component {
   _onBlur (event) {
     const { onBlur } = this.props;
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._rangeRef, this._keyboardHandlers
     );
     this.setState({ focus: false });
     if (onBlur) {

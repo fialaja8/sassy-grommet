@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import { FormattedDate } from 'react-intl';
 import Intl from '../utils/Intl';
@@ -53,7 +52,7 @@ class Notification extends Component {
 
   _setDarkBackground () {
     const { status } = this.props;
-    const container = findDOMNode(this._containerRef);
+    const container = this._containerRef;
     if (this._checkBackground) {
       this._checkBackground.stop();
     }
@@ -178,7 +177,7 @@ class Notification extends Component {
     </Animate>
     */
     return (
-      <Box ref={(ref) => this._containerRef = ref}
+      <Box innerRef={(ref) => this._containerRef = ref}
         {...restProps} {...boxProps} className={classes}
         pad='small' direction='row' align='start' responsive={false}
         full={fullBox}>

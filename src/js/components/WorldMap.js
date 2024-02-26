@@ -315,13 +315,13 @@ export default class WorldMap extends Component {
       space: this._onEnter
     };
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._worldMapRef, this._keyboardHandlers
     );
   }
 
   _stopKeyboardListening() {
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._worldMapRef, this._keyboardHandlers
     );
   }
 

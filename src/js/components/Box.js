@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
 import Intl from '../utils/Intl';
 import Props from '../utils/Props';
@@ -32,7 +31,7 @@ class Box extends Component {
         }
       };
 
-      KeyboardAccelerators.startListeningToKeyboard(this, {
+      KeyboardAccelerators.startListeningToKeyboard(this.boxContainerRef, {
         enter: clickCallback,
         space: clickCallback
       });
@@ -56,7 +55,7 @@ class Box extends Component {
 
   componentWillUnmount () {
     if (this.props.onClick) {
-      KeyboardAccelerators.stopListeningToKeyboard(this);
+      KeyboardAccelerators.stopListeningToKeyboard(this.boxContainerRef);
     }
     if (this._checkBackground) {
       this._checkBackground.stop();
@@ -65,7 +64,7 @@ class Box extends Component {
 
   _setDarkBackground () {
     const { colorIndex } = this.props;
-    const box = findDOMNode(this.boxContainerRef);
+    const box = this.boxContainerRef;
     if (this._checkBackground) {
       this._checkBackground.stop();
     }
@@ -112,7 +111,7 @@ class Box extends Component {
       a11yTitle, appCentered, backgroundImage, children, className,
       colorIndex, containerClassName, focusable, full, id, onClick, onBlur,
       onFocus, onMouseDown, onMouseUp, pad, primary, role, size, tabIndex,
-      tag, texture, intl
+      tag, texture, innerRef, intl
     } = this.props;
     const { darkBackground, mouseActive } = this.state;
     let classes = [CLASS_ROOT];
@@ -269,7 +268,11 @@ class Box extends Component {
           className={containerClasses.join(' ')}
           style={style} role={role} {...a11yProps} {...clickableProps}>
           {skipLinkAnchor}
-          <Component id={id} className={classes.join(' ')}>
+          <Component id={id} className={classes.join(' ')} ref={(ref) => {
+            if (innerRef) {
+              innerRef(ref);
+            }
+          }}>
             {textureMarkup}
             {children}
           </Component>
@@ -277,10 +280,15 @@ class Box extends Component {
       );
     } else {
       return (
-        <Component {...restProps} ref={(ref) => this.boxContainerRef = ref}
-          id={id} className={classes.join(' ')} style={style}
-          role={role} tabIndex={tabIndex}
-          onClick={onClick} {...a11yProps} {...clickableProps}>
+        <Component {...restProps} ref={(ref) => {
+          this.boxContainerRef = ref;
+          if (innerRef) {
+            innerRef(ref);
+          }
+        }}
+        id={id} className={classes.join(' ')} style={style}
+        role={role} tabIndex={tabIndex}
+        onClick={onClick} {...a11yProps} {...clickableProps}>
           {skipLinkAnchor}
           {textureMarkup}
           {children}
@@ -324,6 +332,7 @@ Box.propTypes = {
       })
     ]
   ),
+  innerRef: PropTypes.func,
   // remove in 1.0?
   onClick: PropTypes.func,
   justify: PropTypes.oneOf(['start', 'center', 'between', 'end', 'around']),

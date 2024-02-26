@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import CSSClassnames from '../utils/CSSClassnames';
 import Intl from '../utils/Intl';
@@ -188,7 +187,7 @@ class ResourceMap extends Component {
   }
 
   _layout () {
-    const map = findDOMNode(this._mapRef);
+    const map = this._mapRef;
     if (map) {
       this.setState({
         width: map.scrollWidth,

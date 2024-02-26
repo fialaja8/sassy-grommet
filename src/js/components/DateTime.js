@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
-import Drop from '../utils/Drop';
 import { findAncestor, isDescendant } from '../utils/DOM';
 import Button from './Button';
 import ClockIcon from './icons/base/Clock';
@@ -14,6 +13,7 @@ import CalendarIcon from './icons/base/Calendar';
 import DateTimeDrop from './DateTimeDrop';
 import CSSClassnames from '../utils/CSSClassnames';
 import Intl from '../utils/Intl';
+import PortalDrop from './PortalDrop';
 
 const CLASS_ROOT = CSSClassnames.DATE_TIME;
 const INPUT = CSSClassnames.INPUT;
@@ -86,11 +86,6 @@ class DateTime extends Component {
     if (prevState.dropActive !== dropActive) {
       this._activation(dropActive);
     }
-
-    if (dropActive) {
-      this._drop.render(this._renderDrop());
-    }
-
     if (cursor >= 0) {
       this._inputRef.setSelectionRange(cursor, cursor);
     }
@@ -219,30 +214,25 @@ class DateTime extends Component {
     };
 
     if (dropActive) {
-
-      document.addEventListener('click', this._onClose);
-      KeyboardAccelerators.startListeningToKeyboard(this, listeners);
-
+      KeyboardAccelerators.startListeningToKeyboard(this._containerRef, listeners);
       // If this is inside a FormField, place the drop in reference to it.
       const control =
         findAncestor(this._containerRef, `.${FORM_FIELD}`) ||
         this._containerRef;
-      this._drop = new Drop(control,
-        this._renderDrop(), {
-          align: {top: 'bottom', left: 'left'},
-          focusControl: true,
-          context: {intl}
-        });
+      this.setState({drop: {control, opts: {
+        align: {top: 'bottom', left: 'left'},
+        focusControl: true,
+        context: {intl}
+      }}},()=> {
+        document.addEventListener('click', this._onClose);
+      });
 
     } else {
 
       document.removeEventListener('click', this._onClose);
-      KeyboardAccelerators.stopListeningToKeyboard(this, listeners);
+      KeyboardAccelerators.stopListeningToKeyboard(this._containerRef, listeners);
 
-      if (this._drop) {
-        this._drop.remove();
-        this._drop = undefined;
-      }
+      this.setState({drop: null});
     }
 
     if (onDropChange) {
@@ -263,7 +253,7 @@ class DateTime extends Component {
     const { className, format, value, ...props } = this.props;
     delete props.onChange;
     delete props.step;
-    const { dropActive, textValue } = this.state;
+    const { dropActive, textValue, drop } = this.state;
     const { intl } = this.props;
     let classes = classnames(
       CLASS_ROOT,
@@ -293,6 +283,7 @@ class DateTime extends Component {
         <Button className={`${CLASS_ROOT}__control`} icon={<Icon />}
           a11yTitle={dateTimeIconMessage}
           onClick={this._onControlClick} />
+        {drop ? <PortalDrop content={this._renderDrop()} control={drop.control} opts={drop.opts} /> : null}
       </div>
     );
   }

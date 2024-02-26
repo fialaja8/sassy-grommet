@@ -5,13 +5,13 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
-import Drop from '../utils/Drop';
 import Intl from '../utils/Intl';
 import { announce } from '../utils/Announcer';
 import Button from './Button';
 
 import SearchIcon from './icons/base/Search';
 import CSSClassnames from '../utils/CSSClassnames';
+import PortalDrop from "./PortalDrop";
 
 const CLASS_ROOT = CSSClassnames.SEARCH_INPUT;
 const INPUT = CSSClassnames.INPUT;
@@ -60,30 +60,23 @@ class SearchInput extends Component {
     // the order here is important, need to turn off keys before turning on
     if (! dropActive && prevState.dropActive) {
       document.removeEventListener('click', this._onRemoveDrop);
-      KeyboardAccelerators.stopListeningToKeyboard(this,
+      KeyboardAccelerators.stopListeningToKeyboard(this.componentRef,
         activeKeyboardHandlers);
-      if (this._drop) {
-        this._drop.remove();
-        this._drop = undefined;
-      }
+      this.setState({drop: null});
     }
 
     if (dropActive && ! prevState.dropActive) {
-      document.addEventListener('click', this._onRemoveDrop);
-      KeyboardAccelerators.startListeningToKeyboard(this,
+      KeyboardAccelerators.startListeningToKeyboard(this.componentRef,
         activeKeyboardHandlers);
 
       // If this is inside a FormField, place the drop in reference to it.
       const control = this.componentRef;
-      this._drop = new Drop(control,
-        this._renderDropContent(), {
-          align: {top: 'bottom', left: 'left'},
-          responsive: false // so suggestion changes don't re-align
-        });
-
-      this.inputRef.focus();
-    } else if (dropActive && prevState.dropActive) {
-      this._drop.render(this._renderDropContent());
+      this.setState({drop: {control, opts:{
+        align: {top: 'bottom', left: 'left'},
+        responsive: false // so suggestion changes don't re-align
+      }}}, () => {
+        document.addEventListener('click', this._onRemoveDrop);
+      });
     }
 
     if (announceChange && suggestions) {
@@ -103,10 +96,7 @@ class SearchInput extends Component {
 
   componentWillUnmount () {
     document.removeEventListener('click', this._onRemoveDrop);
-    if (this._drop) {
-      this._drop.remove();
-    }
-    KeyboardAccelerators.stopListeningToKeyboard(this);
+    KeyboardAccelerators.stopListeningToKeyboard(this.componentRef);
   }
 
   _stopPropagation () {
@@ -276,7 +266,7 @@ class SearchInput extends Component {
     const {
       className, defaultValue, id, name, placeHolder, value
     } = this.props;
-    const { active } = this.state;
+    const { active, drop } = this.state;
     let classes = classnames(
       CLASS_ROOT,
       {
@@ -296,6 +286,11 @@ class SearchInput extends Component {
           onKeyDown={this._onInputKeyDown} />
         <Button className={`${CLASS_ROOT}__control`}
           icon={<SearchIcon />} onClick={this._onAddDrop} />
+        {drop ? <PortalDrop content={this._renderDropContent()} control={drop.control} opts={drop.opts} afterRender={() => {
+          if (this.inputRef) {
+            this.inputRef.focus();
+          }
+        }} /> : null}
       </div>
     );
   }

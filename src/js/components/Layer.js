@@ -44,7 +44,7 @@ class LayerContents extends Component {
       this._keyboardHandlers.esc = onClose;
     }
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.containerRef, this._keyboardHandlers
     );
 
     if (onClose && overlayClose) {
@@ -57,12 +57,12 @@ class LayerContents extends Component {
     const { hidden } = this.props;
     if (prevProps.hidden !== hidden) {
       KeyboardAccelerators.stopListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.containerRef, this._keyboardHandlers
       );
 
       if (!hidden) {
         KeyboardAccelerators.startListeningToKeyboard(
-          this, this._keyboardHandlers
+          this.containerRef, this._keyboardHandlers
         );
       }
     }
@@ -71,7 +71,7 @@ class LayerContents extends Component {
   componentWillUnmount () {
     const { onClose, overlayClose } = this.props;
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.containerRef, this._keyboardHandlers
     );
 
     if (onClose && overlayClose) {

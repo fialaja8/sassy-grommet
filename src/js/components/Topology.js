@@ -3,7 +3,6 @@
 import React, { Children, Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import Status from './icons/Status';
 import CSSClassnames from '../utils/CSSClassnames';
@@ -334,7 +333,7 @@ class Topology extends Component {
   }
 
   _layout () {
-    const contents = findDOMNode(this._contentsRef);
+    const contents = this._contentsRef;
     if (contents) {
       this.setState({
         width: contents.scrollWidth,

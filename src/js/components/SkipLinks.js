@@ -31,7 +31,7 @@ class SkipLinks extends Component {
       tab: this._processTab
     };
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.boxRef, this._keyboardHandlers
     );
 
     document.addEventListener('DOMNodeInserted', this._checkForSkipLink);
@@ -39,7 +39,7 @@ class SkipLinks extends Component {
 
   componentWillUnmount () {
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.boxRef, this._keyboardHandlers
     );
     document.removeEventListener('DOMNodeInserted', this._checkForSkipLink);
   }
@@ -127,7 +127,7 @@ class SkipLinks extends Component {
 
     return (
       <Layer id="skip-link-layer" hidden={!this.state.showLayer} align="top">
-        <Box pad={{horizontal: 'small', vertical: 'medium'}}>
+        <Box innerRef={(ref) => this.boxRef = ref} pad={{horizontal: 'small', vertical: 'medium'}}>
           <h2>
             <FormattedMessage id="Skip to" defaultMessage="Skip to" />
           </h2>

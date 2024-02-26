@@ -135,12 +135,12 @@ class DateTimeDrop extends Component {
       right: this._onNextDay,
       enter: this._onSelectDay
     };
-    KeyboardAccelerators.startListeningToKeyboard(this, this._keyboardHandlers);
+    KeyboardAccelerators.startListeningToKeyboard(this.containerRef, this._keyboardHandlers);
   }
 
 
   componentWillUnmount () {
-    KeyboardAccelerators.stopListeningToKeyboard(this, this._keyboardHandlers);
+    KeyboardAccelerators.stopListeningToKeyboard(this.containerRef, this._keyboardHandlers);
   }
 
 
@@ -470,7 +470,7 @@ class DateTimeDrop extends Component {
     }
 
     return (
-      <Box className={CLASS_ROOT}>
+      <Box className={CLASS_ROOT} innerRef={(ref) => this.containerRef = ref}>
         {calendar}
         {counters}
       </Box>

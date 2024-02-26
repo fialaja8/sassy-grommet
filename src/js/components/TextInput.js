@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import PortalDrop from './PortalDrop';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
-import Drop from '../utils/Drop';
 import Intl from '../utils/Intl';
 import InputPaste from '../utils/InputPaste';
 import { announce } from '../utils/Announcer';
@@ -45,6 +45,7 @@ class TextInput extends Component {
     this._announceSuggestion = this._announceSuggestion.bind(this);
 
     this.state = {
+      drop: null,
       announceChange: false,
       dropActive: false,
       activeSuggestionIndex: -1
@@ -59,39 +60,32 @@ class TextInput extends Component {
     // the order here is important, need to turn off keys before turning on
 
     if (! focused && prevState.focused) {
-      KeyboardAccelerators.stopListeningToKeyboard(this,
+      KeyboardAccelerators.stopListeningToKeyboard(this.componentRef,
         focusedKeyboardHandlers);
     }
 
-    if (! dropActive && prevState.dropActive) {
+    if (!dropActive && prevState.dropActive) {
       document.removeEventListener('click', this._onRemoveDrop);
-      KeyboardAccelerators.stopListeningToKeyboard(this,
+      KeyboardAccelerators.stopListeningToKeyboard(this.componentRef,
         activeKeyboardHandlers);
-      if (this._drop) {
-        this._drop.remove();
-        this._drop = undefined;
-      }
+      this.setState({drop: null});
     }
 
     if (focused && ! prevState.focused) {
-      KeyboardAccelerators.startListeningToKeyboard(this,
+      KeyboardAccelerators.startListeningToKeyboard(this.componentRef,
         focusedKeyboardHandlers);
     }
 
     if (dropActive && ! prevState.dropActive) {
-      document.addEventListener('click', this._onRemoveDrop);
-      KeyboardAccelerators.startListeningToKeyboard(this,
+      KeyboardAccelerators.startListeningToKeyboard(this.componentRef,
         activeKeyboardHandlers);
 
       // If this is inside a FormField, place the drop in reference to it.
       const control = this.componentRef;
-      this._drop = new Drop(control,
-        this._renderDropContent(), {
-          align: {top: 'bottom', left: 'left'},
-          responsive: false // so suggestion changes don't re-align
-        });
-    } else if (dropActive && prevState.dropActive) {
-      this._drop.render(this._renderDropContent());
+      this.setState({drop: {control, opts: {
+        align: {top: 'bottom', left: 'left'},
+        responsive: false // so suggestion changes don't re-align
+      }}}, () => document.addEventListener('click', this._onRemoveDrop));
     }
 
     if (announceChange && suggestions) {
@@ -112,16 +106,13 @@ class TextInput extends Component {
   componentWillUnmount () {
     const { activeKeyboardHandlers, focusedKeyboardHandlers } = this;
 
-    KeyboardAccelerators.stopListeningToKeyboard(this,
+    KeyboardAccelerators.stopListeningToKeyboard(this.componentRef,
       focusedKeyboardHandlers);
 
-    KeyboardAccelerators.stopListeningToKeyboard(this,
+    KeyboardAccelerators.stopListeningToKeyboard(this.componentRef,
       activeKeyboardHandlers);
 
     document.removeEventListener('click', this._onRemoveDrop);
-    if (this._drop) {
-      this._drop.remove();
-    }
   }
 
   _stopPropagation() {
@@ -300,6 +291,7 @@ class TextInput extends Component {
   }
 
   render () {
+    const {drop} = this.state;
     const {
       className, defaultValue, value, placeHolder, ...props
     } = this.props;
@@ -316,18 +308,21 @@ class TextInput extends Component {
     );
 
     return (
-      <input
-        ref={ref => this.componentRef = ref}
-        type='text'
-        autoComplete="off"
-        {...props}
-        className={classes}
-        defaultValue={this._renderLabel(defaultValue)}
-        value={this._renderLabel(value)}
-        placeholder={placeHolder}
-        onChange={this._onInputChange} onFocus={this._onFocus}
-        onKeyDown={this._onInputKeyDown}
-        onPaste={InputPaste.getInputOnPaste('text')} />
+      <>
+        <input
+          ref={ref => this.componentRef = ref}
+          type='text'
+          autoComplete="off"
+          {...props}
+          className={classes}
+          defaultValue={this._renderLabel(defaultValue)}
+          value={this._renderLabel(value)}
+          placeholder={placeHolder}
+          onChange={this._onInputChange} onFocus={this._onFocus}
+          onKeyDown={this._onInputKeyDown}
+          onPaste={InputPaste.getInputOnPaste('text')} />
+        {drop ? <PortalDrop content={this._renderDropContent()} control={drop.control} opts={drop.opts} /> : null}
+      </>
     );
   }
 

@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import Box from '../Box';
 import SocialShare from '../SocialShare';
 import Form from '../Form';
@@ -21,7 +20,7 @@ export default class Overlay extends Component {
   }
 
   _onClickShareLink () {
-    findDOMNode(this.shareLinkRef).select();
+    this.shareLinkRef?.select();
   }
 
   render() {

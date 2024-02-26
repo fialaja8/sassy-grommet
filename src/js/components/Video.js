@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import CSSClassnames from '../utils/CSSClassnames';
 import Props from '../utils/Props';
@@ -91,7 +90,7 @@ export default class Video extends Component {
     let interacting = this.state.interacting;
     if (this._video.ended) {
       interacting = false;
-    };
+    }
 
     this.setState({
       duration: this._video.duration,
@@ -241,14 +240,14 @@ export default class Video extends Component {
         onMouseMove={(event) => {
           // needed to avoid react synthatic event pooling
           event.persist();
-          if (!ended || findDOMNode(this._controlRef).contains(event.target)) {
+          if (!ended || this._controlRef.contains(event.target)) {
             this._onInterationStart();
           } else if (ended) {
             this._onInteractionOver();
           }
           clearTimeout(this._moveTimer);
           this._moveTimer = setTimeout(() => {
-            const element = findDOMNode(this._controlRef);
+            const element = this._controlRef;
             if (element && !element.contains(event.target)) {
               this._onInteractionOver();
             }
