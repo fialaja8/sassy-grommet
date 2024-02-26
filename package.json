@@ -29,8 +29,8 @@
     "dist": "rimraf dist && cross-env NODE_ENV=production babel src/js --out-dir dist --copy-files && cpx \"./src/scss/**\" \"./dist/scss\" && cpx \"./src/img/**\" \"./dist/img\" && node tools/distPackage.js && cpx \"./README.md\" \"./dist\""
   },
   "peerDependencies": {
-    "react": "16.8.6",
-    "react-dom": "16.8.6"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -52,9 +52,9 @@
     "markdown-to-jsx": "^6.1.3",
     "moment": "^2.29.4",
     "prop-types": "^15.5.8",
-    "react-desc": "^1.0.0",
+    "react-desc": "^6.6.2",
     "react-intl": "^2.2.3",
-    "react-router": "2 - 4",
+    "react-router": "^5.3.4",
     "react-transition-group": "^1.1.1",
     "superagent": "^3.8.2"
   },
@@ -70,8 +70,8 @@
     "eslint": "8.22.0",
     "eslint-plugin-react": "^7.32.2",
     "sass": "^1.63.6",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-test-renderer": "^16.0.0",
     "rimraf": "^5.0.1"
   },
