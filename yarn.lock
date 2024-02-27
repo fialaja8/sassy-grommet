@@ -1071,6 +1071,76 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@formatjs/ecma402-abstract@1.18.2":
+  version "1.18.2"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@formatjs/ecma402-abstract/-/ecma402-abstract-1.18.2.tgz#bf103712a406874eb1e387858d5be2371ab3aa14"
+  integrity sha512-+QoPW4csYALsQIl8GbN14igZzDbuwzcpWrku9nyMXlaqAlwRBgl5V+p0vWMGFqHOw37czNXaP/lEk4wbLgcmtA==
+  dependencies:
+    "@formatjs/intl-localematcher" "0.5.4"
+    tslib "^2.4.0"
+
+"@formatjs/fast-memoize@2.2.0":
+  version "2.2.0"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@formatjs/fast-memoize/-/fast-memoize-2.2.0.tgz#33bd616d2e486c3e8ef4e68c99648c196887802b"
+  integrity sha512-hnk/nY8FyrL5YxwP9e4r9dqeM6cAbo8PeU9UjyXojZMNvVad2Z06FAVHyR3Ecw6fza+0GH7vdJgiKIVXTMbSBA==
+  dependencies:
+    tslib "^2.4.0"
+
+"@formatjs/icu-messageformat-parser@2.7.6":
+  version "2.7.6"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.7.6.tgz#3d69806de056d2919d53dad895a5ff4851e4e9ff"
+  integrity sha512-etVau26po9+eewJKYoiBKP6743I1br0/Ie00Pb/S/PtmYfmjTcOn2YCh2yNkSZI12h6Rg+BOgQYborXk46BvkA==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.18.2"
+    "@formatjs/icu-skeleton-parser" "1.8.0"
+    tslib "^2.4.0"
+
+"@formatjs/icu-skeleton-parser@1.8.0":
+  version "1.8.0"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-1.8.0.tgz#5f3d3a620c687d6f8c180d80d1241e8f213acf79"
+  integrity sha512-QWLAYvM0n8hv7Nq5BEs4LKIjevpVpbGLAJgOaYzg9wABEoX1j0JO1q2/jVkO6CVlq0dbsxZCngS5aXbysYueqA==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.18.2"
+    tslib "^2.4.0"
+
+"@formatjs/intl-displaynames@6.6.6":
+  version "6.6.6"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@formatjs/intl-displaynames/-/intl-displaynames-6.6.6.tgz#be9fea4d24f577bb1a9d0f3ef4f2dcdabb4fe42d"
+  integrity sha512-Dg5URSjx0uzF8VZXtHb6KYZ6LFEEhCbAbKoYChYHEOnMFTw/ZU3jIo/NrujzQD2EfKPgQzIq73LOUvW6Z/LpFA==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.18.2"
+    "@formatjs/intl-localematcher" "0.5.4"
+    tslib "^2.4.0"
+
+"@formatjs/intl-listformat@7.5.5":
+  version "7.5.5"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@formatjs/intl-listformat/-/intl-listformat-7.5.5.tgz#e4c7d741f2201c65e7da71326726e61332c7161e"
+  integrity sha512-XoI52qrU6aBGJC9KJddqnacuBbPlb/bXFN+lIFVFhQ1RnFHpzuFrlFdjD9am2O7ZSYsyqzYRpkVcXeT1GHkwDQ==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.18.2"
+    "@formatjs/intl-localematcher" "0.5.4"
+    tslib "^2.4.0"
+
+"@formatjs/intl-localematcher@0.5.4":
+  version "0.5.4"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@formatjs/intl-localematcher/-/intl-localematcher-0.5.4.tgz#caa71f2e40d93e37d58be35cfffe57865f2b366f"
+  integrity sha512-zTwEpWOzZ2CiKcB93BLngUX59hQkuZjT2+SAQEscSm52peDW/getsawMcWF1rGRpMCX6D7nSJA3CzJ8gn13N/g==
+  dependencies:
+    tslib "^2.4.0"
+
+"@formatjs/intl@2.10.0":
+  version "2.10.0"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@formatjs/intl/-/intl-2.10.0.tgz#d7bb557e172ceb0bb0be9298b61e9de957119985"
+  integrity sha512-X3xT9guVkKDS86EKV80lS0KxoazUglkJTGZO66sKY7otgl0VeStPA8B3u8UkKT47PexVV98fUzjpkchYmbe9nw==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.18.2"
+    "@formatjs/fast-memoize" "2.2.0"
+    "@formatjs/icu-messageformat-parser" "2.7.6"
+    "@formatjs/intl-displaynames" "6.6.6"
+    "@formatjs/intl-listformat" "7.5.5"
+    intl-messageformat "10.5.11"
+    tslib "^2.4.0"
+
 "@humanwhocodes/config-array@^0.10.4":
   version "0.10.7"
   resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@humanwhocodes/config-array/-/config-array-0.10.7.tgz#6d53769fd0c222767e6452e8ebda825c22e9f0dc"
@@ -1176,6 +1246,33 @@
   version "0.11.0"
   resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
+
+"@types/hoist-non-react-statics@^3.3.1":
+  version "3.3.5"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.5.tgz#dab7867ef789d87e2b4b0003c9d65c49cc44a494"
+  integrity sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+
+"@types/prop-types@*":
+  version "15.7.11"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@types/prop-types/-/prop-types-15.7.11.tgz#2596fb352ee96a1379c657734d4b913a613ad563"
+  integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
+
+"@types/react@*", "@types/react@16 || 17 || 18":
+  version "18.2.60"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@types/react/-/react-18.2.60.tgz#df026eaef1100b6dafe420f36fecb1d209a8cee1"
+  integrity sha512-dfiPj9+k20jJrLGOu9Nf6eqxm2EyJRrq2NvwOFsfbb7sFExZ9WELPs67UImHj3Ayxg8ruTtKtNnbjaF8olPq0A==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/scheduler@*":
+  version "0.16.8"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/@types/scheduler/-/scheduler-0.16.8.tgz#ce5ace04cfeabe7ef87c0091e50752e36707deff"
+  integrity sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==
 
 acorn-jsx@^5.3.2:
   version "5.3.2"
@@ -1560,6 +1657,11 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+csstype@^3.0.2:
+  version "3.1.3"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/csstype/-/csstype-3.1.3.tgz#d80ff294d114fb0e6ac500fbf85b60137d7eff81"
+  integrity sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==
 
 debounce@^1.2.0:
   version "1.2.1"
@@ -2226,7 +2328,7 @@ history@^4.9.0:
     tiny-warning "^1.0.0"
     value-equal "^1.0.1"
 
-hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0:
+hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -2283,29 +2385,15 @@ internal-slot@^1.0.3, internal-slot@^1.0.5:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-intl-format-cache@^2.0.5:
-  version "2.2.9"
-  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/intl-format-cache/-/intl-format-cache-2.2.9.tgz#fb560de20c549cda20b569cf1ffb6dc62b5b93b4"
-  integrity sha512-Zv/u8wRpekckv0cLkwpVdABYST4hZNTDaX7reFetrYTJwxExR2VyTqQm+l0WmL0Qo8Mjb9Tf33qnfj0T7pjxdQ==
-
-intl-messageformat-parser@1.4.0:
-  version "1.4.0"
-  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/intl-messageformat-parser/-/intl-messageformat-parser-1.4.0.tgz#b43d45a97468cadbe44331d74bb1e8dea44fc075"
-  integrity sha512-/XkqFHKezO6UcF4Av2/Lzfrez18R0jyw7kRFhSeB/YRakdrgSc9QfFZUwNJI9swMwMoNPygK1ArC5wdFSjPw+A==
-
-intl-messageformat@^2.0.0, intl-messageformat@^2.1.0:
-  version "2.2.0"
-  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/intl-messageformat/-/intl-messageformat-2.2.0.tgz#345bcd46de630b7683330c2e52177ff5eab484fc"
-  integrity sha512-I+tSvHnXqJYjDfNmY95tpFMj30yoakC6OXAo+wu/wTMy6tA/4Fd4mvV7Uzs4cqK/Ap29sHhwjcY+78a8eifcXw==
+intl-messageformat@10.5.11:
+  version "10.5.11"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/intl-messageformat/-/intl-messageformat-10.5.11.tgz#95d6a3b0b303f924d5d8c3f8d3ad057d1dc73c64"
+  integrity sha512-eYq5fkFBVxc7GIFDzpFQkDOZgNayNTQn4Oufe8jw6YY6OHVw70/4pA3FyCsQ0Gb2DnvEJEMmN2tOaXUGByM+kg==
   dependencies:
-    intl-messageformat-parser "1.4.0"
-
-intl-relativeformat@^2.1.0:
-  version "2.2.0"
-  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/intl-relativeformat/-/intl-relativeformat-2.2.0.tgz#6aca95d019ec8d30b6c5653b6629f9983ea5b6c5"
-  integrity sha512-4bV/7kSKaPEmu6ArxXf9xjv1ny74Zkwuey8Pm01NH4zggPP7JHwg2STk8Y3JdspCKRDriwIyLRfEXnj2ZLr4Bw==
-  dependencies:
-    intl-messageformat "^2.0.0"
+    "@formatjs/ecma402-abstract" "1.18.2"
+    "@formatjs/fast-memoize" "2.2.0"
+    "@formatjs/icu-messageformat-parser" "2.7.6"
+    tslib "^2.4.0"
 
 intl@^1.0.0:
   version "1.2.5"
@@ -2357,13 +2445,6 @@ inuit-shared@~0.1.5:
   integrity sha512-/roqk6kj5k9suDmWGCsnEb6p++wlj4g0LjkTHKVcQrcC3gkuzD7UaH1fMcTQaWrlloi77ylIPaRJCrYuE9yN1Q==
   dependencies:
     inuit-defaults "~0.2.0"
-
-invariant@^2.1.1:
-  version "2.2.4"
-  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
-  integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
-  dependencies:
-    loose-envify "^1.0.0"
 
 is-array-buffer@^3.0.1, is-array-buffer@^3.0.2:
   version "3.0.2"
@@ -2983,7 +3064,7 @@ queue-microtask@^1.2.2:
   resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-desc@^6.6.2:
+react-desc@^4.1.3:
   version "4.1.3"
   resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/react-desc/-/react-desc-4.1.3.tgz#197b56b7b55aba702e0c912f372dea5fee86f53b"
   integrity sha512-XqfNsg+nvAO77ja5+v3J6bMS7drnWozpiA64bUTyhqvSCJRkq45FiONl7/+74OjPw4Id6qbqVX6xkER/yTU8+w==
@@ -2996,16 +3077,21 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
-react-intl@^2.2.3:
-  version "2.9.0"
-  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/react-intl/-/react-intl-2.9.0.tgz#c97c5d17d4718f1575fdbd5a769f96018a3b1843"
-  integrity sha512-27jnDlb/d2A7mSJwrbOBnUgD+rPep+abmoJE511Tf8BnoONIAUehy/U1zZCHGO17mnOwMWxqN4qC0nW11cD6rA==
+react-intl@^6.6.2:
+  version "6.6.2"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/react-intl/-/react-intl-6.6.2.tgz#97a044afa9cac65ae62f404c8bb9cbd3aec52d41"
+  integrity sha512-IpW2IkLtGENSFlX3vfH11rjuCIsW0VyjT0Q1pPKMZPtT2z1FxLt4weFT5Ezti2TScT1xiyb3aQBFth9EB7jzAg==
   dependencies:
-    hoist-non-react-statics "^3.3.0"
-    intl-format-cache "^2.0.5"
-    intl-messageformat "^2.1.0"
-    intl-relativeformat "^2.1.0"
-    invariant "^2.1.1"
+    "@formatjs/ecma402-abstract" "1.18.2"
+    "@formatjs/icu-messageformat-parser" "2.7.6"
+    "@formatjs/intl" "2.10.0"
+    "@formatjs/intl-displaynames" "6.6.6"
+    "@formatjs/intl-listformat" "7.5.5"
+    "@types/hoist-non-react-statics" "^3.3.1"
+    "@types/react" "16 || 17 || 18"
+    hoist-non-react-statics "^3.3.2"
+    intl-messageformat "10.5.11"
+    tslib "^2.4.0"
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.6:
   version "16.13.1"
@@ -3457,6 +3543,11 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
+
+tslib@^2.4.0:
+  version "2.6.2"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
+  integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
