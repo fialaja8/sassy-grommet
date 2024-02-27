@@ -1,11 +1,11 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
-import Drop from '../utils/Drop';
 import { findAncestor, isDescendant } from '../utils/DOM';
 import Button from './Button';
 import ClockIcon from './icons/base/Clock';
@@ -13,6 +13,7 @@ import CalendarIcon from './icons/base/Calendar';
 import DateTimeDrop from './DateTimeDrop';
 import CSSClassnames from '../utils/CSSClassnames';
 import Intl from '../utils/Intl';
+import PortalDrop from './PortalDrop';
 
 const CLASS_ROOT = CSSClassnames.DATE_TIME;
 const INPUT = CSSClassnames.INPUT;
@@ -51,10 +52,10 @@ const _stateFromProps = (props) => {
   return result;
 };
 
-export default class DateTime extends Component {
+class DateTime extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onInputChange = this._onInputChange.bind(this);
     this._onOpen = this._onOpen.bind(this);
@@ -85,11 +86,6 @@ export default class DateTime extends Component {
     if (prevState.dropActive !== dropActive) {
       this._activation(dropActive);
     }
-
-    if (dropActive) {
-      this._drop.render(this._renderDrop());
-    }
-
     if (cursor >= 0) {
       this._inputRef.setSelectionRange(cursor, cursor);
     }
@@ -209,7 +205,7 @@ export default class DateTime extends Component {
   }
 
   _activation (dropActive) {
-    const { onDropChange } =  this.context;
+    const { onDropChange, intl } =  this.props;
 
     var listeners = {
       esc: this._onForceClose,
@@ -218,30 +214,25 @@ export default class DateTime extends Component {
     };
 
     if (dropActive) {
-
-      document.addEventListener('click', this._onClose);
-      KeyboardAccelerators.startListeningToKeyboard(this, listeners);
-
+      KeyboardAccelerators.startListeningToKeyboard(this._containerRef, listeners);
       // If this is inside a FormField, place the drop in reference to it.
       const control =
         findAncestor(this._containerRef, `.${FORM_FIELD}`) ||
         this._containerRef;
-      this._drop = new Drop(control,
-        this._renderDrop(), {
-          align: {top: 'bottom', left: 'left'},
-          focusControl: true,
-          context: this.context
-        });
+      this.setState({drop: {control, opts: {
+        align: {top: 'bottom', left: 'left'},
+        focusControl: true,
+        context: {intl}
+      }}},()=> {
+        document.addEventListener('click', this._onClose);
+      });
 
     } else {
 
       document.removeEventListener('click', this._onClose);
-      KeyboardAccelerators.stopListeningToKeyboard(this, listeners);
+      KeyboardAccelerators.stopListeningToKeyboard(this._containerRef, listeners);
 
-      if (this._drop) {
-        this._drop.remove();
-        this._drop = undefined;
-      }
+      this.setState({drop: null});
     }
 
     if (onDropChange) {
@@ -262,8 +253,8 @@ export default class DateTime extends Component {
     const { className, format, value, ...props } = this.props;
     delete props.onChange;
     delete props.step;
-    const { dropActive, textValue } = this.state;
-    const { intl } = this.context;
+    const { dropActive, textValue, drop } = this.state;
+    const { intl } = this.props;
     let classes = classnames(
       CLASS_ROOT,
       {
@@ -292,16 +283,12 @@ export default class DateTime extends Component {
         <Button className={`${CLASS_ROOT}__control`} icon={<Icon />}
           a11yTitle={dateTimeIconMessage}
           onClick={this._onControlClick} />
+        {drop ? <PortalDrop content={this._renderDrop()} control={drop.control} opts={drop.opts} /> : null}
       </div>
     );
   }
 
 }
-
-DateTime.contextTypes = {
-  intl: PropTypes.object,
-  onDropChange: PropTypes.func
-};
 
 DateTime.defaultProps = {
   format: 'M/D/YYYY h:mm a',
@@ -309,6 +296,8 @@ DateTime.defaultProps = {
 };
 
 DateTime.propTypes = {
+  intl: PropTypes.object,
+  onDropChange: PropTypes.func,
   format: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
@@ -316,3 +305,5 @@ DateTime.propTypes = {
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };
+
+export default injectIntl(DateTime);

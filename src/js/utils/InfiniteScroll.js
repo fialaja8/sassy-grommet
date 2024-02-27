@@ -36,14 +36,7 @@ function _evaluate(scrollState) {
   });
 }
 
-function _onScroll(scrollState) {
-  // delay a bit to ride out quick users
-  clearTimeout(scrollState.scrollTimer);
-  scrollState.scrollTimer = setTimeout(() => _evaluate(scrollState),
-    SCROLL_MORE_DELAY);
-}
-
-function _onResize(scrollState) {
+function _onResizeOrScroll(scrollState) {
   clearTimeout(scrollState.scrollTimer);
   scrollState.scrollTimer = setTimeout(() => _evaluate(scrollState),
     SCROLL_MORE_DELAY);
@@ -57,7 +50,7 @@ export default {
     startIndicatorElement,
     onTop) {
 
-    var scrollState = {
+    const scrollState = {
       onEnd: onEnd,
       endIndicatorElement: endIndicatorElement,
       onTop: onTop,
@@ -66,8 +59,10 @@ export default {
         startIndicatorElement)
     };
 
-    scrollState._onResize = _onResize.bind(this, scrollState);
-    scrollState._onScroll = _onScroll.bind(this, scrollState);
+    const checkScrollPosition = _onResizeOrScroll.bind(this, scrollState);
+    scrollState._onResize = checkScrollPosition;
+    scrollState._onScroll = checkScrollPosition;
+    scrollState.check = checkScrollPosition;
 
     window.addEventListener("resize", scrollState._onResize);
     // check in case we're already at the extreme and the indicator is visible

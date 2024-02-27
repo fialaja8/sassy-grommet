@@ -1,8 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
 import Intl from '../utils/Intl';
@@ -21,10 +21,10 @@ const THIN_HEIGHT = 72;
 
 const GUTTER_SIZE = 4;
 
-export default class Distribution extends Component {
+class Distribution extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onEnter = this._onEnter.bind(this);
     this._onPreviousDistribution = this._onPreviousDistribution.bind(this);
@@ -52,7 +52,7 @@ export default class Distribution extends Component {
       space: this._onEnter
     };
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._containerRef, this._keyboardHandlers
     );
 
     window.addEventListener('resize', this._onResize);
@@ -77,7 +77,7 @@ export default class Distribution extends Component {
 
   componentWillUnmount () {
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._containerRef, this._keyboardHandlers
     );
 
     clearTimeout(this._resizeTimer);
@@ -236,7 +236,7 @@ export default class Distribution extends Component {
     if (this._distributionRef.contains(document.activeElement)) {
       event.preventDefault();
       var totalDistributionCount = (
-        ReactDOM.findDOMNode(this.distributionItemsRef).childNodes.length
+        this.distributionItemsRef.childNodes.length
       );
 
       if (this.state.activeIndex + 1 < totalDistributionCount) {
@@ -265,7 +265,7 @@ export default class Distribution extends Component {
   }
 
   _onActivate (index) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     this.setState({ activeIndex: index }, () => {
       let activeMessage = this.activeDistributionRef.getAttribute('aria-label');
       const clickable = this.state.items[this.state.activeIndex].datum.onClick;
@@ -451,7 +451,7 @@ export default class Distribution extends Component {
     } = this.props;
     delete props.series;
     delete props.units;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { allIcons, focus, height, items, mouseActive, width } = this.state;
     const classes = classnames(
       CLASS_ROOT,
@@ -527,11 +527,9 @@ export default class Distribution extends Component {
 
 }
 
-Distribution.contextTypes = {
-  intl: PropTypes.object
-};
 
 Distribution.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   full: PropTypes.bool, // deprecated, use size='full'
   series: PropTypes.arrayOf(PropTypes.shape({
@@ -554,3 +552,5 @@ Distribution.propTypes = {
 Distribution.defaultProps = {
   size: 'medium'
 };
+
+export default injectIntl(Distribution);

@@ -1,8 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
 import Intl from '../utils/Intl';
 import Props from '../utils/Props';
@@ -10,11 +10,12 @@ import { checkDarkBackground } from '../utils/DOM';
 import SkipLinkAnchor from './SkipLinkAnchor';
 import CSSClassnames from '../utils/CSSClassnames';
 import { announce } from '../utils/Announcer';
+import composeKeepPropTypes from "../utils/composeKeepPropTypes";
 
 const CLASS_ROOT = CSSClassnames.BOX;
 const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
 
-export default class Box extends Component {
+class Box extends Component {
 
   constructor (props) {
     super(props);
@@ -30,7 +31,7 @@ export default class Box extends Component {
         }
       };
 
-      KeyboardAccelerators.startListeningToKeyboard(this, {
+      KeyboardAccelerators.startListeningToKeyboard(this.boxContainerRef, {
         enter: clickCallback,
         space: clickCallback
       });
@@ -54,7 +55,7 @@ export default class Box extends Component {
 
   componentWillUnmount () {
     if (this.props.onClick) {
-      KeyboardAccelerators.stopListeningToKeyboard(this);
+      KeyboardAccelerators.stopListeningToKeyboard(this.boxContainerRef);
     }
     if (this._checkBackground) {
       this._checkBackground.stop();
@@ -63,7 +64,7 @@ export default class Box extends Component {
 
   _setDarkBackground () {
     const { colorIndex } = this.props;
-    const box = findDOMNode(this.boxContainerRef);
+    const box = this.boxContainerRef;
     if (this._checkBackground) {
       this._checkBackground.stop();
     }
@@ -110,7 +111,7 @@ export default class Box extends Component {
       a11yTitle, appCentered, backgroundImage, children, className,
       colorIndex, containerClassName, focusable, full, id, onClick, onBlur,
       onFocus, onMouseDown, onMouseUp, pad, primary, role, size, tabIndex,
-      tag, texture
+      tag, texture, innerRef, intl
     } = this.props;
     const { darkBackground, mouseActive } = this.state;
     let classes = [CLASS_ROOT];
@@ -222,7 +223,7 @@ export default class Box extends Component {
           classes.push(`${CLASS_ROOT}--focus`);
         }
         let boxLabel = (typeof a11yTitle !== 'undefined') ?
-          a11yTitle : Intl.getMessage(this.context.intl, 'Box');
+          a11yTitle : Intl.getMessage(intl, 'Box');
         a11yProps.tabIndex = tabIndex || 0;
         a11yProps["aria-label"] = this.props['aria-label'] || boxLabel;
         a11yProps.role = role || 'group';
@@ -232,7 +233,7 @@ export default class Box extends Component {
     let skipLinkAnchor;
     if (primary) {
       let mainContentLabel = (
-        Intl.getMessage(this.context.intl, 'Main Content')
+        Intl.getMessage(intl, 'Main Content')
       );
       skipLinkAnchor = <SkipLinkAnchor label={mainContentLabel} />;
     }
@@ -267,7 +268,11 @@ export default class Box extends Component {
           className={containerClasses.join(' ')}
           style={style} role={role} {...a11yProps} {...clickableProps}>
           {skipLinkAnchor}
-          <Component id={id} className={classes.join(' ')}>
+          <Component id={id} className={classes.join(' ')} ref={(ref) => {
+            if (innerRef) {
+              innerRef(ref);
+            }
+          }}>
             {textureMarkup}
             {children}
           </Component>
@@ -275,10 +280,15 @@ export default class Box extends Component {
       );
     } else {
       return (
-        <Component {...restProps} ref={(ref) => this.boxContainerRef = ref}
-          id={id} className={classes.join(' ')} style={style}
-          role={role} tabIndex={tabIndex}
-          onClick={onClick} {...a11yProps} {...clickableProps}>
+        <Component {...restProps} ref={(ref) => {
+          this.boxContainerRef = ref;
+          if (innerRef) {
+            innerRef(ref);
+          }
+        }}
+        id={id} className={classes.join(' ')} style={style}
+        role={role} tabIndex={tabIndex}
+        onClick={onClick} {...a11yProps} {...clickableProps}>
           {skipLinkAnchor}
           {textureMarkup}
           {children}
@@ -296,6 +306,7 @@ const MARGIN_SIZES = ['small', 'medium', 'large', 'none'];
 const PAD_SIZES = ['small', 'medium', 'large', 'xlarge', 'none'];
 
 Box.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   announce: PropTypes.bool,
   align: PropTypes.oneOf(['start', 'center', 'end', 'baseline', 'stretch']),
@@ -304,7 +315,7 @@ Box.propTypes = {
   alignSelf: PropTypes.oneOf(['start', 'center', 'end', 'stretch']),
   appCentered: PropTypes.bool,
   backgroundImage: PropTypes.string,
-  basis: PropTypes.oneOf(SIZES),
+  basis: PropTypes.oneOf([true, ...SIZES]),
   colorIndex: PropTypes.string,
   containerClassName: PropTypes.string,
   direction: PropTypes.oneOf(['row', 'column']),
@@ -321,6 +332,7 @@ Box.propTypes = {
       })
     ]
   ),
+  innerRef: PropTypes.func,
   // remove in 1.0?
   onClick: PropTypes.func,
   justify: PropTypes.oneOf(['start', 'center', 'between', 'end', 'around']),
@@ -378,9 +390,6 @@ Box.propTypes = {
   wrap: PropTypes.bool
 };
 
-Box.contextTypes = {
-  intl: PropTypes.object
-};
 
 Box.defaultProps = {
   announce: false,
@@ -390,3 +399,5 @@ Box.defaultProps = {
   responsive: true,
   focusable: true
 };
+
+export default composeKeepPropTypes(Box, injectIntl);

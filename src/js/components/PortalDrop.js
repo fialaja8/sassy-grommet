@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { createPortal } from 'react-dom';
 import classnames from 'classnames';
-import { filterByFocusable, findScrollParents, findVisibleParent } from './DOM';
-import CSSClassnames from './CSSClassnames';
-import KeyboardAccelerators from './KeyboardAccelerators';
+import { filterByFocusable, findScrollParents, findVisibleParent } from '../utils/DOM';
+import CSSClassnames from '../utils/CSSClassnames';
+import KeyboardAccelerators from '../utils/KeyboardAccelerators';
 
 const CLASS_ROOT = CSSClassnames.DROP;
 const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
@@ -22,26 +22,23 @@ const VERTICAL_ALIGN_OPTIONS = ['top', 'bottom'];
 const HORIZONTAL_ALIGN_OPTIONS = ['right', 'left'];
 
 class DropContents extends Component {
-
-  constructor (props, context) {
-    super(props, context);
+  constructor (props) {
+    super(props);
     this._processTab = this._processTab.bind(this);
   }
 
-  getChildContext () {
-    const { context } = this.props;
-    return { ...context };
-  }
-
   componentDidMount () {
-    const { focusControl } = this.props;
+    const { focusControl, afterRender } = this.props;
     if (focusControl) {
       this._keyboardHandlers = {
         tab: this._processTab
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this._containerRef, this._keyboardHandlers
       );
+    }
+    if (afterRender) {
+      afterRender();
     }
   }
 
@@ -49,7 +46,7 @@ class DropContents extends Component {
     const { focusControl } = this.props;
     if (focusControl) {
       KeyboardAccelerators.stopListeningToKeyboard(
-        this, this._keyboardHandlers
+        this._containerRef, this._keyboardHandlers
       );
     }
   }
@@ -93,16 +90,8 @@ class DropContents extends Component {
 
 DropContents.propTypes = {
   content: PropTypes.node.isRequired,
-  context: PropTypes.any,
-  focusControl: PropTypes.bool
-};
-
-DropContents.childContextTypes = {
-  history: PropTypes.object,
-  intl: PropTypes.object,
-  onDropChange: PropTypes.func,
-  router: PropTypes.any,
-  store: PropTypes.object
+  focusControl: PropTypes.bool,
+  afterRender: PropTypes.func
 };
 
 const _normalizeOptions = (options) => {
@@ -155,23 +144,21 @@ const _normalizeOptions = (options) => {
 // className: PropTypes.string
 // colorIndex: PropTypes.string
 //    Background color
-// context: PropTypes.object
-//    React context to pass through
 // focusControl: PropTypes.bool
 //    Whether to focus inside the dropped content when added
 // responsive: PropTypes.bool
 //    Whether to dynamically re-place when resized
 //
 
-export default class Drop {
+class PortalDrop extends Component {
 
-  constructor (control, content, opts) {
+  constructor (props) {
+    super(props);
+    const {control, opts} = props;
     const options = _normalizeOptions(opts);
-    const { context, focusControl } = options;
+    const { focusControl } = options;
 
     // bind functions to instance
-    this.render = this.render.bind(this);
-    this.remove = this.remove.bind(this);
     this.place = this.place.bind(this);
     this._onResize = this._onResize.bind(this);
     this._control = control;
@@ -200,13 +187,6 @@ export default class Drop {
       container, control, initialFocusNeeded: focusControl, options,
       scrollParents
     };
-
-    render(
-      <DropContents content={content} context={context}
-        focusControl={focusControl} />,
-      container, () => this.place()
-    );
-
     this._listen();
   }
 
@@ -240,7 +220,7 @@ export default class Drop {
     this.place();
   }
 
-  place () {
+  place() {
     const {
       control, container, initialFocusNeeded, options: { align, responsive }
     } = this.state;
@@ -368,7 +348,7 @@ export default class Drop {
     }
   }
 
-  _focus () {
+  _focus() {
     const { container } = this.state;
     this.state.originalFocusedElement = document.activeElement;
     if (! container.contains(document.activeElement)) {
@@ -381,29 +361,27 @@ export default class Drop {
     delete this.state.initialFocusNeeded;
   }
 
-  render (content) {
-    const { container, options: { context, focusControl } } = this.state;
+  render() {
+    const { content, afterRender } = this.props;
+    const { container, options: { focusControl } } = this.state;
     const originalScrollPosition = container.scrollTop;
-    render(
-      <DropContents content={content} context={context}
-        focusControl={focusControl}/>,
-      container,
-      () => {
+    return createPortal(<DropContents content={content}
+      focusControl={focusControl} afterRender={() => {
         this.place();
         // reset container to its original scroll position
         container.scrollTop = originalScrollPosition;
-      }
-    );
+        if (afterRender) {
+          afterRender();
+        }
+      }}/>, container);
   }
 
-  remove () {
+  componentWillUnmount() {
     const { container, originalFocusedElement, scrollParents } = this.state;
     scrollParents.forEach(scrollParent => {
       scrollParent.removeEventListener('scroll', this.place);
     });
     window.removeEventListener('resize', this._onResize);
-
-    unmountComponentAtNode(container);
     this.parentContainer.removeChild(container);
     // weird bug in Chrome does not remove child if
     // document.body.insertBefore is called in another new drop.
@@ -413,11 +391,9 @@ export default class Drop {
         document.body.removeChild(element);
       }
     });
-
     if (originalFocusedElement) {
       originalFocusedElement.focus();
     }
-
     this.place = function () {};
     this.state = undefined;
   }
@@ -432,7 +408,11 @@ export var dropAlignPropType = PropTypes.shape({
   right: PropTypes.oneOf(HORIZONTAL_ALIGN_OPTIONS)
 });
 
-Drop.add = (control, content, options) => {
-  console.warn("Warning: Drop.add() is deprecated, use new Drop().");
-  return new Drop(control, content, options);
+PortalDrop.propTypes = {
+  content: PropTypes.any,
+  control: PropTypes.any,
+  opts: PropTypes.object,
+  afterRender: PropTypes.func
 };
+
+export default PortalDrop;

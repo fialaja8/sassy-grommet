@@ -6,6 +6,8 @@ import { baseUnit, translateEndAngle, arcCommands, polarToCartesian }
 import CSSClassnames from '../../utils/CSSClassnames';
 import { baseDimension } from './utils';
 import Graphic from './Graphic';
+import composeKeepPropTypes from "../../utils/composeKeepPropTypes";
+import {injectIntl} from "react-intl";
 
 const CLASS_ROOT = CSSClassnames.METER;
 const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
@@ -33,10 +35,10 @@ function singleIndicatorCommands (centerX, centerY, radius, startAngle,
   return d;
 }
 
-export default class Arc extends Graphic {
+class Arc extends Graphic {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     //needed in Graphic.js to fix minification issues
     this.displayName = 'Arc';
   }
@@ -111,3 +113,4 @@ export default class Arc extends Graphic {
     return indicator;
   }
 }
+export default composeKeepPropTypes(Arc, injectIntl);

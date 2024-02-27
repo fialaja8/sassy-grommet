@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Children, Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import SpinningIcon from './icons/Spinning';
@@ -78,10 +79,10 @@ function findHead(children) {
   return head;
 }
 
-export default class Table extends Component {
+class Table extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onClick = this._onClick.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -140,7 +141,7 @@ export default class Table extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.containerRef, this._keyboardHandlers
       );
     }
 
@@ -183,7 +184,7 @@ export default class Table extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.containerRef, this._keyboardHandlers
       );
     }
   }
@@ -198,7 +199,7 @@ export default class Table extends Component {
 
     if (selectable) {
       KeyboardAccelerators.stopListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.containerRef, this._keyboardHandlers
       );
     }
 
@@ -210,7 +211,7 @@ export default class Table extends Component {
   }
 
   _announceRow (label) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     announce(`${label} ${enterSelectMessage}`);
   }
@@ -341,7 +342,7 @@ export default class Table extends Component {
 
   _onEnter (event) {
     const { activeRow } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (this.tableRef.contains(document.activeElement) &&
       activeRow !== undefined) {
       const rows = immediateTableChildOnly(
@@ -483,7 +484,7 @@ export default class Table extends Component {
     delete props.onSelect;
     delete props.selected;
     const { activeRow, columnMode, focus, mouseActive, small } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let classes = classnames(
       CLASS_ROOT,
       {
@@ -591,11 +592,9 @@ export default class Table extends Component {
   }
 }
 
-Table.contextTypes = {
-  intl: PropTypes.object
-};
 
 Table.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   onMore: PropTypes.func,
   onMoreAbove: PropTypes.func,
@@ -615,3 +614,5 @@ Table.propTypes = {
 Table.defaultProps = {
   responsive: true
 };
+
+export default injectIntl(Table);

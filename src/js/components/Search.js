@@ -1,11 +1,10 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
-import Drop, { dropAlignPropType } from '../utils/Drop';
 import Props from '../utils/Props';
 import Responsive from '../utils/Responsive';
 import Button from './Button';
@@ -14,15 +13,16 @@ import CSSClassnames from '../utils/CSSClassnames';
 import Intl from '../utils/Intl';
 import { announce } from '../utils/Announcer';
 import InputPaste from "../utils/InputPaste";
+import PortalDrop, {dropAlignPropType} from "./PortalDrop";
 
 const CLASS_ROOT = CSSClassnames.SEARCH;
 const INPUT = CSSClassnames.INPUT;
 const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
 
-export default class Search extends Component {
+class Search extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onAddDrop = this._onAddDrop.bind(this);
     this._onRemoveDrop = this._onRemoveDrop.bind(this);
@@ -56,14 +56,14 @@ export default class Search extends Component {
       this._responsive = Responsive.start(this._onResponsive);
     }
     if (initialFocus) {
-      findDOMNode(this._inputRef).focus();
+      this._inputRef?.focus();
     }
   }
 
   componentDidUpdate (prevProps, prevState) {
     const { dropAlign, suggestions } = this.props;
     const { announceChange, dropActive, inline, small } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     if (suggestions && suggestions.length > 0 &&
       ! dropActive && this._inputRef === document.activeElement) {
@@ -89,22 +89,18 @@ export default class Search extends Component {
 
     if (! dropActive && prevState.dropActive) {
       document.removeEventListener('click', this._onClickBody);
-      KeyboardAccelerators.stopListeningToKeyboard(this,
+      KeyboardAccelerators.stopListeningToKeyboard(this._controlRef,
         activeKeyboardHandlers);
-      if (this._drop) {
-        this._drop.remove();
-        this._drop = undefined;
-      }
+      this.setState({drop: null});
     }
 
     if (dropActive && ! prevState.dropActive) {
-      document.addEventListener('click', this._onClickBody);
-      KeyboardAccelerators.startListeningToKeyboard(this,
+      KeyboardAccelerators.startListeningToKeyboard(this._controlRef,
         activeKeyboardHandlers);
 
       let baseElement;
       if (this._controlRef) {
-        baseElement = findDOMNode(this._controlRef);
+        baseElement = this._controlRef;
       } else {
         baseElement = this._inputRef;
       }
@@ -112,17 +108,13 @@ export default class Search extends Component {
         top: (inline ? 'bottom' : 'top'),
         left: 'left'
       };
-      this._drop = new Drop(baseElement, this._renderDropContent(), {
+      this.setState({drop: {control:baseElement, opts:{
         align: align,
         focusControl: ! inline,
         responsive: false // so suggestion changes don't re-align
+      }}},() => {
+        document.addEventListener('click', this._onClickBody);
       });
-
-      if (this._inputRef) {
-        this._inputRef.focus();
-      }
-    } else if (this._drop) {
-      this._drop.render(this._renderDropContent());
     }
 
     if (announceChange && suggestions) {
@@ -142,19 +134,16 @@ export default class Search extends Component {
 
   componentWillUnmount () {
     document.removeEventListener('click', this._onClickBody);
-    KeyboardAccelerators.stopListeningToKeyboard(this);
+    KeyboardAccelerators.stopListeningToKeyboard(this._controlRef);
     if (this._responsive) {
       this._responsive.stop();
-    }
-    if (this._drop) {
-      this._drop.remove();
     }
   }
 
   focus () {
     const input = this._inputRef;
     if (input) {
-      findDOMNode(input).focus();
+      (input).focus();
     }
   }
 
@@ -244,7 +233,7 @@ export default class Search extends Component {
   }
 
   _announceSuggestion (index) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const labelMessage = this._renderLabel(this.props.suggestions[index]);
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     announce(`${labelMessage} ${enterSelectMessage}`);
@@ -273,7 +262,7 @@ export default class Search extends Component {
   _onEnter (event) {
     const { inline, onSelect, suggestions } = this.props;
     const { activeSuggestionIndex } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     // for not inline search the enter should NOT submit the form
     // in this case double enter is required
     if (!inline) {
@@ -432,7 +421,7 @@ export default class Search extends Component {
       className, defaultValue, iconAlign, id, fill, pad, placeHolder, size,
       value
     } = this.props;
-    const { inline } = this.state;
+    const { inline, drop } = this.state;
     const restProps = Props.omit(this.props, Object.keys(Search.propTypes));
     const classes = classnames(
       CLASS_ROOT,
@@ -467,17 +456,20 @@ export default class Search extends Component {
 
     } else {
       return (
-        <Button ref={(ref) => this._controlRef = ref}
+        <><Button innerRef={(ref) => this._controlRef = ref}
           id={id} className={className} icon={<SearchIcon />}
           onClick={this._onAddDrop} />
+        {drop ? <PortalDrop content={this._renderDropContent()} control={drop.control} opts={drop.opts} afterRender={() => {
+          if (this._inputRef) {
+            this._inputRef.focus();
+          }
+        }} /> : null}
+        </>
       );
     }
   }
 }
 
-Search.contextTypes = {
-  intl: PropTypes.object
-};
 
 Search.defaultProps = {
   align: 'left',
@@ -487,6 +479,7 @@ Search.defaultProps = {
 };
 
 Search.propTypes = {
+  intl: PropTypes.object,
   align: PropTypes.string,
   defaultValue: PropTypes.string,
   dropAlign: dropAlignPropType,
@@ -514,3 +507,5 @@ Search.propTypes = {
   ),
   value: PropTypes.string
 };
+
+export default injectIntl(Search);

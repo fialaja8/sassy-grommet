@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Responsive from '../utils/Responsive';
@@ -9,6 +10,7 @@ import Bar from './meter/Bar';
 import Spiral from './meter/Spiral';
 import Circle from './meter/Circle';
 import Arc from './meter/Arc';
+import composeKeepPropTypes from '../utils/composeKeepPropTypes';
 
 const CLASS_ROOT = CSSClassnames.METER;
 
@@ -164,10 +166,10 @@ const _stateFromProps = (props) => {
   return nextState;
 };
 
-export default class Meter extends Component {
+class Meter extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onResponsive = this._onResponsive.bind(this);
     this._initialTimeout = this._initialTimeout.bind(this);
@@ -306,6 +308,7 @@ export default class Meter extends Component {
 }
 
 Meter.propTypes = {
+  intl: PropTypes.object,
   active: PropTypes.bool, // when single value
   activeIndex: PropTypes.number, // for series values
   a11yTitle: PropTypes.string,
@@ -338,6 +341,5 @@ Meter.defaultProps = {
   type: 'bar'
 };
 
-Meter.contextTypes = {
-  intl: PropTypes.object
-};
+
+export default composeKeepPropTypes(Meter, injectIntl);

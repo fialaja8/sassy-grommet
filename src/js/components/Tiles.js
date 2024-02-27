@@ -1,8 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component, Children } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import Props from '../utils/Props';
 import Box from './Box';
@@ -24,10 +24,10 @@ const TILE = CSSClassnames.TILE;
 const SELECTED_CLASS = `${TILE}--selected`;
 const ACTIVE_CLASS = `${TILE}--active`;
 
-export default class Tiles extends Component {
+class Tiles extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._onLeft = this._onLeft.bind(this);
     this._onRight = this._onRight.bind(this);
     this._onScrollHorizontal = this._onScrollHorizontal.bind(this);
@@ -73,7 +73,7 @@ export default class Tiles extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.tilesRef, this._keyboardHandlers
       );
     }
   }
@@ -100,7 +100,7 @@ export default class Tiles extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.tilesRef, this._keyboardHandlers
       );
     }
   }
@@ -114,13 +114,13 @@ export default class Tiles extends Component {
       window.removeEventListener('resize', this._onResize);
       document.removeEventListener('wheel', this._onWheel);
       if (this._tracking) {
-        const tiles = findDOMNode(this.tilesRef);
+        const tiles = (this.tilesRef);
         tiles.removeEventListener('scroll', this._onScrollHorizontal);
       }
     }
     if (selectable) {
       KeyboardAccelerators.stopListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.tilesRef, this._keyboardHandlers
       );
     }
     if (this._layoutTimer) {
@@ -129,7 +129,7 @@ export default class Tiles extends Component {
   }
 
   _announceTile (label) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     // avoid a long text to be read by the screen reader
     const labelMessage = label.length > 15 ?
@@ -138,10 +138,10 @@ export default class Tiles extends Component {
   }
 
   _onPreviousTile (event) {
-    if (findDOMNode(this.tilesRef).contains(document.activeElement)) {
+    if ((this.tilesRef).contains(document.activeElement)) {
       event.preventDefault();
       const { activeTile } = this.state;
-      const rows = findDOMNode(this.tilesRef).querySelectorAll(`.${TILE}`);
+      const rows = (this.tilesRef).querySelectorAll(`.${TILE}`);
       if (rows && rows.length > 0) {
         if (activeTile === undefined) {
           rows[0].classList.add(ACTIVE_CLASS);
@@ -167,10 +167,10 @@ export default class Tiles extends Component {
   }
 
   _onNextTile (event) {
-    if (findDOMNode(this.tilesRef).contains(document.activeElement)) {
+    if ((this.tilesRef).contains(document.activeElement)) {
       event.preventDefault();
       const { activeTile } = this.state;
-      const rows = findDOMNode(this.tilesRef).querySelectorAll(`.${TILE}`);
+      const rows = (this.tilesRef).querySelectorAll(`.${TILE}`);
       if (rows && rows.length > 0) {
         if (activeTile === undefined) {
           rows[0].classList.add(ACTIVE_CLASS);
@@ -214,10 +214,10 @@ export default class Tiles extends Component {
 
   _onEnter (event) {
     const { activeTile } = this.state;
-    const { intl } = this.context;
-    if (findDOMNode(this.tilesRef).contains(document.activeElement) &&
+    const { intl } = this.props;
+    if ((this.tilesRef).contains(document.activeElement) &&
       activeTile !== undefined) {
-      const rows = findDOMNode(this.tilesRef).querySelectorAll(`.${TILE}`);
+      const rows = (this.tilesRef).querySelectorAll(`.${TILE}`);
       this._fireClick(rows[activeTile], event.shiftKey);
       rows[activeTile].classList.remove(ACTIVE_CLASS);
       const label = rows[activeTile].innerText;
@@ -230,12 +230,12 @@ export default class Tiles extends Component {
   }
 
   _onLeft () {
-    const tiles = findDOMNode(this.tilesRef);
+    const tiles = (this.tilesRef);
     Scroll.scrollBy(tiles, 'scrollLeft', - tiles.offsetWidth);
   }
 
   _onRight () {
-    const tiles = findDOMNode(this.tilesRef);
+    const tiles = (this.tilesRef);
     Scroll.scrollBy(tiles, 'scrollLeft', tiles.offsetWidth);
   }
 
@@ -260,7 +260,7 @@ export default class Tiles extends Component {
 
     if ('row' === direction) {
       // determine if we have more tiles than room to fit
-      const tiles = findDOMNode(this.tilesRef);
+      const tiles = (this.tilesRef);
 
       // 20 is to allow some fuzziness as scrollbars come and go
       const newState = {
@@ -309,7 +309,7 @@ export default class Tiles extends Component {
   _trackHorizontalScroll () {
     const { overflow } = this.state;
     if (overflow && ! this._tracking) {
-      const tiles = findDOMNode(this.tilesRef);
+      const tiles = (this.tilesRef);
       tiles.addEventListener('scroll', this._onScrollHorizontal);
       this._tracking = true;
     }
@@ -318,7 +318,7 @@ export default class Tiles extends Component {
   _onClick (event) {
     const { onSelect, selectable, selected } = this.props;
     const selection = Selection.onClick(event, {
-      containerElement: findDOMNode(this.tilesRef),
+      containerElement: (this.tilesRef),
       childSelector: `.${TILE}`,
       selectedClass: SELECTED_CLASS,
       multiSelect: ('multiple' === selectable),
@@ -368,7 +368,7 @@ export default class Tiles extends Component {
     const {
       activeTile, focus, mouseActive, overflow, overflowEnd, overflowStart
     } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT,
@@ -435,7 +435,7 @@ export default class Tiles extends Component {
         onBlur: (event) => {
           if (activeTile) {
             const rows = (
-              findDOMNode(this.tilesRef).querySelectorAll(`.${TILE}`)
+              (this.tilesRef).querySelectorAll(`.${TILE}`)
             );
             rows[activeTile].classList.remove(ACTIVE_CLASS);
           }
@@ -448,7 +448,7 @@ export default class Tiles extends Component {
     }
 
     let contents = (
-      <Box ref={ref => this.tilesRef = ref} {...other}
+      <Box innerRef={ref => this.tilesRef = ref} {...other}
         wrap={direction ? false : true}
         direction={direction ? direction : 'row'}
         className={classes} focusable={false} {...selectableProps}>
@@ -492,11 +492,9 @@ export default class Tiles extends Component {
 
 }
 
-Tiles.contextTypes = {
-  intl: PropTypes.object
-};
 
 Tiles.propTypes = {
+  intl: PropTypes.object,
   fill: PropTypes.bool,
   flush: PropTypes.bool,
   onMore: PropTypes.func,
@@ -517,3 +515,5 @@ Tiles.defaultProps = {
   justify: 'start',
   pad: 'small'
 };
+
+export default injectIntl(Tiles);

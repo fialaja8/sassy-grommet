@@ -14,8 +14,8 @@ const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
 
 export default class Hero extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._onResize = this._onResize.bind(this);
     this._layout = this._layout.bind(this);
     this.state = {};

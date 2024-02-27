@@ -21,8 +21,8 @@ const areActiveArraysEqual = (a1, a2) => {
 
 export default class Accordion extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._onPanelChange = this._onPanelChange.bind(this);
     this.state = {active: [].concat(props.active || [])};
   }

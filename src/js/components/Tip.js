@@ -5,21 +5,23 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Box from './Box';
 import CSSClassnames from '../utils/CSSClassnames';
-import Drop from '../utils/Drop';
+import composeKeepPropTypes from "../utils/composeKeepPropTypes";
+import { injectIntl } from 'react-intl';
+import PortalDrop from './PortalDrop';
 
 const CLASS_ROOT = CSSClassnames.TIP;
 
 
-export default class Tip extends Component {
+class Tip extends Component {
 
   constructor (props) {
-    super();
+    super(props);
+    this.state = { drop: null };
     this._getTarget = this._getTarget.bind(this);
-    this._onResize = this._onResize.bind(this);
   }
 
   componentDidMount () {
-    const { onClose, colorIndex } = this.props;
+    const { onClose, colorIndex, intl } = this.props;
     const target = this._getTarget();
     if (target) {
       const rect = target.getBoundingClientRect();
@@ -46,39 +48,25 @@ export default class Tip extends Component {
           [`${CLASS_ROOT}__drop--bottom`]: align.bottom
         }
       );
-
-      this._drop = new Drop(target, this._renderDropContent(), {
+      this.setState({drop: {control: target, opts: {
         align: align,
         className: classNames,
         colorIndex: colorIndex,
+        context: { intl },
         responsive: false
+      }}}, () => {
+        target.addEventListener('click', onClose);
+        target.addEventListener('blur', onClose);
       });
-
-      target.addEventListener('click', onClose);
-      target.addEventListener('blur', onClose);
-      window.addEventListener('resize', this._onResize);
     }
   }
 
   componentWillUnmount () {
     const { onClose } = this.props;
     const target = this._getTarget();
-
-    // if the drop was created successfully, remove it
-    if (this._drop) {
-      this._drop.remove();
-      this._drop = null;
-    }
     if (target) {
       target.removeEventListener('click', onClose);
       target.removeEventListener('blur', onClose);
-      window.removeEventListener('resize', this._onResize);
-    }
-  }
-
-  _onResize () {
-    if (this._drop) {
-      this._drop.place();
     }
   }
 
@@ -103,7 +91,8 @@ export default class Tip extends Component {
   }
 
   render () {
-    return <span />;
+    const { drop } = this.state;
+    return <>{drop ? <PortalDrop content={this._renderDropContent()} control={drop.control} opts={drop.opts} /> : null}</>;
   }
 
 }
@@ -111,9 +100,12 @@ export default class Tip extends Component {
 Tip.propTypes = {
   colorIndex: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  target: PropTypes.string.isRequired
+  target: PropTypes.string.isRequired,
+  intl: PropTypes.object
 };
 
 Tip.defaultProps = {
   colorIndex: 'accent-1'
 };
+
+export default composeKeepPropTypes(Tip, injectIntl);

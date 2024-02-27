@@ -1,47 +1,44 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Children, Component } from 'react';
-import ReactPropTypes from 'prop-types';
 import classnames from 'classnames';
 import { schema, PropTypes } from 'react-desc';
-import { matchPath } from 'react-router';
+import { matchPath, withRouter } from 'react-router';
 import LinkNextIcon from './icons/base/LinkNext';
 
 import CSSClassnames from '../utils/CSSClassnames';
+import composeKeepPropTypes from "../utils/composeKeepPropTypes";
 
 const CLASS_ROOT = CSSClassnames.ANCHOR;
 
-export default class Anchor extends Component {
+class Anchor extends Component {
 
-  constructor (props, context) {
-    super(props, context);
+  constructor (props) {
+    super(props);
     this._onClick = this._onClick.bind(this);
     this._onLocationChange = this._onLocationChange.bind(this);
     this._attachUnlisten = this._attachUnlisten.bind(this);
     this._isRouteActive = this._isRouteActive.bind(this);
-    const { path } = props;
-    const { router } = context;
+    const { path, history } = props;
 
-    const active = this._isRouteActive(path, router);
+    const active = this._isRouteActive(path, history);
 
     this.state = { active };
   }
 
   componentDidMount () {
-    const { path } = this.props;
-    const { router } = this.context;
+    const { path, history } = this.props;
 
     if (path) {
-      this._attachUnlisten(router.history || router);
+      this._attachUnlisten(history);
     }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { path } = this.props;
-    const { router } = this.context;
+    const { path, history } = this.props;
 
     if (path && path !== prevProps.path) {
-      this._attachUnlisten(router.history || router);
+      this._attachUnlisten(history);
     }
   }
 
@@ -53,20 +50,21 @@ export default class Anchor extends Component {
     this._unmounted = true;
   }
 
-  _isRouteActive(path, router) {
+  _isRouteActive(path, history) {
     if (!path) {
       return false;
     }
     let active;
-    if (router && router.isActive) {
-      active = router && router.isActive &&
-        path && router.isActive({
-        pathname: path.path || path,
-        query: { indexLink: path.index }
-      });
-    } else if(router && matchPath) {
+    // if (router && router.isActive) {
+    //   active = router && router.isActive &&
+    //     path && router.isActive({
+    //     pathname: path.path || path,
+    //     query: { indexLink: path.index }
+    //   });
+    // } else 
+    if(history && matchPath) {
       active = !!matchPath(
-        router.history.location.pathname,
+        history.location.pathname,
         { path: path.path || path, exact: !!path.index }
       );
     }
@@ -74,8 +72,8 @@ export default class Anchor extends Component {
     return active;
   }
 
-  _attachUnlisten(router) {
-    this._unlisten = router.listen(this._onLocationChange);
+  _attachUnlisten(history) {
+    this._unlisten = history.listen(this._onLocationChange);
   }
 
   _onLocationChange (location) {
@@ -83,23 +81,21 @@ export default class Anchor extends Component {
     // if we called unlisten. So we added this check here to prevent
     // calling setState in a unmounted component
     if (!this._unmounted) {
-      const { path } = this.props;
-      const { router } = this.context;
+      const { path, history } = this.props;
       const active = matchPath ? (
         !!matchPath(
           location.pathname,
           { path: path.path || path, exact: !!path.index }
         )
       ) : (
-        router && location.pathname === (path.path || path)
+        history && location.pathname === (path.path || path)
       );
       this.setState({ active });
     }
   }
 
   _onClick (event) {
-    const { method, onClick, path, disabled } = this.props;
-    const { router } = this.context;
+    const { method, onClick, path, disabled, history } = this.props;
     const modifierKey = event.ctrlKey || event.metaKey;
 
     if (modifierKey && !disabled && !onClick) {
@@ -111,9 +107,9 @@ export default class Anchor extends Component {
     if (!disabled) {
       if (path) {
         if ('push' === method) {
-          (router.history || router).push(path.path || path);
+          (history).push(path.path || path);
         } else if ('replace' === method) {
-          (router.history || router).replace(path.path || path);
+          (history).replace(path.path || path);
         }
       }
 
@@ -126,11 +122,11 @@ export default class Anchor extends Component {
   render () {
     const {
       a11yTitle, align, animateIcon, children, className, disabled, href, icon,
-      label, onClick, path, primary, reverse, tag, ...props
+      label, onClick, path, primary, reverse, tag, history, ...props
     } = this.props;
     delete props.method;
+    delete props.staticContext;
     const { active } = this.state;
-    const { router } = this.context;
 
     let anchorIcon;
     if (icon) {
@@ -155,16 +151,16 @@ export default class Anchor extends Component {
     });
 
     const target = path ? path.path || path : undefined;
-    let adjustedHref;
-    if (router && router.createPath) {
-      adjustedHref = (path && router) ?
-        router.createPath(target) : href;
-    } else {
-      adjustedHref = (path && router && router.history) ?
-        router.history.createHref(
-          typeof target === 'string' ? { pathname: target } : target
-        ) : href;
-    }
+    //let adjustedHref;
+    //if (router && router.createPath) {
+    //  adjustedHref = (path && router) ?
+    //    router.createPath(target) : href;
+    //} else {
+    //}
+    let adjustedHref = (path && history) ?
+      history.createHref(
+        typeof target === 'string' ? { pathname: target } : target
+      ) : href;
 
     let classes = classnames(
       CLASS_ROOT,
@@ -181,7 +177,7 @@ export default class Anchor extends Component {
       className
     );
 
-    let adjustedOnClick = (path && router ? this._onClick : onClick);
+    let adjustedOnClick = (path && history ? this._onClick : onClick);
     if (!anchorChildren) {
       anchorChildren = label;
     }
@@ -205,7 +201,7 @@ export default class Anchor extends Component {
       </Component>
     );
   }
-};
+}
 
 schema(Anchor, {
   description: `A text link. We have a separate component from the browser
@@ -256,6 +252,4 @@ schema(Anchor, {
   }
 });
 
-Anchor.contextTypes = {
-  router: ReactPropTypes.object
-};
+export default composeKeepPropTypes(Anchor, withRouter);

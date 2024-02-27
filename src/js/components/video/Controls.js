@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
@@ -20,7 +21,7 @@ import { formatTime } from '../../utils/FormatTime';
 const CLASS_ROOT = CSSClassnames.VIDEO;
 const BUTTON_CLASS = `${CLASS_ROOT}__button`;
 
-export default class Controls extends Component {
+class Controls extends Component {
 
   constructor () {
     super();
@@ -51,7 +52,7 @@ export default class Controls extends Component {
 
   _renderMuteButton () {
     const { muted, toggleMute } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let buttonMessage = Intl.getMessage(intl, 'Mute');
     let Icon = VolumeMuteIcon;
     if (muted) {
@@ -112,7 +113,8 @@ export default class Controls extends Component {
       seek,
       timeline,
       allowFullScreen,
-      fullscreen
+      fullscreen,
+      innerRef
     } = this.props;
 
     if (!hasPlayed) {
@@ -121,7 +123,7 @@ export default class Controls extends Component {
 
     let overlayContent = (
       <Box pad="none" className={`${CLASS_ROOT}__controls`}
-        direction="column" justify="start">
+        direction="column" justify="start" innerRef={innerRef}>
         <VideoProgressBar progress={percentagePlayed}
           onChapterHover={this._onChapterTickHover}
           duration={duration} onChange={seek} timeline={timeline} />
@@ -149,6 +151,9 @@ export default class Controls extends Component {
   }
 }
 
-Controls.contextTypes = {
-  intl: PropTypes.object
+Controls.propTypes = {
+  intl: PropTypes.object,
+  innerRef: PropTypes.func
 };
+
+export default injectIntl(Controls);

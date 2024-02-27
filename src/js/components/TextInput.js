@@ -1,10 +1,11 @@
 // (C) Copyright 2014 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import PortalDrop from './PortalDrop';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
-import Drop from '../utils/Drop';
 import Intl from '../utils/Intl';
 import InputPaste from '../utils/InputPaste';
 import { announce } from '../utils/Announcer';
@@ -14,7 +15,7 @@ import CSSClassnames from '../utils/CSSClassnames';
 const CLASS_ROOT = CSSClassnames.TEXT_INPUT;
 const INPUT = CSSClassnames.INPUT;
 
-export default class TextInput extends Component {
+class TextInput extends Component {
 
   activeKeyboardHandlers = {
     esc: this._onRemoveDrop,
@@ -28,8 +29,8 @@ export default class TextInput extends Component {
     down: this._onAddDrop
   };
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onInputChange = this._onInputChange.bind(this);
     this._onAddDrop = this._onAddDrop.bind(this);
@@ -44,6 +45,7 @@ export default class TextInput extends Component {
     this._announceSuggestion = this._announceSuggestion.bind(this);
 
     this.state = {
+      drop: null,
       announceChange: false,
       dropActive: false,
       activeSuggestionIndex: -1
@@ -53,44 +55,37 @@ export default class TextInput extends Component {
   componentDidUpdate (prevProps, prevState) {
     const { suggestions } = this.props;
     const { announceChange, dropActive, focused } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { activeKeyboardHandlers, focusedKeyboardHandlers } = this;
     // the order here is important, need to turn off keys before turning on
 
     if (! focused && prevState.focused) {
-      KeyboardAccelerators.stopListeningToKeyboard(this,
+      KeyboardAccelerators.stopListeningToKeyboard(this.componentRef,
         focusedKeyboardHandlers);
     }
 
-    if (! dropActive && prevState.dropActive) {
+    if (!dropActive && prevState.dropActive) {
       document.removeEventListener('click', this._onRemoveDrop);
-      KeyboardAccelerators.stopListeningToKeyboard(this,
+      KeyboardAccelerators.stopListeningToKeyboard(this.componentRef,
         activeKeyboardHandlers);
-      if (this._drop) {
-        this._drop.remove();
-        this._drop = undefined;
-      }
+      this.setState({drop: null});
     }
 
     if (focused && ! prevState.focused) {
-      KeyboardAccelerators.startListeningToKeyboard(this,
+      KeyboardAccelerators.startListeningToKeyboard(this.componentRef,
         focusedKeyboardHandlers);
     }
 
     if (dropActive && ! prevState.dropActive) {
-      document.addEventListener('click', this._onRemoveDrop);
-      KeyboardAccelerators.startListeningToKeyboard(this,
+      KeyboardAccelerators.startListeningToKeyboard(this.componentRef,
         activeKeyboardHandlers);
 
       // If this is inside a FormField, place the drop in reference to it.
       const control = this.componentRef;
-      this._drop = new Drop(control,
-        this._renderDropContent(), {
-          align: {top: 'bottom', left: 'left'},
-          responsive: false // so suggestion changes don't re-align
-        });
-    } else if (dropActive && prevState.dropActive) {
-      this._drop.render(this._renderDropContent());
+      this.setState({drop: {control, opts: {
+        align: {top: 'bottom', left: 'left'},
+        responsive: false // so suggestion changes don't re-align
+      }}}, () => document.addEventListener('click', this._onRemoveDrop));
     }
 
     if (announceChange && suggestions) {
@@ -111,16 +106,13 @@ export default class TextInput extends Component {
   componentWillUnmount () {
     const { activeKeyboardHandlers, focusedKeyboardHandlers } = this;
 
-    KeyboardAccelerators.stopListeningToKeyboard(this,
+    KeyboardAccelerators.stopListeningToKeyboard(this.componentRef,
       focusedKeyboardHandlers);
 
-    KeyboardAccelerators.stopListeningToKeyboard(this,
+    KeyboardAccelerators.stopListeningToKeyboard(this.componentRef,
       activeKeyboardHandlers);
 
     document.removeEventListener('click', this._onRemoveDrop);
-    if (this._drop) {
-      this._drop.remove();
-    }
   }
 
   _stopPropagation() {
@@ -145,7 +137,7 @@ export default class TextInput extends Component {
 
   _announceSuggestion (index) {
     const { suggestions } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (suggestions && suggestions.length > 0) {
       const labelMessage = this._renderLabel(suggestions[index]);
       const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
@@ -195,7 +187,7 @@ export default class TextInput extends Component {
   _onEnter (event) {
     const { onSelect, suggestions } = this.props;
     const { activeSuggestionIndex } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     this.setState({ dropActive: false });
     if (activeSuggestionIndex >= 0) {
       event.preventDefault(); // prevent submitting forms
@@ -299,6 +291,7 @@ export default class TextInput extends Component {
   }
 
   render () {
+    const {drop} = this.state;
     const {
       className, defaultValue, value, placeHolder, ...props
     } = this.props;
@@ -315,28 +308,29 @@ export default class TextInput extends Component {
     );
 
     return (
-      <input
-        ref={ref => this.componentRef = ref}
-        type='text'
-        autoComplete="off"
-        {...props}
-        className={classes}
-        defaultValue={this._renderLabel(defaultValue)}
-        value={this._renderLabel(value)}
-        placeholder={placeHolder}
-        onChange={this._onInputChange} onFocus={this._onFocus}
-        onKeyDown={this._onInputKeyDown}
-        onPaste={InputPaste.getInputOnPaste('text')} />
+      <>
+        <input
+          ref={ref => this.componentRef = ref}
+          type='text'
+          autoComplete="off"
+          {...props}
+          className={classes}
+          defaultValue={this._renderLabel(defaultValue)}
+          value={this._renderLabel(value)}
+          placeholder={placeHolder}
+          onChange={this._onInputChange} onFocus={this._onFocus}
+          onKeyDown={this._onInputKeyDown}
+          onPaste={InputPaste.getInputOnPaste('text')} />
+        {drop ? <PortalDrop content={this._renderDropContent()} control={drop.control} opts={drop.opts} /> : null}
+      </>
     );
   }
 
 }
 
-TextInput.contextTypes = {
-  intl: PropTypes.object
-};
 
 TextInput.propTypes = {
+  intl: PropTypes.object,
   defaultValue: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
@@ -354,3 +348,5 @@ TextInput.propTypes = {
   ),
   value: PropTypes.string
 };
+
+export default injectIntl(TextInput);

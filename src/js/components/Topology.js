@@ -1,8 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Children, Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import Status from './icons/Status';
 import CSSClassnames from '../utils/CSSClassnames';
@@ -27,7 +27,7 @@ class Part extends Component {
       a11yTitle, align, children, className, demarcate, direction, justify,
       label, reverse, status, ...props
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let realChildren = 0;
     Children.forEach(children, (child) => {
       if (child) {
@@ -96,11 +96,8 @@ class Part extends Component {
   }
 }
 
-Part.contextTypes = {
-  intl: PropTypes.object
-};
-
 Part.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   align: PropTypes.oneOf(['start', 'center', 'between', 'end', 'stretch']),
   demarcate: PropTypes.bool,
@@ -155,7 +152,7 @@ class Parts extends Component {
 
   render () {
     const { a11yTitle, align, children, className, direction } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       `${CLASS_ROOT}__parts`,
       {
@@ -174,11 +171,8 @@ class Parts extends Component {
   }
 }
 
-Parts.contextTypes = {
-  intl: PropTypes.object
-};
-
 Parts.propTypes = {
+  intl: PropTypes.object,
   align: PropTypes.oneOf(['start', 'center', 'between', 'end', 'stretch']),
   direction: PropTypes.oneOf(['row', 'column']).isRequired,
   uniform: PropTypes.bool
@@ -188,10 +182,10 @@ Parts.defaultProps = {
   direction: 'column'
 };
 
-export default class Topology extends Component {
+class Topology extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._layout = this._layout.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -209,7 +203,7 @@ export default class Topology extends Component {
 
   componentDidMount () {
     const { links } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     window.addEventListener('resize', this._onResize);
     this._layout();
     if (links && links.length > 0) {
@@ -339,7 +333,7 @@ export default class Topology extends Component {
   }
 
   _layout () {
-    const contents = findDOMNode(this._contentsRef);
+    const contents = this._contentsRef;
     if (contents) {
       this.setState({
         width: contents.scrollWidth,
@@ -387,7 +381,7 @@ export default class Topology extends Component {
     } = this.props;
     delete props.linkOffset;
     const { focus, height, mouseActive, paths, width } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames( CLASS_ROOT, {
       [`${CLASS_ROOT}--focus`]: focus
     }, className );
@@ -452,11 +446,9 @@ export default class Topology extends Component {
 
 }
 
-Topology.contextTypes = {
-  intl: PropTypes.object
-};
 
 Topology.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   links: PropTypes.arrayOf(
     PropTypes.shape({
@@ -472,6 +464,8 @@ Topology.defaultProps = {
   linkOffset: 18
 };
 
-Topology.Parts = Parts;
-Topology.Part = Part;
-Topology.Label = Label;
+Topology.Parts = injectIntl(Parts);
+Topology.Part = injectIntl(Part);
+Topology.Label = injectIntl(Label);
+
+export default injectIntl(Topology);

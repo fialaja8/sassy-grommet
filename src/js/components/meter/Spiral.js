@@ -6,6 +6,8 @@ import { baseUnit, translateEndAngle, arcCommands } from '../../utils/Graphics';
 import CSSClassnames from '../../utils/CSSClassnames';
 import { baseDimension } from './utils';
 import Graphic from './Graphic';
+import composeKeepPropTypes from "../../utils/composeKeepPropTypes";
+import {injectIntl} from "react-intl";
 
 const CLASS_ROOT = CSSClassnames.METER;
 
@@ -14,10 +16,10 @@ const SPIRAL_RADIUS = (baseDimension / 2) - (baseUnit / 2);
 const RING_THICKNESS = baseUnit;
 // Allow for active value content next to a spiral meter
 
-export default class Spiral extends Graphic {
+class Spiral extends Graphic {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     //needed in Graphic.js to fix minification issues
     this.displayName = 'Spiral';
   }
@@ -111,3 +113,4 @@ Spiral.defaultProps = {
 
 //needed in Graphic.js to fix minification issues
 Spiral.displayName = 'Spiral';
+export default composeKeepPropTypes(Spiral, injectIntl);

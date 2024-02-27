@@ -10,10 +10,10 @@ import { padding, pointSize } from './utils';
 const CLASS_ROOT = CSSClassnames.CHART_GRAPH;
 const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 
-export default class Graph extends Component {
+class Graph extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._renderA11YTitle = this._renderA11YTitle.bind(this);
   }
 
@@ -62,7 +62,7 @@ export default class Graph extends Component {
 
   _renderA11YTitle () {
     const { a11yTitle, max, min, type, values } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     if (a11yTitle) {
       return a11yTitle;
@@ -249,9 +249,6 @@ export default class Graph extends Component {
 
 }
 
-Graph.contextTypes = {
-  intl: PropTypes.object
-};
 
 Graph.defaultProps = {
   min: 0,
@@ -259,6 +256,7 @@ Graph.defaultProps = {
 };
 
 Graph.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   activeIndex: PropTypes.number,
   colorIndex: PropTypes.string,
@@ -274,3 +272,6 @@ Graph.propTypes = {
   vertical: PropTypes.bool,
   width: PropTypes.number // only from Chart
 };
+
+//NOTE: No HOC, other components extend this one
+export default Graph;

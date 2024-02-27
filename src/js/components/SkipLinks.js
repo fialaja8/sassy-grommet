@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import FormattedMessage from './FormattedMessage';
 import Box from './Box';
@@ -12,9 +13,9 @@ import CSSClassnames from '../utils/CSSClassnames';
 
 const CLASS_ROOT = CSSClassnames.SKIP_LINK_ANCHOR;
 
-export default class SkipLinks extends Component {
-  constructor (props, context) {
-    super(props, context);
+class SkipLinks extends Component {
+  constructor (props) {
+    super(props);
     this._processTab = this._processTab.bind(this);
     this._onFocus = this._onFocus.bind(this);
     this._onClick = this._onClick.bind(this);
@@ -30,7 +31,7 @@ export default class SkipLinks extends Component {
       tab: this._processTab
     };
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.boxRef, this._keyboardHandlers
     );
 
     document.addEventListener('DOMNodeInserted', this._checkForSkipLink);
@@ -38,7 +39,7 @@ export default class SkipLinks extends Component {
 
   componentWillUnmount () {
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this.boxRef, this._keyboardHandlers
     );
     document.removeEventListener('DOMNodeInserted', this._checkForSkipLink);
   }
@@ -101,7 +102,7 @@ export default class SkipLinks extends Component {
   render () {
 
     let anchorElements = this.state.anchors.map(function (anchor, index) {
-      let skipToLabel = Intl.getMessage(this.context.intl, 'Skip to');
+      let skipToLabel = Intl.getMessage(this.props.intl, 'Skip to');
       let a11yLabel = `${skipToLabel} ${anchor.label}`;
       return (
         <a href={'#' + anchor.id}
@@ -126,7 +127,7 @@ export default class SkipLinks extends Component {
 
     return (
       <Layer id="skip-link-layer" hidden={!this.state.showLayer} align="top">
-        <Box pad={{horizontal: 'small', vertical: 'medium'}}>
+        <Box innerRef={(ref) => this.boxRef = ref} pad={{horizontal: 'small', vertical: 'medium'}}>
           <h2>
             <FormattedMessage id="Skip to" defaultMessage="Skip to" />
           </h2>
@@ -137,6 +138,8 @@ export default class SkipLinks extends Component {
   }
 }
 
-SkipLinks.contextTypes = {
+SkipLinks.propTypes = {
   intl: PropTypes.object
 };
+
+export default injectIntl(SkipLinks);

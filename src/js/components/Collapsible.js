@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import { TransitionGroup } from 'react-transition-group';
 import classnames from 'classnames';
 import Box from './Box';
@@ -14,7 +13,7 @@ const CLASS_ROOT = CSSClassnames.COLLAPSIBLE;
 
 class Collapse extends Component {
   componentWillEnter (callback) {
-    const node = ReactDOM.findDOMNode(this);
+    const node = this._thisRef;
     if (node) {
       const contentHeight = node.clientHeight;
       node.classList.remove('animate');
@@ -29,13 +28,13 @@ class Collapse extends Component {
   }
 
   componentDidEnter () {
-    const node = ReactDOM.findDOMNode(this);
+    const node = this._thisRef;
     node.classList.remove('animate');
     node.style.height = '';
   }
 
   componentWillLeave (callback) {
-    const node = ReactDOM.findDOMNode(this);
+    const node = this._thisRef;
     if (node) {
       const contentHeight = node.clientHeight;
       node.style.height = `${contentHeight}px`;
@@ -53,7 +52,7 @@ class Collapse extends Component {
       CLASS_ROOT,
       this.props.className
     );
-    return <Box {...this.props} className={classes} />;
+    return <Box {...this.props} className={classes} innerRef={(ref) => this._thisRef = ref} />;
   }
 }
 

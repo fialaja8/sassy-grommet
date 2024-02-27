@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import Box from './Box';
 import SkipLinkAnchor from './SkipLinkAnchor';
@@ -13,8 +12,8 @@ const CLASS_ROOT = CSSClassnames.FOOTER;
 
 export default class Footer extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._alignMirror = this._alignMirror.bind(this);
     this._onResize = this._onResize.bind(this);
   }
@@ -43,7 +42,7 @@ export default class Footer extends Component {
   }
 
   _alignMirror () {
-    var contentElement = ReactDOM.findDOMNode(this.contentRef);
+    var contentElement = this.contentRef;
     var mirrorElement = this.mirrorRef;
 
     // constrain fixed content to the width of the mirror
@@ -105,7 +104,7 @@ export default class Footer extends Component {
           <div ref={ref => this.mirrorRef = ref}
             className={`${CLASS_ROOT}__mirror`} />
           <div className={wrapperClasses}>
-            <Box ref={ref => this.contentRef = ref}
+            <Box innerRef={ref => this.contentRef = ref}
               {...boxProps} tag="footer" className={classes}
               primary={false}>
               {footerSkipLink}

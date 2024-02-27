@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import SpinningIcon from './icons/Spinning';
@@ -16,10 +17,10 @@ const LIST_ITEM = CSSClassnames.LIST_ITEM;
 const SELECTED_CLASS = `${CLASS_ROOT}-item--selected`;
 const ACTIVE_CLASS = `${CLASS_ROOT}-item--active`;
 
-export default class List extends Component {
+class List extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onClick = this._onClick.bind(this);
     this._fireClick = this._fireClick.bind(this);
@@ -63,7 +64,7 @@ export default class List extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.listRef, this._keyboardHandlers
       );
     }
   }
@@ -96,7 +97,7 @@ export default class List extends Component {
         space: this._onEnter
       };
       KeyboardAccelerators.startListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.listRef, this._keyboardHandlers
       );
     }
   }
@@ -108,13 +109,13 @@ export default class List extends Component {
     }
     if (selectable) {
       KeyboardAccelerators.stopListeningToKeyboard(
-        this, this._keyboardHandlers
+        this.listRef, this._keyboardHandlers
       );
     }
   }
 
   _announceItem (label) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
     announce(`${label} ${enterSelectMessage}`);
   }
@@ -207,7 +208,7 @@ export default class List extends Component {
 
   _onEnter (event) {
     const { activeItem } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (this.listRef.contains(document.activeElement) &&
       activeItem !== undefined) {
       const rows = this.listRef.querySelectorAll('ul li');
@@ -246,10 +247,10 @@ export default class List extends Component {
   render () {
     const {
       a11yTitle, children, className, emptyIndicator, onBlur, onFocus, onMore,
-      onMouseDown, onMouseUp, selectable, ...props
+      onMouseDown, onMouseUp, selectable, innerRef, ...props
     } = this.props;
     const { activeItem, focus, mouseActive } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT,
@@ -325,8 +326,13 @@ export default class List extends Component {
     }
 
     return (
-      <ul {...props} ref={(ref) => this.listRef = ref} className={classes}
-        {...selectableProps}>
+      <ul {...props} ref={(ref) => {
+        this.listRef = ref;
+        if (innerRef) {
+          innerRef(ref);
+        }
+      }} className={classes}
+      {...selectableProps}>
         {empty}
         {children}
         {more}
@@ -335,14 +341,13 @@ export default class List extends Component {
   }
 }
 
-List.contextTypes = {
-  intl: PropTypes.object
-};
 
 List.propTypes = {
+  intl: PropTypes.object,
   emptyIndicator: PropTypes.node,
   onMore: PropTypes.func,
   onSelect: PropTypes.func,
+  innerRef: PropTypes.func,
   selectable: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.oneOf(['multiple'])
@@ -356,3 +361,5 @@ List.propTypes = {
 List.defaultProps = {
   role: 'list'
 };
+
+export default injectIntl(List);

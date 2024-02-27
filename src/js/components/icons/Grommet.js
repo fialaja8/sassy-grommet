@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../../utils/CSSClassnames';
@@ -8,10 +9,10 @@ import Intl from '../../utils/Intl';
 
 const CLASS_ROOT = CSSClassnames.LOGO_ICON;
 
-export default class Grommet extends Component {
+class Grommet extends Component {
   render () {
     const { a11yTitle, className, invert, large, size, small } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       CLASS_ROOT,
       {
@@ -33,16 +34,15 @@ export default class Grommet extends Component {
   }
 }
 
-Grommet.contextTypes = {
-  intl: PropTypes.object
-};
-
 Grommet.defaultProps = {
   a11yTitle: 'Grommet'
 };
 
 Grommet.propTypes = {
   a11yTitle: PropTypes.string,
+  intl: PropTypes.object,
   invert: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'xlarge'])
 };
+
+export default injectIntl(Grommet);

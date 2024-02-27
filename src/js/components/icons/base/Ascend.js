@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2015 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../../../utils/CSSClassnames';
@@ -10,11 +11,11 @@ import Props from '../../../utils/Props';
 const CLASS_ROOT = CSSClassnames.CONTROL_ICON;
 const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 
-export default class Icon extends Component {
+class Icon extends Component {
   render () {
     const { className, colorIndex } = this.props;
     let { a11yTitle, size, responsive } = this.props;
-    let { intl } = this.context;
+    let { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT,
@@ -34,9 +35,6 @@ export default class Icon extends Component {
   }
 };
 
-Icon.contextTypes = {
-  intl: PropTypes.object
-};
 
 Icon.defaultProps = {
   responsive: true
@@ -47,9 +45,12 @@ Icon.displayName = 'Ascend';
 Icon.icon = true;
 
 Icon.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   colorIndex: PropTypes.string,
   size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge', 'huge']),
   responsive: PropTypes.bool
 };
 
+
+export default injectIntl(Icon);

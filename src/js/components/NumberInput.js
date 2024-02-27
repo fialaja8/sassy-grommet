@@ -13,8 +13,8 @@ const INPUT = CSSClassnames.INPUT;
 
 export default class NumberInput extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onAdd = this._onAdd.bind(this);
     this._onSubtract = this._onSubtract.bind(this);

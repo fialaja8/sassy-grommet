@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../../utils/CSSClassnames';
@@ -8,12 +9,12 @@ import Intl from '../../utils/Intl';
 
 const CLASS_ROOT = CSSClassnames.SPINNING;
 
-export default class Spinning extends Component {
+class Spinning extends Component {
   render () {
     const {
       a11yTitle, className, small, size, responsive, ...props
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     let sizeOverride = small ? 'small' : size;
 
@@ -36,10 +37,6 @@ export default class Spinning extends Component {
   }
 }
 
-Spinning.contextTypes = {
-  intl: PropTypes.object
-};
-
 Spinning.defaultProps = {
   responsive: true
 };
@@ -47,7 +44,10 @@ Spinning.defaultProps = {
 Spinning.propTypes = {
   a11yTitle: PropTypes.string,
   className: PropTypes.string,
+  intl: PropTypes.object,
   small: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'xlarge', 'huge']),
   responsive: PropTypes.bool
 };
+
+export default injectIntl(Spinning);

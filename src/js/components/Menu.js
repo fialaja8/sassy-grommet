@@ -1,12 +1,12 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
 import { filterByFocusable } from '../utils/DOM';
-import Drop, { dropAlignPropType } from '../utils/Drop';
 import Intl from '../utils/Intl';
 import Props from '../utils/Props';
 import Responsive from '../utils/Responsive';
@@ -15,6 +15,7 @@ import Button from './Button';
 import DropCaretIcon from './icons/base/Down';
 import MoreIcon from './icons/base/More';
 import CSSClassnames from '../utils/CSSClassnames';
+import PortalDrop, { dropAlignPropType } from './PortalDrop';
 
 const CLASS_ROOT = CSSClassnames.MENU;
 
@@ -26,21 +27,12 @@ function isFunction (obj) {
 // so we can transfer the router context.
 class MenuDrop extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onUpKeyPress = this._onUpKeyPress.bind(this);
     this._onDownKeyPress = this._onDownKeyPress.bind(this);
     this._processTab = this._processTab.bind(this);
-  }
-
-  getChildContext () {
-    return {
-      intl: this.props.intl,
-      history: this.props.history,
-      router: this.props.router,
-      store: this.props.store
-    };
   }
 
   componentDidMount () {
@@ -52,7 +44,7 @@ class MenuDrop extends Component {
       down: this._onDownKeyPress,
       right: this._onDownKeyPress
     };
-    KeyboardAccelerators.startListeningToKeyboard(this, this._keyboardHandlers);
+    KeyboardAccelerators.startListeningToKeyboard(this.menuDropRef, this._keyboardHandlers);
   }
 
   componentWillUnmount () {
@@ -63,11 +55,11 @@ class MenuDrop extends Component {
       // required for IE11 and Edge
       this._originalFocusedElement.parentNode.focus();
     }
-    KeyboardAccelerators.stopListeningToKeyboard(this, this._keyboardHandlers);
+    KeyboardAccelerators.stopListeningToKeyboard(this.menuDropRef, this._keyboardHandlers);
   }
 
   _processTab (event) {
-    let container = findDOMNode(this.menuDropRef);
+    let container = this.menuDropRef;
     let items = container.getElementsByTagName('*');
     items = filterByFocusable(items);
 
@@ -88,7 +80,7 @@ class MenuDrop extends Component {
 
   _onUpKeyPress (event) {
     event.preventDefault();
-    const container = findDOMNode(this.navContainerRef);
+    const container = this.navContainerRef;
     let menuItems = container.childNodes;
     if (!this.activeMenuItem) {
       let lastMenuItem = menuItems[menuItems.length - 1];
@@ -118,7 +110,7 @@ class MenuDrop extends Component {
 
   _onDownKeyPress (event) {
     event.preventDefault();
-    const container = findDOMNode(this.navContainerRef);
+    const container = this.navContainerRef;
     let menuItems = container.childNodes;
     if (!this.activeMenuItem) {
       this.activeMenuItem = menuItems[0];
@@ -147,10 +139,9 @@ class MenuDrop extends Component {
 
   render () {
     const {
-      dropAlign, size, children, control, colorIndex, onClick, ...props
+      dropAlign, size, children, control, colorIndex, onClick, innerRef, ...props
     } = this.props;
     const restProps = Props.omit(props, [
-      ...Object.keys(MenuDrop.childContextTypes),
       ...Object.keys(MenuDrop.propTypes)
     ]);
 
@@ -166,7 +157,7 @@ class MenuDrop extends Component {
     });
 
     let contents = [
-      <Box {...restProps} key="nav" ref={ref => this.navContainerRef = ref}
+      <Box {...restProps} key="nav" innerRef={ref => this.navContainerRef = ref}
         tag="nav" className={`${CLASS_ROOT}__contents`}
         primary={false}>
         {menuDropChildren}
@@ -198,8 +189,13 @@ class MenuDrop extends Component {
     );
 
     return (
-      <Box ref={ref => this.menuDropRef = ref} className={classes}
-        colorIndex={colorIndex} onClick={onClick} focusable={false}>
+      <Box innerRef={ref => {
+        this.menuDropRef = ref;
+        if (innerRef) {
+          innerRef(ref);
+        }
+      }} className={classes}
+      colorIndex={colorIndex} onClick={onClick} focusable={false}>
         {contents}
       </Box>
     );
@@ -210,18 +206,11 @@ MenuDrop.propTypes = {
   control: PropTypes.node,
   dropAlign: dropAlignPropType,
   dropColorIndex: PropTypes.string,
+  innerRef: PropTypes.func,
   onClick: PropTypes.func.isRequired,
   router: PropTypes.any,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  store: PropTypes.any,
   ...Box.propTypes
-};
-
-MenuDrop.childContextTypes = {
-  history: PropTypes.any,
-  intl: PropTypes.any,
-  router: PropTypes.any,
-  store: PropTypes.any
 };
 
 const inlineFromProps = (props) => {
@@ -229,10 +218,10 @@ const inlineFromProps = (props) => {
     : (!props.label && !props.icon);
 };
 
-export default class Menu extends Component {
+class Menu extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onOpen = this._onOpen.bind(this);
     this._onClose = this._onClose.bind(this);
@@ -285,75 +274,66 @@ export default class Menu extends Component {
       switch (this.state.state) {
         case 'collapsed':
           KeyboardAccelerators.stopListeningToKeyboard(
-            this, focusedKeyboardHandlers
+            this._controlRef, focusedKeyboardHandlers
           );
           KeyboardAccelerators.stopListeningToKeyboard(
-            this, activeKeyboardHandlers
+            this._controlRef, activeKeyboardHandlers
           );
           document.removeEventListener('click', this._checkOnClose);
           document.removeEventListener('touchstart', this._checkOnClose);
-          if (this._drop) {
-            // When Menu is used with Anchor/paths the Drop removes too quickly
-            // and react looks for a DOM element which is gone. Adding a
-            // slight delay resolves this issue.
-            setTimeout(() => {
-              this._drop.remove();
-              this._drop = undefined;
-            }, 5);
-          }
+          // When Menu is used with Anchor/paths the Drop removes too quickly
+          // and react looks for a DOM element which is gone. Adding a
+          // slight delay resolves this issue.
+          setTimeout(() => {
+            this.setState({drop: null});
+          }, 5);
           break;
         case 'focused':
           KeyboardAccelerators.stopListeningToKeyboard(
-            this, activeKeyboardHandlers
+            this._controlRef, activeKeyboardHandlers
           );
           KeyboardAccelerators.startListeningToKeyboard(
-            this, focusedKeyboardHandlers
+            this._controlRef, focusedKeyboardHandlers
           );
           break;
         case 'expanded':
           // only add the drop again if the instance is not defined
           // see https://github.com/grommet/grommet/issues/1431
-          if (!this._drop) {
+          if (!this.state.drop) {
             KeyboardAccelerators.stopListeningToKeyboard(
-              this, focusedKeyboardHandlers
+              this._controlRef, focusedKeyboardHandlers
             );
             KeyboardAccelerators.startListeningToKeyboard(
-              this, activeKeyboardHandlers
+              this._controlRef, activeKeyboardHandlers
             );
-            document.addEventListener('click', this._checkOnClose);
-            document.addEventListener('touchstart', this._checkOnClose);
-            this._drop = new Drop(findDOMNode(this._controlRef),
-              this._renderMenuDrop(),
-              {
-                align: this.props.dropAlign,
-                colorIndex: this.props.dropColorIndex,
-                className: this.props.className &&
-                `${this.props.className}__drop--container`,
-                focusControl: true,
-                dropContainer: dropContainer
-              });
+            this.setState({drop: {control: this._controlRef, opts: {
+              align: this.props.dropAlign,
+              colorIndex: this.props.dropColorIndex,
+              className: this.props.className &&
+                    `${this.props.className}__drop--container`,
+              focusControl: true,
+              dropContainer: dropContainer
+            }}}, () => {
+              document.addEventListener('click', this._checkOnClose);
+              document.addEventListener('touchstart', this._checkOnClose);
+            });
           }
           break;
       }
-    } else if (this.state.state === 'expanded') {
-      this._drop.render(this._renderMenuDrop());
     }
   }
 
   componentWillUnmount () {
     document.removeEventListener('click', this._checkOnClose);
     document.removeEventListener('touchstart', this._checkOnClose);
-    KeyboardAccelerators.stopListeningToKeyboard(this);
-    if (this._drop) {
-      this._drop.remove();
-    }
+    KeyboardAccelerators.stopListeningToKeyboard(this._controlRef);
     if (this._responsive) {
       this._responsive.stop();
     }
   }
 
   _onOpen () {
-    if(findDOMNode(this._controlRef).contains(document.activeElement)) {
+    if(this._controlRef.contains(document.activeElement)) {
       this.setState({state: 'expanded'});
     }
   }
@@ -364,7 +344,7 @@ export default class Menu extends Component {
 
   _checkOnClose (event) {
     const drop = findDOMNode(this._menuDrop);
-    const control = findDOMNode(this._controlRef);
+    const control = this._controlRef;
     if (drop && !drop.contains(event.target) &&
       !control.contains(event.target)) {
       this._onClose();
@@ -423,8 +403,9 @@ export default class Menu extends Component {
   }
 
   _renderMenuDrop () {
-    let closeLabel = Intl.getMessage(this.context.intl, 'Close');
-    let menuLabel = Intl.getMessage(this.context.intl, 'Menu');
+    const { intl } = this.props;
+    let closeLabel = Intl.getMessage(intl, 'Close');
+    let menuLabel = Intl.getMessage(intl, 'Menu');
     let menuTitle = (
       `${closeLabel} ${this.props.a11yTitle || this.props.label || ''} ` +
       `${menuLabel}`
@@ -440,21 +421,23 @@ export default class Menu extends Component {
     let onClick = this.props.closeOnClick ? this._onClose : this._onSink;
 
     return (
-      <MenuDrop {...boxProps} {...this.context}
+      <MenuDrop {...boxProps}
+        intl={intl}
         className={this.props.className}
         dropAlign={this.props.dropAlign}
         size={this.props.size}
         onClick={onClick}
-        control={control} ref={(ref) => this._menuDrop = ref}>
+        control={control} innerRef={(ref) => this._menuDrop = ref}>
         {this.props.children}
       </MenuDrop>
     );
   }
 
   render () {
+    const { drop } = this.state;
     const {
       a11yTitle, children, className, direction, fill, label, primary, size,
-      pad, ...props
+      pad, intl, ...props
     } = this.props;
     delete props.closeOnClick;
     delete props.dropColorIndex;
@@ -496,21 +479,22 @@ export default class Menu extends Component {
       );
 
     } else {
-      const openLabel = Intl.getMessage(this.context.intl, 'Open');
-      const menuLabel = Intl.getMessage(this.context.intl, 'Menu');
+      const openLabel = Intl.getMessage(intl, 'Open');
+      const menuLabel = Intl.getMessage(intl, 'Menu');
       const menuTitle = (
         `${openLabel} ${a11yTitle || label || ''} ` +
         `${menuLabel}`
       );
 
       return (
-        <Box ref={ref => this._controlRef = ref} {...props} className={classes}>
+        <Box innerRef={ref => this._controlRef = ref} {...props} className={classes}>
           <Button plain={true} reverse={true}
             a11yTitle={menuTitle} {...this._renderButtonProps()}
             onClick={() => this.setState({
               state: this.state.state !== 'expanded' ? 'expanded' : 'collapsed'
             })}
             onFocus={this._onFocusControl} onBlur={this._onBlurControl} />
+          {drop ? <PortalDrop content={this.renderMenuDrop()} control={drop.control} opts={drop.opts} /> : null}
         </Box>
       );
 
@@ -519,6 +503,10 @@ export default class Menu extends Component {
 }
 
 Menu.propTypes = {
+  history: PropTypes.any,
+  intl: PropTypes.any,
+  router: PropTypes.any,
+  store: PropTypes.any,
   closeOnClick: PropTypes.bool,
   dropAlign: dropAlignPropType,
   dropColorIndex: PropTypes.string,
@@ -532,12 +520,6 @@ Menu.propTypes = {
   ...Box.propTypes
 };
 
-Menu.contextTypes = {
-  history: PropTypes.any,
-  intl: PropTypes.any,
-  router: PropTypes.any,
-  store: PropTypes.any
-};
 
 Menu.defaultProps = {
   closeOnClick: true,
@@ -546,3 +528,5 @@ Menu.defaultProps = {
   pad: 'none',
   dropContainer: undefined
 };
+
+export default withRouter(injectIntl(Menu));

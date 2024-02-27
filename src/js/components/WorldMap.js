@@ -155,8 +155,8 @@ const coordToLatLon = (coord, origin, extent) => {
 
 export default class WorldMap extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._renderPlace = this._renderPlace.bind(this);
     this._activateContinent = this._activateContinent.bind(this);
     this._activatePlace = this._activatePlace.bind(this);
@@ -315,13 +315,13 @@ export default class WorldMap extends Component {
       space: this._onEnter
     };
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._worldMapRef, this._keyboardHandlers
     );
   }
 
   _stopKeyboardListening() {
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._worldMapRef, this._keyboardHandlers
     );
   }
 

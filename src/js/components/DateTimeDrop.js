@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -101,13 +102,12 @@ const _stateFromProps =  (props)=> {
   return result;
 };
 
-export default class DateTimeDrop extends Component {
+class DateTimeDrop extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._announceActiveCell = this._announceActiveCell.bind(this);
-    this._buildDateRows = this._buildDateRows.bind(this);
     this._onDay = this._onDay.bind(this);
     this._onToday = this._onToday.bind(this);
     this._onPrevious = this._onPrevious.bind(this);
@@ -134,18 +134,18 @@ export default class DateTimeDrop extends Component {
       right: this._onNextDay,
       enter: this._onSelectDay
     };
-    KeyboardAccelerators.startListeningToKeyboard(this, this._keyboardHandlers);
+    KeyboardAccelerators.startListeningToKeyboard(this.containerRef, this._keyboardHandlers);
   }
 
 
   componentWillUnmount () {
-    KeyboardAccelerators.stopListeningToKeyboard(this, this._keyboardHandlers);
+    KeyboardAccelerators.stopListeningToKeyboard(this.containerRef, this._keyboardHandlers);
   }
 
 
   _announceActiveCell () {
     const { activeCell, dateRows } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const weekDay = WEEK_DAYS[activeCell[1]];
     const day = dateRows[activeCell[0]][activeCell[1]].date();
     const enterSelectMessage = Intl.getMessage(intl, 'Enter Select');
@@ -211,7 +211,7 @@ export default class DateTimeDrop extends Component {
       event.nativeEvent.stopImmediatePropagation();
     }
     const { format, onChange } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     this.setState({
       value: moment(date)
     }, () => {
@@ -225,7 +225,7 @@ export default class DateTimeDrop extends Component {
   _onToday () {
     const { format, onChange } = this.props;
     const { timeOfDay } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const today = moment().startOf('day').add(timeOfDay);
     this.setState({ value: today }, () => {
       const dateFormatted = today.format(format);
@@ -256,7 +256,7 @@ export default class DateTimeDrop extends Component {
     } else {
       // rebuild grid
       let state = { timeOfDay, value: newValue };
-      this._buildDateRows(state);
+      _buildDateRows(state);
       this.setState(state);
     }
   }
@@ -282,7 +282,7 @@ export default class DateTimeDrop extends Component {
     } else {
       // rebuild grid
       let state = { timeOfDay, value: newValue };
-      this._buildDateRows(state);
+      _buildDateRows(state);
       this.setState(state);
     }
   }
@@ -290,7 +290,7 @@ export default class DateTimeDrop extends Component {
   _renderGrid () {
     const { value: propsValue } = this.props;
     const { activeCell, dateRows, focus, mouseActive, value } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const dateSelectorMessage = Intl.getMessage(intl, 'Date Selector');
     const navigationHelpMessage = Intl.getMessage(intl, 'Navigation Help');
@@ -369,7 +369,7 @@ export default class DateTimeDrop extends Component {
   _renderCalendar () {
     const { format } = this.props;
     const { value } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const previousMonthMessage = Intl.getMessage(intl, 'Previous Month');
     const nextMonthMessage = Intl.getMessage(intl, 'Next Month');
@@ -404,7 +404,7 @@ export default class DateTimeDrop extends Component {
   _renderCounters (includeDate) {
     const { format } = this.props;
     const { value } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     // break the format up into chunks
     let chunks = [];
@@ -469,7 +469,7 @@ export default class DateTimeDrop extends Component {
     }
 
     return (
-      <Box className={CLASS_ROOT}>
+      <Box className={CLASS_ROOT} innerRef={(ref) => this.containerRef = ref}>
         {calendar}
         {counters}
       </Box>
@@ -478,13 +478,13 @@ export default class DateTimeDrop extends Component {
 
 }
 
-DateTimeDrop.contextTypes = {
-  intl: PropTypes.object
-};
 
 DateTimeDrop.propTypes = {
+  intl: PropTypes.object,
   format: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   step: PropTypes.number.isRequired,
   value: PropTypes.object.isRequired
 };
+
+export default injectIntl(DateTimeDrop);

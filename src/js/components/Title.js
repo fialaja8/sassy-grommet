@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Box from './Box';
@@ -9,13 +10,13 @@ import CSSClassnames from '../utils/CSSClassnames';
 
 const CLASS_ROOT = CSSClassnames.TITLE;
 
-export default class Title extends Component {
+class Title extends Component {
 
   render () {
     const {
       a11yTitle, children, className, responsive, truncate, ...props
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       CLASS_ROOT,
       {
@@ -55,17 +56,17 @@ export default class Title extends Component {
 }
 
 Title.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   onClick: PropTypes.func,
   responsive: PropTypes.bool,
   truncate: PropTypes.bool
 };
 
-Title.contextTypes = {
-  intl: PropTypes.object
-};
 
 Title.defaultProps = {
   responsive: true,
   truncate: true
 };
+
+export default injectIntl(Title);

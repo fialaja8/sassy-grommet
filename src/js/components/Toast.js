@@ -1,8 +1,10 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import ReactDOM_client from 'react-dom/client';
 import classnames from 'classnames';
 import Button from './Button';
 import Status from './icons/Status';
@@ -22,15 +24,6 @@ class ToastContents extends Component {
     super();
     this._onClose = this._onClose.bind(this);
     this.state = {};
-  }
-
-  getChildContext () {
-    return {
-      history: this.props.history,
-      intl: this.props.intl,
-      router: this.props.router,
-      store: this.props.store
-    };
   }
 
   componentDidMount () {
@@ -114,9 +107,7 @@ ToastContents.propTypes = {
   history: PropTypes.object,
   intl: PropTypes.object,
   onClose: PropTypes.func,
-  router: PropTypes.any,
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-  store: PropTypes.any
+  size: PropTypes.oneOf(['small', 'medium', 'large'])
 };
 
 // Because Toast creates a new DOM render context, the context
@@ -124,14 +115,8 @@ ToastContents.propTypes = {
 // TODO: Either figure out how to introspect the context and transfer
 // whatever we find or have callers explicitly indicate which parts
 // of the context to transfer somehow.
-ToastContents.childContextTypes = {
-  history: PropTypes.object,
-  intl: PropTypes.object,
-  router: PropTypes.any,
-  store: PropTypes.object
-};
 
-export default class Toast extends Component {
+class Toast extends Component {
 
   componentDidMount () {
     this._addLayer();
@@ -174,21 +159,22 @@ export default class Toast extends Component {
       const contents = (
         <ToastContents
           {...this.props}
-          history={this.context.history}
-          intl={this.context.intl}
-          router={this.context.router}
-          store={this.context.store}
+          history={this.props.history}
+          intl={this.props.intl}
           onClose={() => this._removeLayer()}
         />
       );
-      ReactDOM.render(contents, this._element);
+      this._elementRDRoot = ReactDOM_client.createRoot(this._element);
+      this._elementRDRoot.render(contents);
     }
   }
 
   _removeLayer () {
     const { onClose } = this.props;
     if (this._element) {
-      ReactDOM.unmountComponentAtNode(this._element);
+      if (this._elementRDRoot) {
+        this._elementRDRoot.unmount();
+      }
       this._element.parentNode.removeChild(this._element);
       this._element = undefined;
 
@@ -207,10 +193,13 @@ Toast.propTypes = {
   onClose: PropTypes.func,
   duration: PropTypes.number,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  status: PropTypes.string
+  status: PropTypes.string,
+  history: PropTypes.object
 };
 
 Toast.defaultProps = {
   duration: DURATION,
   size: 'medium'
 };
+
+export default withRouter(injectIntl(Toast));

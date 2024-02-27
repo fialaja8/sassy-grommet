@@ -3,15 +3,17 @@
 import { baseDimension } from './utils';
 import Graphic from './Graphic';
 import { baseUnit, translateEndAngle, arcCommands } from '../../utils/Graphics';
+import composeKeepPropTypes from "../../utils/composeKeepPropTypes";
+import {injectIntl} from "react-intl";
 
 const CIRCLE_WIDTH = baseDimension;
 const CIRCLE_RADIUS = (baseDimension / 2) - (baseUnit / 2);
 const RING_THICKNESS = baseUnit;
 
-export default class Circle extends Graphic {
+class Circle extends Graphic {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     //needed in Graphic.js to fix minification issues
     this.displayName = 'Circle';
   }
@@ -61,3 +63,4 @@ export default class Circle extends Graphic {
 
 //needed in Graphic.js to fix minification issues
 Circle.displayName = 'Circle';
+export default composeKeepPropTypes(Circle, injectIntl);

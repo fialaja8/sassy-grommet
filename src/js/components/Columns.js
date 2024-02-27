@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import CSSClassnames from '../utils/CSSClassnames';
 import Props from '../utils/Props';
@@ -12,8 +11,8 @@ const CLASS_ROOT = CSSClassnames.COLUMNS;
 
 export default class Columns extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._onResize = this._onResize.bind(this);
     this._layout = this._layout.bind(this);
     this.state = {
@@ -78,7 +77,7 @@ export default class Columns extends Component {
     const { initMobile, margin } = this.state;
     // grab CSS styles from DOM after component mounted
     // default to small size ($size-small = 192px)
-    const container = findDOMNode(this.containerRef);
+    const container = this.containerRef;
     if (container) {
       const column = container.childNodes[0];
       const child = column.childNodes[0];
@@ -124,8 +123,8 @@ export default class Columns extends Component {
 
   _calculateMaxCount () {
     const { columnBreakpoints } = this.state;
-    const container = findDOMNode(this.containerRef);
-    let maxColumnWidthIndex;
+    const container = this.containerRef;
+    let maxColumnWidthIndex = null;
 
     if (container && columnBreakpoints) {
       maxColumnWidthIndex = columnBreakpoints

@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../utils/CSSClassnames';
@@ -14,10 +15,10 @@ const CLASS_ROOT = {
   'status': CSSClassnames.STATUS_ICON
 };
 
-export default class SVGIcon extends Component {
+class SVGIcon extends Component {
   render () {
     const {
-      a11yTitle, children, className, colorIndex, size, type, ...props
+      a11yTitle, children, className, colorIndex, size, type, intl, ...props
     } = this.props;
 
     const classRoot = CLASS_ROOT[type];
@@ -30,8 +31,8 @@ export default class SVGIcon extends Component {
       className
     );
 
-    const iconMessage = Intl.getMessage(this.context.intl, 'icon');
-    const typeMessage = Intl.getMessage(this.context.intl, type);
+    const iconMessage = Intl.getMessage(intl, 'icon');
+    const typeMessage = Intl.getMessage(intl, type);
     let defaultTitle = `${typeMessage} ${iconMessage}`;
 
     return (
@@ -45,18 +46,18 @@ export default class SVGIcon extends Component {
   }
 }
 
-SVGIcon.contextTypes = {
-  intl: PropTypes.object
-};
 
 SVGIcon.defaultProps = {
   type: 'control'
 };
 
 SVGIcon.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   colorIndex: PropTypes.string,
   size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge',
     'huge']),
   type: PropTypes.oneOf(['control', 'logo', 'status'])
 };
+
+export default injectIntl(SVGIcon);

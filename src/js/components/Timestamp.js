@@ -23,8 +23,8 @@ function _showField(field, fields) {
 
 export default class Timestamp extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this._formatForLocale = this._formatForLocale.bind(this);
     this.state = {};
   }

@@ -1,6 +1,5 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-import { findDOMNode } from 'react-dom';
 import { generateId } from './DOM';
 
 // Allow callers to use key labels instead of key code numbers.
@@ -86,7 +85,7 @@ export default {
   // This function can be called multiple times, existing handlers will
   // be replaced, new handlers will be added.
   startListeningToKeyboard (component, handlers) {
-    var element = findDOMNode(component);
+    var element = component;
     if (element) {
       this._initKeyboardAccelerators(element);
       var keys = 0;
@@ -120,7 +119,7 @@ export default {
   // This function can be called multiple times, only the handlers
   // specified will be removed.
   stopListeningToKeyboard (component, handlers) {
-    var element = findDOMNode(component);
+    var element = component;
     if (!this._isComponentListening(element)) {
       return;
     }

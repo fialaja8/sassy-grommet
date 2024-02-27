@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Box from './Box';
@@ -17,10 +18,10 @@ import Props from '../utils/Props';
 
 const CLASS_ROOT = CSSClassnames.CAROUSEL;
 
-export default class Carousel extends Component {
+class Carousel extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onSelect = this._onSelect.bind(this);
     this._stopAutoplay = this._stopAutoplay.bind(this);
@@ -142,7 +143,7 @@ export default class Carousel extends Component {
   }
 
   _announce() {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const slideNumber = Intl.getMessage(intl, 'Slide Number', {
       slideNumber: this.state.activeIndex + 1
     });
@@ -263,7 +264,7 @@ export default class Carousel extends Component {
   _renderPrevButton () {
     const { infinite } = this.props;
     const { activeIndex } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let prevButton;
     if (infinite || activeIndex !== 0) {
       const prevMessage = Intl.getMessage(intl, 'Previous Slide');
@@ -281,7 +282,7 @@ export default class Carousel extends Component {
   _renderNextButton () {
     const { children, infinite } = this.props;
     const { activeIndex } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     let nextButton;
     if (infinite || activeIndex !== children.length - 1) {
       const nextMessage = Intl.getMessage(intl, 'Next Slide');
@@ -302,7 +303,7 @@ export default class Carousel extends Component {
     delete props.onActive;
     const restProps = Props.omit({...props}, Object.keys(Carousel.propTypes));
     const { activeIndex, hideControls, width } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       CLASS_ROOT, {
         [`${CLASS_ROOT}--hide-controls`]: hideControls
@@ -383,10 +384,6 @@ export default class Carousel extends Component {
   }
 }
 
-Carousel.contextTypes = {
-  intl: PropTypes.object
-};
-
 Carousel.defaultProps = {
   autoplay: true,
   autoplaySpeed: 5000,
@@ -396,6 +393,7 @@ Carousel.defaultProps = {
 
 Carousel.propTypes = {
   a11yTitle: PropTypes.string,
+  intl: PropTypes.object,
   activeIndex: PropTypes.number,
   autoplay: PropTypes.bool,
   autoplaySpeed: PropTypes.number,
@@ -403,3 +401,5 @@ Carousel.propTypes = {
   onActive: PropTypes.func,
   persistentNav: PropTypes.bool
 };
+
+export default injectIntl(Carousel);

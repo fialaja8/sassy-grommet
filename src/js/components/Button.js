@@ -1,9 +1,11 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Children, Component } from 'react';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames, { namespace } from '../utils/CSSClassnames';
+import composeKeepPropTypes from "../utils/composeKeepPropTypes";
 
 import Box from './Box';
 
@@ -25,7 +27,7 @@ function getHoverModifier(hoverIndicator) {
   }
 }
 
-export default class Button extends Component {
+class Button extends Component {
 
   constructor () {
     super();
@@ -42,7 +44,7 @@ export default class Button extends Component {
 
   _onClick (event) {
     const { method, onClick, path} = this.props;
-    const { router } = this.context;
+    const { history } = this.props;
     const modifierKey = event.ctrlKey || event.metaKey;
 
     if (modifierKey && !onClick) {
@@ -52,9 +54,9 @@ export default class Button extends Component {
     event.preventDefault();
 
     if ('push' === method) {
-      (router.history || router).push(path);
+      (history).push(path);
     } else if ('replace' === method) {
-      (router.history || router).replace(path);
+      (history).replace(path);
     }
 
     if (onClick) {
@@ -101,10 +103,11 @@ export default class Button extends Component {
     const {
       a11yTitle, accent, align, box, children, className, critical, fill,
       hoverIndicator, href, icon, label, onClick, path, plain, primary, reverse,
-      secondary, type, ...props
+      secondary, type, innerRef, ...props
     } = this.props;
     delete props.method;
-    const { router } = this.context;
+    delete props.staticContext;
+    const { history } = this.props;
 
     let buttonIcon;
     if (icon) {
@@ -117,15 +120,15 @@ export default class Button extends Component {
     }
 
     let adjustedHref;
-    if (router && router.createPath) {
-      adjustedHref = (path && router) ?
-        router.createPath(path) : href;
-    } else {
-      adjustedHref = (path && router && router.history) ?
-        router.history.createHref(
-          { pathname: path }
-        ) : href;
-    }
+    //if (router && router.createPath) {
+    //  adjustedHref = (path && router) ?
+    //    router.createPath(path) : href;
+    //} else {
+    //}
+    adjustedHref = (path && history) ?
+      history.createHref(
+        { pathname: path }
+      ) : href;
 
     const classes = classnames(
       CLASS_ROOT,
@@ -150,7 +153,7 @@ export default class Button extends Component {
       className
     );
 
-    let adjustedOnClick = (path && router ? this._onClick : onClick);
+    let adjustedOnClick = (path && history ? this._onClick : onClick);
 
     let Tag = adjustedHref ? 'a' : 'button';
     let buttonType;
@@ -158,20 +161,24 @@ export default class Button extends Component {
       buttonType = type;
     }
 
-    let boxProps;
+    let addProps;
     if (box) {
       // Let the root element of the Button be a Box element with tag prop
-      boxProps = {
-        tag: Tag
+      addProps = {
+        tag: Tag,
+        innerRef
       };
       Tag = Box;
+    } else {
+      addProps = {ref: innerRef};
     }
+
 
     const first = reverse ? buttonLabel : buttonIcon;
     const second = reverse ? buttonIcon : buttonLabel;
 
     return (
-      <Tag {...props} {...boxProps} href={adjustedHref} type={buttonType}
+      <Tag {...props} {...addProps} href={adjustedHref} type={buttonType}
         className={classes} aria-label={a11yTitle}
         onClick={adjustedOnClick}
         disabled={
@@ -210,12 +217,14 @@ Button.propTypes = {
   label: PropTypes.node,
   method: PropTypes.oneOf(['push', 'replace']),
   onClick: PropTypes.func,
+  innerRef: PropTypes.func,
   path: PropTypes.string,
   plain: PropTypes.bool,
   primary: PropTypes.bool,
   reverse: PropTypes.bool,
   secondary: PropTypes.bool,
-  type: PropTypes.oneOf(['button', 'reset', 'submit'])
+  type: PropTypes.oneOf(['button', 'reset', 'submit']),
+  history: PropTypes.object
 };
 
 Button.defaultProps = {
@@ -223,6 +232,4 @@ Button.defaultProps = {
   type: 'button'
 };
 
-Button.contextTypes = {
-  router: PropTypes.object
-};
+export default composeKeepPropTypes(Button, withRouter);

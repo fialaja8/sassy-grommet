@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import CSSClassnames from '../utils/CSSClassnames';
 import Props from '../utils/Props';
@@ -12,8 +11,8 @@ const CLASS_ROOT = CSSClassnames.HEADER;
 
 export default class Header extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._onResize = this._onResize.bind(this);
     this._alignMirror = this._alignMirror.bind(this);
@@ -46,7 +45,7 @@ export default class Header extends Component {
   }
 
   _alignMirror () {
-    var contentElement = ReactDOM.findDOMNode(this.contentRef);
+    var contentElement = this.contentRef;
     var mirrorElement = this.mirrorRef;
 
     // constrain fixed content to the width of the mirror
@@ -101,7 +100,7 @@ export default class Header extends Component {
               https://github.com/philipwalton/flexbugs
             */}
             <Box pad='none' flex={false}>
-              <Box ref={ref => this.contentRef = ref}
+              <Box innerRef={ref => this.contentRef = ref}
                 {...other} {...restProps} tag="header"
                 className={classes}>
                 {children}

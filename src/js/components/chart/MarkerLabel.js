@@ -23,8 +23,8 @@ const _valueBasis =  (props) => {
 
 export default class MarkerLabel extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {};
   }
   static getDerivedStateFromProps(props, state) {

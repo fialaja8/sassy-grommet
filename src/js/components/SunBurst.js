@@ -1,6 +1,7 @@
 // (C) Copyright 2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { baseUnit, translateEndAngle, arcCommands } from '../utils/Graphics';
@@ -14,10 +15,10 @@ const COLOR_INDEX = CSSClassnames.COLOR_INDEX;
 const UNIT_FACTOR = baseUnit * 0.75;
 const PAD_FACTOR = baseUnit * 8;
 
-export default class SunBurst extends Component {
+class SunBurst extends Component {
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this._layout = this._layout.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -58,7 +59,7 @@ export default class SunBurst extends Component {
       enter: this._onSunBurstClick
     };
     KeyboardAccelerators.startListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._containerRef, this._keyboardHandlers
     );
     if (mouseActive === false) {
       this.setState({ focus: true });
@@ -67,7 +68,7 @@ export default class SunBurst extends Component {
 
   _onSunBurstBlur () {
     KeyboardAccelerators.stopListeningToKeyboard(
-      this, this._keyboardHandlers
+      this._containerRef, this._keyboardHandlers
     );
 
     this.setState({ focus: false });
@@ -188,7 +189,7 @@ export default class SunBurst extends Component {
 
     const { active, onActive, onClick } = this.props;
     const { width } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const unit = width / UNIT_FACTOR;
     const ringPad = width / PAD_FACTOR;
     if (! total) {
@@ -262,7 +263,7 @@ export default class SunBurst extends Component {
     delete props.onActive;
     delete props.onClick;
     const { focus, height, width } = this.state;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const classes = classnames(
       CLASS_ROOT,
       {
@@ -313,6 +314,7 @@ export default class SunBurst extends Component {
 }
 
 SunBurst.propTypes = {
+  intl: PropTypes.object,
   a11yTitle: PropTypes.string,
   active: PropTypes.arrayOf(PropTypes.number),
   data: PropTypes.arrayOf(PropTypes.shape({
@@ -331,6 +333,5 @@ SunBurst.defaultProps = {
   size: 'medium'
 };
 
-SunBurst.contextTypes = {
-  intl: PropTypes.object
-};
+
+export default injectIntl(SunBurst);

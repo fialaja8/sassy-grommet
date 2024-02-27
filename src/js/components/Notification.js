@@ -1,8 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
 import { FormattedDate } from 'react-intl';
 import Intl from '../utils/Intl';
@@ -21,7 +21,7 @@ import { checkDarkBackground } from '../utils/DOM';
 const CLASS_ROOT = CSSClassnames.NOTIFICATION;
 const BACKGROUND_COLOR_INDEX = CSSClassnames.BACKGROUND_COLOR_INDEX;
 
-export default class Notification extends Component {
+class Notification extends Component {
 
   constructor () {
     super();
@@ -52,7 +52,7 @@ export default class Notification extends Component {
 
   _setDarkBackground () {
     const { status } = this.props;
-    const container = findDOMNode(this._containerRef);
+    const container = this._containerRef;
     if (this._checkBackground) {
       this._checkBackground.stop();
     }
@@ -62,7 +62,7 @@ export default class Notification extends Component {
 
   _announce () {
     const { announce, message } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     if (announce) {
       const notificationMessage = Intl.getMessage(intl, 'Notification');
       Announcer.announce(`${notificationMessage}: ${message}`);
@@ -86,7 +86,7 @@ export default class Notification extends Component {
       children, className, closer, context, percentComplete, message,
       onClose, timestamp, size, state, status
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { darkBackground } = this.state;
     const classes = classnames(
       CLASS_ROOT,
@@ -177,7 +177,7 @@ export default class Notification extends Component {
     </Animate>
     */
     return (
-      <Box ref={(ref) => this._containerRef = ref}
+      <Box innerRef={(ref) => this._containerRef = ref}
         {...restProps} {...boxProps} className={classes}
         pad='small' direction='row' align='start' responsive={false}
         full={fullBox}>
@@ -201,6 +201,7 @@ export default class Notification extends Component {
 }
 
 Notification.propTypes = {
+  intl: PropTypes.object,
   closer: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.bool
@@ -219,12 +220,11 @@ Notification.propTypes = {
   ...Box.propTypes
 };
 
-Notification.contextTypes = {
-  intl: PropTypes.object
-};
 
 Notification.defaultProps = {
   closer: false,
   status: 'unknown',
   pad: 'medium'
 };
+
+export default injectIntl(Notification);

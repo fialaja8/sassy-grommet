@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Header from './Header';
@@ -14,7 +15,7 @@ import Intl from '../utils/Intl';
 
 const CLASS_ROOT = CSSClassnames.ACCORDION_PANEL;
 
-export default class AccordionPanel extends Component {
+class AccordionPanel extends Component {
   constructor() {
     super();
 
@@ -33,7 +34,7 @@ export default class AccordionPanel extends Component {
     const {
       a11yTitle, active, animate, className, children, heading, pad
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const classes = classnames(
       CLASS_ROOT,
@@ -77,9 +78,8 @@ AccordionPanel.propTypes = {
   animate: PropTypes.bool,
   heading: PropTypes.node.isRequired,
   onChange: PropTypes.func,
-  pad: Header.propTypes.pad
-};
-
-AccordionPanel.contextTypes = {
+  pad: Header.propTypes.pad,
   intl: PropTypes.object
 };
+
+export default injectIntl(AccordionPanel);
