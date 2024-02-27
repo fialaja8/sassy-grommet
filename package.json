@@ -52,7 +52,7 @@
     "markdown-to-jsx": "^6.1.3",
     "moment": "^2.29.4",
     "prop-types": "^15.5.8",
-    "react-desc": "^4.1.3",
+    "react-desc": "^1.0.0",
     "react-intl": "^6.6.2",
     "react-router": "^5.3.4",
     "react-transition-group": "^1.1.1",
