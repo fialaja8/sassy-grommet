@@ -193,19 +193,21 @@ export default class Article extends Component {
       window.innerHeight;
     for (let index = 0; index < childCount; index += 1) {
       const childElement = this._childDOMNode(index);
-      const rect = childElement.getBoundingClientRect();
-      // ignore small drifts of 10 pixels on either end
-      if ('row' === direction) {
-        if (rect.right > 10 && rect.left < (limit - 10)) {
-          result.push(index);
-        } else if (result.length > 0) {
-          break;
-        }
-      } else {
-        if (rect.bottom > 10 && rect.top < (limit - 10)) {
-          result.push(index);
-        } else if (result.length > 0) {
-          break;
+      if (childElement) {
+        const rect = childElement.getBoundingClientRect();
+        // ignore small drifts of 10 pixels on either end
+        if ('row' === direction) {
+          if (rect.right > 10 && rect.left < (limit - 10)) {
+            result.push(index);
+          } else if (result.length > 0) {
+            break;
+          }
+        } else {
+          if (rect.bottom > 10 && rect.top < (limit - 10)) {
+            result.push(index);
+          } else if (result.length > 0) {
+            break;
+          }
         }
       }
     }
@@ -267,45 +269,47 @@ export default class Article extends Component {
       const { selectedIndex } = this.state;
       const componentElement = this._componentRef;
       const childElement = this._childDOMNode(selectedIndex);
-      let rect = childElement.getBoundingClientRect();
-      if (event.target === componentElement) {
-        // scrolling Article
-        if (this._scrollingVertically) {
-          // prevent Article horizontal scrolling while scrolling vertically
-          componentElement.scrollLeft += rect.left;
-        } else {
-          const scrollingRight =
-            this._priorScrollLeft < componentElement.scrollLeft;
-          // once we stop scrolling, align with child boundaries
-          clearTimeout(this._scrollTimer);
-          this._scrollTimer = setTimeout(() => {
-            if (! this._resizing) {
-              const indexes = this._visibleIndexes();
-              if (indexes.length > 1 && scrollingRight) {
-                this._onSelect(indexes[1]);
-              } else {
-                this._onSelect(indexes[0]);
+      if (childElement) {
+        let rect = childElement.getBoundingClientRect();
+        if (event.target === componentElement) {
+          // scrolling Article
+          if (this._scrollingVertically) {
+            // prevent Article horizontal scrolling while scrolling vertically
+            componentElement.scrollLeft += rect.left;
+          } else {
+            const scrollingRight =
+              this._priorScrollLeft < componentElement.scrollLeft;
+            // once we stop scrolling, align with child boundaries
+            clearTimeout(this._scrollTimer);
+            this._scrollTimer = setTimeout(() => {
+              if (! this._resizing) {
+                const indexes = this._visibleIndexes();
+                if (indexes.length > 1 && scrollingRight) {
+                  this._onSelect(indexes[1]);
+                } else {
+                  this._onSelect(indexes[0]);
+                }
               }
-            }
-          }, 100);
-          this._priorScrollLeft = componentElement.scrollLeft;
-        }
-      } else if (event.target.parentNode === componentElement) {
-        // scrolling child
-        // Has it scrolled near the bottom?
-        if (this.state.accessibilityTabbingCompatible) {
-          // only use lastGrandChild logic if we're not using Firefox or IE.
-          // causes flashing in Firefox, but required for Safari scrolling.
-          const grandchildren = event.target.children;
-          const lastGrandChild = grandchildren[grandchildren.length - 1];
-          rect = lastGrandChild.getBoundingClientRect();
-        }
-        if (rect.bottom <= (window.innerHeight + 24)) {
-          // at the bottom
-          this.setState({ atBottom: true });
-        } else {
-          // not at the bottom
-          this.setState({ atBottom: false });
+            }, 100);
+            this._priorScrollLeft = componentElement.scrollLeft;
+          }
+        } else if (event.target.parentNode === componentElement) {
+          // scrolling child
+          // Has it scrolled near the bottom?
+          if (this.state.accessibilityTabbingCompatible) {
+            // only use lastGrandChild logic if we're not using Firefox or IE.
+            // causes flashing in Firefox, but required for Safari scrolling.
+            const grandchildren = event.target.children;
+            const lastGrandChild = grandchildren[grandchildren.length - 1];
+            rect = lastGrandChild.getBoundingClientRect();
+          }
+          if (rect.bottom <= (window.innerHeight + 24)) {
+            // at the bottom
+            this.setState({ atBottom: true });
+          } else {
+            // not at the bottom
+            this.setState({ atBottom: false });
+          }
         }
       }
     }
