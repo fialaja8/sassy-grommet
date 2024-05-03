@@ -273,7 +273,7 @@ class Graphic extends Component {
   }
 
   render () {
-    const { series, tabIndex } = this.props;
+    const { series, tabIndex, preserveAspectRatio } = this.props;
     const { viewBoxHeight, viewBoxWidth } = this.state;
     let tracks = this._renderTracks();
     let values = this._renderValues();
@@ -290,7 +290,7 @@ class Graphic extends Component {
         width={viewBoxWidth} role={role}
         height={viewBoxHeight}
         viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
-        preserveAspectRatio="xMidYMid meet"
+        preserveAspectRatio={preserveAspectRatio || "xMidYMid meet"}
         aria-label={a11yTitle} onFocus={this._onGraphicFocus}
         onBlur={this._onGraphicBlur}
         ref={(ref) => this.svgRef = ref}>
@@ -312,6 +312,7 @@ Graphic.propTypes = {
     colorIndex: PropTypes.string
   })).isRequired,
   vertical: PropTypes.bool,
+  preserveAspectRatio: PropTypes.string,
   ...propTypes
 };
 

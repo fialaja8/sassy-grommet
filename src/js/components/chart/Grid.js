@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames from '../../utils/CSSClassnames';
-import { padding } from './utils';
+import { padding as defaultPadding } from './utils';
 
 const CLASS_ROOT = CSSClassnames.CHART_GRID;
 
@@ -13,11 +13,12 @@ const CLASS_ROOT = CSSClassnames.CHART_GRID;
 export default class Grid extends Component {
 
   render () {
-    const { className, columns, rows, width, height, ...props } = this.props;
+    const { className, columns, rows, width, height, paddingPx , ...props } = this.props;
     const classes = classnames(
       CLASS_ROOT,
       className
     );
+    const padding = typeof paddingPx === 'number' ? paddingPx : defaultPadding;
 
     let commands = '';
 
@@ -56,5 +57,6 @@ export default class Grid extends Component {
 
 Grid.propTypes = {
   columns: PropTypes.number,
-  rows: PropTypes.number
+  rows: PropTypes.number,
+  paddingPx: PropTypes.number
 };

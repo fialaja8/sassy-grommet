@@ -222,7 +222,7 @@ class Meter extends Component {
   render () {
     const {
       active, a11yTitle, className, label, onActive, size, stacked,
-      tabIndex, type, vertical, ...props
+      tabIndex, type, vertical, preserveAspectRatio, ...props
     } = this.props;
     delete props.activeIndex;
     delete props.colorIndex;
@@ -285,6 +285,7 @@ class Meter extends Component {
         tabIndex={tabIndex}
         thresholds={thresholds}
         total={total}
+        preserveAspectRatio={preserveAspectRatio}
         vertical={vertical} />
     );
 
@@ -312,6 +313,7 @@ Meter.propTypes = {
   active: PropTypes.bool, // when single value
   activeIndex: PropTypes.number, // for series values
   a11yTitle: PropTypes.string,
+  preserveAspectRatio: PropTypes.string,
   colorIndex: PropTypes.string,
   label: PropTypes.node,
   max: PropTypes.number,
