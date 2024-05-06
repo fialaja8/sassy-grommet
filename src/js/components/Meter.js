@@ -254,7 +254,7 @@ class Meter extends Component {
         [`${CLASS_ROOT}--vertical`]: vertical,
         [`${CLASS_ROOT}--loading`]: series.length === 0,
         [`${CLASS_ROOT}--single`]: series.length === 1,
-        [`${CLASS_ROOT}--count-${series.length}`]: series.length > 1,
+        [`${CLASS_ROOT}--count-${Math.min(series.length, 4)}`]: series.length > 1,
         [`${CLASS_ROOT}--${responsiveSize}`]: responsiveSize,
         [`${CLASS_ROOT}--active`]: active
       },
