@@ -1,7 +1,8 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
+@use "sass:math";
 
-$map-stroke-width: round($inuit-base-spacing-unit / 12);
-$map-active-stroke-width: round($inuit-base-spacing-unit / 4);
+$map-stroke-width: round(math.div($inuit-base-spacing-unit, 12));
+$map-active-stroke-width: round(math.div($inuit-base-spacing-unit, 4));
 
 .#{$grommet-namespace}map {
   position: relative;

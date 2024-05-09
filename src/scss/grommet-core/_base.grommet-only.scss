@@ -1,4 +1,5 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
+@use "sass:math";
 
 .grommet,
 .brand-font {
@@ -23,8 +24,8 @@
   // 5. Fonts on OSX will look more consistent with other systems that do not
   //    render text using sub-pixel anti-aliasing.
 
-  font-size: ($inuit-base-font-size / 16px) * 1em;
-  line-height: $inuit-base-line-height / $inuit-base-font-size;
+  font-size: math.div($inuit-base-font-size, 16px) * 1em;
+  line-height: math.div($inuit-base-line-height, $inuit-base-font-size);
   background-color: $background-color;
   color: $text-color;
   // overflow-y: scroll; // [2]

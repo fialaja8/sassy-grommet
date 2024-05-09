@@ -1,20 +1,21 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
+@use "sass:math";
 
 // BAR
 
 // For each size of meter, we calculate the proportional cross dimension
 $meter-bar-cross-xsmall:
-  round($inuit-base-spacing-unit * ($size-xsmall / $size-small));
+  round($inuit-base-spacing-unit * math.div($size-xsmall, $size-small));
 $meter-bar-cross-small:
-  round($inuit-base-spacing-unit * ($size-small / $size-small));
+  round($inuit-base-spacing-unit * math.div($size-small, $size-small));
 $meter-bar-cross-medium:
-  round($inuit-base-spacing-unit * ($size-medium / $size-small));
+  round($inuit-base-spacing-unit * math.div($size-medium, $size-small));
 $meter-bar-cross-large:
-  round($inuit-base-spacing-unit * ($size-large / $size-small));
+  round($inuit-base-spacing-unit * math.div($size-large, $size-small));
 $meter-bar-cross-xlarge:
-  round($inuit-base-spacing-unit * ($size-xlarge / $size-small));
+  round($inuit-base-spacing-unit * math.div($size-xlarge, $size-small));
 $meter-bar-cross-default:
-  round($inuit-base-spacing-unit * ($meter-size-default / $size-small));
+  round($inuit-base-spacing-unit * math.div($meter-size-default, $size-small));
 
 @include keyframes(draw-meter-bar-small) {
   0% {
