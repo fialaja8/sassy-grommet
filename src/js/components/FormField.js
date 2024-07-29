@@ -49,9 +49,29 @@ export default class FormField extends Component {
     this.setState({focus: false});
   }
 
-  _onClick () {
-    if (this._inputElement) {
-      this._inputElement.focus();
+  _onClick (evt) {
+    if (this._inputElement && this.containerRef) {
+      let node = evt.target;
+      let containerFound = false;
+      while (node && node.parentNode) {
+        if (node === document.body) {
+          break;
+        }
+        if (node === this.containerRef) {
+          containerFound = true;
+          break;
+        }
+        let nodeParent = null;
+        try {
+          nodeParent = node.parentNode;
+        } catch (e) {
+          // Nothing
+        }
+        node = nodeParent;
+      }
+      if (containerFound) {
+        this._inputElement.focus();
+      }
     }
   }
 
@@ -89,7 +109,7 @@ export default class FormField extends Component {
     ) : undefined;
 
     return (
-      <div className={classes} {...props} onClick={this._onClick}>
+      <div className={classes} {...props} onClick={this._onClick} ref={ref => this.containerRef = ref}>
         {fieldError}
         {labelNode}
         {fieldHelp}
