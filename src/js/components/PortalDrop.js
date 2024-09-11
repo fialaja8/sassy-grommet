@@ -256,7 +256,7 @@ class PortalDrop extends Component {
       if ('left' === align.left) {
         left = controlRect.left;
       } else if ('right' === align.left) {
-        left = controlRect.left - width;
+        left = controlRect.left + controlRect.width;
       }
     } else if (align.right) {
       if ('left' === align.right) {
