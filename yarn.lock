@@ -2824,13 +2824,10 @@ make-dir@^2.1.0:
     pify "^4.0.1"
     semver "^5.6.0"
 
-markdown-to-jsx@^6.1.3:
-  version "6.11.4"
-  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/markdown-to-jsx/-/markdown-to-jsx-6.11.4.tgz#b4528b1ab668aef7fe61c1535c27e837819392c5"
-  integrity sha512-3lRCD5Sh+tfA52iGgfs/XZiw33f7fFX9Bn55aNnVNUd2GzLDkOWyKYYD8Yju2B1Vn+feiEdgJs8T6Tg0xNokPw==
-  dependencies:
-    prop-types "^15.6.2"
-    unquote "^1.1.0"
+markdown-to-jsx@^7.5.0:
+  version "7.5.0"
+  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/markdown-to-jsx/-/markdown-to-jsx-7.5.0.tgz#42ece0c71e842560a7d8bd9f81e7a34515c72150"
+  integrity sha512-RrBNcMHiFPcz/iqIj0n3wclzHXjwS7mzjBNWecKKVhNTIxQepIix6Il/wZCn2Cg5Y1ow2Qi84+eJrryFRWBEWw==
 
 merge2@^1.3.0, merge2@^1.4.1:
   version "1.4.1"
@@ -3665,11 +3662,6 @@ universalify@^2.0.0:
   version "2.0.0"
   resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
   integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
-
-unquote@^1.1.0:
-  version "1.1.1"
-  resolved "https://cps-sharedsvcs-docker.ssp.svcs.entsvcs.com:8443/repository/yarn-proxy/unquote/-/unquote-1.1.1.tgz#8fded7324ec6e88a0ff8b905e7c098cdc086d544"
-  integrity sha512-vRCqFv6UhXpWxZPyGDh/F3ZpNv8/qo7w6iufLpQg9aKnQ71qM4B5KiI7Mia9COcjEhrO9LueHpMYjYzsWH3OIg==
 
 update-browserslist-db@^1.0.11:
   version "1.0.11"
