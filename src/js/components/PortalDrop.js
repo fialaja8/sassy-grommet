@@ -251,13 +251,15 @@ class PortalDrop extends Component {
     const controlRect = findVisibleParent(control).getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
 
-    // determine width
-    const width = Math.min(
-      Math.max(controlRect.width, containerRect.width),
-      windowWidth
-    );
-
     const getPosition = (align) => {
+
+      // determine width
+
+      const width = Math.min(
+        'left' === align.left || 'right' === align.right
+          ? Math.max(controlRect.width, containerRect.width) : containerRect.width,
+        windowWidth
+      );
 
       // set left position
       let left;
@@ -338,7 +340,7 @@ class PortalDrop extends Component {
           }
         }
       }
-      return {left, top, maxHeight};
+      return {width, left, top, maxHeight};
     };
 
     let finalPosition = getPosition(mainAlign);
@@ -348,7 +350,7 @@ class PortalDrop extends Component {
       };
       for (var i=0; i<altAligns.length; i++) {
         const altAlign = altAligns[i];
-        if (areBetween(finalPosition.left, finalPosition.left + width,
+        if (areBetween(finalPosition.left, finalPosition.left + finalPosition.width,
           controlRect.left, controlRect.left + controlRect.width)
           && areBetween(finalPosition.top, finalPosition.top + finalPosition.maxHeight,
             controlRect.top, controlRect.top + containerRect.height)) {
@@ -359,7 +361,7 @@ class PortalDrop extends Component {
       }
     }
 
-    const {left, top} = finalPosition;
+    const {width, left, top} = finalPosition;
 
     container.style.left = `${left}px`;
     // offset width by 0.1 to avoid a bug in ie11 that
