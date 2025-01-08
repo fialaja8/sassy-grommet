@@ -5,8 +5,8 @@ const composeKeepPropTypes = (WrappedComponent,...injectors) => {
     ...injectors
   )(WrappedComponent);
   result.propTypes = WrappedComponent.propTypes;
-  result.defaultProps = WrappedComponent.defaultProps;
   result.displayName = WrappedComponent.displayName;
+  // NOTE: defaultProps shall not be copied, as function components cannot have defaultProps
   return result;
 };
 

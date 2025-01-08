@@ -249,11 +249,12 @@ class Graph extends Component {
 
 }
 
-
-Graph.defaultProps = {
+export const graphDefaultProps = {
   min: 0,
   max: 100
 };
+
+Graph.defaultProps = {...graphDefaultProps};
 
 Graph.propTypes = {
   intl: PropTypes.object,
