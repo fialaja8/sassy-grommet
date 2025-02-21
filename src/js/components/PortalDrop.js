@@ -162,6 +162,8 @@ class PortalDrop extends Component {
     const options = _normalizeOptions(opts);
     const {focusControl} = options;
 
+    const uniqueClassName = `${CLASS_ROOT}--${Math.random().toString(16).slice(2)}`;
+
     // bind functions to instance
     this.place = this.place.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -169,7 +171,7 @@ class PortalDrop extends Component {
 
     // setup DOM
     let container = document.createElement('div');
-    container.className = classnames('grommet', CLASS_ROOT, {
+    container.className = classnames('grommet', CLASS_ROOT, uniqueClassName, {
       [options.className]: options.className,
       [`${BACKGROUND_COLOR_INDEX}-${options.colorIndex}`]: options.colorIndex
     });
@@ -188,8 +190,12 @@ class PortalDrop extends Component {
 
     // initialize state
     this.state = {
-      container, control, initialFocusNeeded: focusControl, options,
-      scrollParents
+      container,
+      control,
+      initialFocusNeeded: focusControl,
+      options,
+      scrollParents,
+      uniqueClassName
     };
     this._listen();
   }
@@ -411,25 +417,28 @@ class PortalDrop extends Component {
   }
 
   componentWillUnmount() {
-    const {container, originalFocusedElement, scrollParents} = this.state;
+    const {container, originalFocusedElement, scrollParents, uniqueClassName} = this.state;
     scrollParents.forEach(scrollParent => {
       scrollParent.removeEventListener('scroll', this.place);
     });
     window.removeEventListener('resize', this._onResize);
-    this.parentContainer.removeChild(container);
-    // weird bug in Chrome does not remove child if
-    // document.body.insertBefore is called in another new drop.
-    // the code below will go over remaining drop that was not removed
-    [].forEach.call(document.getElementsByClassName(CLASS_ROOT), (element) => {
-      if (element.getAttribute('style') === container.getAttribute('style')) {
-        document.body.removeChild(element);
-      }
-    });
+    try {
+      this.parentContainer.removeChild(container);
+      // weird bug in Chrome does not remove child if
+      // document.body.insertBefore is called in another new drop.
+      // the code below will go over remaining drop that was not removed
+      [].forEach.call(document.getElementsByClassName(CLASS_ROOT), (element) => {
+        if (element.getAttribute('style') === container.getAttribute('style') && element.classList.contains(uniqueClassName)) {
+          document.body.removeChild(element);
+        }
+      });
+    } catch (e) {
+    // Probably not a child node anymore
+    }
     if (originalFocusedElement) {
       originalFocusedElement.focus();
     }
-    this.place = function () {
-    };
+    this.place = function () {};
     this.state = undefined;
   }
 }
