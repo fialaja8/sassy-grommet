@@ -200,6 +200,12 @@ class PortalDrop extends Component {
     this._listen();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.resizeCounter !== props.resizeCounter) {
+      this._onResize();
+    }
+  }
+
   _listen() {
     const {scrollParents} = this.state;
     scrollParents.forEach(scrollParent => {
@@ -456,7 +462,8 @@ PortalDrop.propTypes = {
   content: PropTypes.any,
   control: PropTypes.any,
   opts: PropTypes.object,
-  afterRender: PropTypes.func
+  afterRender: PropTypes.func,
+  resizeCounter: PropTypes.number
 };
 
 export default PortalDrop;
