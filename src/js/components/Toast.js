@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import ReactDOM_client from 'react-dom/client';
 import classnames from 'classnames';
@@ -11,6 +10,7 @@ import Status from './icons/Status';
 import CloseIcon from './icons/base/Close';
 import CSSClassnames from '../utils/CSSClassnames';
 import { announce } from '../utils/Announcer';
+import withV5Router from "../utils/withV5Router";
 
 const CLASS_ROOT = CSSClassnames.TOAST;
 const APP = CSSClassnames.APP;
@@ -202,4 +202,4 @@ Toast.defaultProps = {
   size: 'medium'
 };
 
-export default withRouter(injectIntl(Toast));
+export default withV5Router(injectIntl(Toast));

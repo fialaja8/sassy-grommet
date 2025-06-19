@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
@@ -16,6 +15,7 @@ import DropCaretIcon from './icons/base/Down';
 import MoreIcon from './icons/base/More';
 import CSSClassnames from '../utils/CSSClassnames';
 import PortalDrop, { dropAlignPropType } from './PortalDrop';
+import withV5Router from "../utils/withV5Router";
 
 const CLASS_ROOT = CSSClassnames.MENU;
 
@@ -529,4 +529,4 @@ Menu.defaultProps = {
   dropContainer: undefined
 };
 
-export default withRouter(injectIntl(Menu));
+export default withV5Router(injectIntl(Menu));

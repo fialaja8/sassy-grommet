@@ -201,7 +201,7 @@ class PortalDrop extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.resizeCounter !== props.resizeCounter) {
+    if (prevProps.resizeCounter !== this.props.resizeCounter) {
       this._onResize();
     }
   }

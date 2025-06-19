@@ -3,11 +3,12 @@
 import React, { Children, Component } from 'react';
 import classnames from 'classnames';
 import { schema, PropTypes } from 'react-desc';
-import { matchPath, withRouter } from 'react-router';
+import { matchPath } from 'react-router';
 import LinkNextIcon from './icons/base/LinkNext';
 
 import CSSClassnames from '../utils/CSSClassnames';
 import composeKeepPropTypes from "../utils/composeKeepPropTypes";
+import withV5Router from "../utils/withV5Router";
 
 const CLASS_ROOT = CSSClassnames.ANCHOR;
 
@@ -54,7 +55,7 @@ class Anchor extends Component {
     if (!path) {
       return false;
     }
-    let active;
+    let active = false;
     // if (router && router.isActive) {
     //   active = router && router.isActive &&
     //     path && router.isActive({
@@ -63,10 +64,14 @@ class Anchor extends Component {
     //   });
     // } else 
     if(history && matchPath) {
-      active = !!matchPath(
-        history.location.pathname,
-        { path: path.path || path, exact: !!path.index }
-      );
+      try {
+        active = !!matchPath(
+          history.location.pathname,
+          path.path || path
+        );
+      } catch (e) {
+        // Keep false value
+      }
     }
 
     return active;
@@ -80,12 +85,12 @@ class Anchor extends Component {
     // sometimes react router is still calling the listen callback even
     // if we called unlisten. So we added this check here to prevent
     // calling setState in a unmounted component
-    if (!this._unmounted) {
+    if (location && !this._unmounted) {
       const { path, history } = this.props;
       const active = matchPath ? (
         !!matchPath(
           location.pathname,
-          { path: path.path || path, exact: !!path.index }
+          `${path.path || path}`
         )
       ) : (
         history && location.pathname === (path.path || path)
@@ -252,4 +257,4 @@ schema(Anchor, {
   }
 });
 
-export default composeKeepPropTypes(Anchor, withRouter);
+export default composeKeepPropTypes(Anchor, withV5Router);

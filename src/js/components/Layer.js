@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { injectIntl, IntlProvider } from 'react-intl';
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import ReactDOM_client from 'react-dom/client';
 import classnames from 'classnames';
@@ -12,6 +11,7 @@ import CSSClassnames from '../utils/CSSClassnames';
 import { filterByFocusable } from '../utils/DOM';
 import Intl from '../utils/Intl';
 import KeyboardAccelerators from '../utils/KeyboardAccelerators';
+import withV5Router from "../utils/withV5Router";
 
 const CLASS_ROOT = CSSClassnames.LAYER;
 const APP = CSSClassnames.APP;
@@ -341,4 +341,4 @@ Layer.defaultProps = {
   align: 'center'
 };
 
-export default withRouter(injectIntl(Layer));
+export default withV5Router(injectIntl(Layer));

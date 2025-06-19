@@ -1,13 +1,13 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Children, Component } from 'react';
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CSSClassnames, { namespace } from '../utils/CSSClassnames';
 import composeKeepPropTypes from "../utils/composeKeepPropTypes";
 
 import Box from './Box';
+import withV5Router from "../utils/withV5Router";
 
 const CLASS_ROOT = CSSClassnames.BUTTON;
 
@@ -232,4 +232,4 @@ Button.defaultProps = {
   type: 'button'
 };
 
-export default composeKeepPropTypes(Button, withRouter);
+export default composeKeepPropTypes(Button, withV5Router);
