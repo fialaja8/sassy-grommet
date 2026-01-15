@@ -343,7 +343,7 @@ class Menu extends Component {
   }
 
   _checkOnClose (event) {
-    const drop = findDOMNode(this._menuDrop);
+    const drop = this._menuDrop;
     const control = this._controlRef;
     if (drop && !drop.contains(event.target) &&
       !control.contains(event.target)) {
