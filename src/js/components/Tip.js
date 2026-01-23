@@ -21,7 +21,7 @@ class Tip extends Component {
   }
 
   componentDidMount () {
-    const { onClose, colorIndex, intl } = this.props;
+    const { onClose, colorIndex, intl, dropClassName } = this.props;
     const target = this._getTarget();
     if (target) {
       const rect = target.getBoundingClientRect();
@@ -46,7 +46,8 @@ class Tip extends Component {
           [`${CLASS_ROOT}__drop--right`]: align.right,
           [`${CLASS_ROOT}__drop--top`]: align.top,
           [`${CLASS_ROOT}__drop--bottom`]: align.bottom
-        }
+        },
+        dropClassName
       );
       this.setState({drop: {control: target, opts: {
         align: align,
@@ -101,7 +102,8 @@ Tip.propTypes = {
   colorIndex: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   target: PropTypes.string.isRequired,
-  intl: PropTypes.object
+  intl: PropTypes.object,
+  dropClassName: PropTypes.string
 };
 
 Tip.defaultProps = {
