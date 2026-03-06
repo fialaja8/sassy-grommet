@@ -6,4 +6,4 @@
  4. `yarn dist`
  5. Navigate to `/dist` directory
  6. Check that npm registry is not set to local (if it is:`npm config set registry https://registry.npmjs.org/`)
- 7. `npm publish`
+ 7. `npm publish` (if not logged in, first: `npm login`)

@@ -1,5 +1,7 @@
 // (C) Copyright 2016 Hewlett Packard Enterprise Development LP
 
+$tip-after-size: calc(halve($inuit-base-spacing-unit) - 1px);
+
 .grommet.#{$grommet-namespace}tip__drop {
   overflow: visible; // needed so caret can be seen
   max-width: $size-medium;
@@ -12,8 +14,8 @@
     position: absolute;
     width: 0;
     height: 0;
-    border-left: halve($inuit-base-spacing-unit) solid transparent;
-    border-right: halve($inuit-base-spacing-unit) solid transparent;
+    border-left: $tip-after-size solid transparent;
+    border-right: $tip-after-size solid transparent;
   }
 }
 
@@ -22,8 +24,8 @@
 
   &:after {
     content: '';
-    top: - halve($inuit-base-spacing-unit);
-    border-bottom: halve($inuit-base-spacing-unit) solid $border-color;
+    top: - $tip-after-size;
+    border-bottom: $tip-after-size solid $border-color;
   }
 
   @for $i from 1 through length($brand-accent-colors) {
@@ -42,8 +44,8 @@
 
   &:after {
     content: '';
-    bottom: - halve($inuit-base-spacing-unit);
-    border-top: halve($inuit-base-spacing-unit) solid $border-color;
+    bottom: - $tip-after-size;
+    border-top: $tip-after-size solid $border-color;
   }
 
   @for $i from 1 through length($brand-accent-colors) {
@@ -60,14 +62,14 @@
 .#{$grommet-namespace}tip__drop--left {
   &:after {
     content: '';
-    left: halve($inuit-base-spacing-unit);
+    left: $tip-after-size;
   }
 }
 
 .#{$grommet-namespace}tip__drop--right {
   &:after {
     content: '';
-    right: halve($inuit-base-spacing-unit);
+    right: $tip-after-size;
   }
 }
 
