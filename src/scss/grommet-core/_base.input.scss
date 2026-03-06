@@ -1,5 +1,8 @@
 // (C) Copyright 2014-2018 Hewlett Packard Enterprise Development LP
 
+$do-not-style-plain-inputs: false !default;
+$do-not-style-plain-buttons: false !default;
+
 @mixin range-track {
   width: 100%;
   height: $control-border-width;
@@ -22,27 +25,55 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
 }
 
 .grommet {
-  input:not(.#{$grommet-namespace}input):not(.#{$grommet-namespace}check-box__input),
-  select,
-  textarea {
-    @include inuit-font-size($inuit-base-font-size);
-    @include input();
+  @if ($do-not-style-plain-inputs) {
+    input:not(.#{$grommet-namespace}input):not(.#{$grommet-namespace}check-box__input).grommet-like-input,
+    select.grommet-like-input,
+    textarea.grommet-like-input {
+      @include inuit-font-size($inuit-base-font-size);
+      @include input();
+    }
+  } @else {
+    input:not(.#{$grommet-namespace}input):not(.#{$grommet-namespace}check-box__input),
+    select,
+    textarea {
+      @include inuit-font-size($inuit-base-font-size);
+      @include input();
+    }
   }
 
-  input[type="button"],
-  input[type="submit"] {
-    text-align: center;
-    line-height: inherit;
-  }
+  @if ($do-not-style-plain-buttons) {
+    input[type="button"].grommet-like-input,
+    input[type="submit"].grommet-like-input {
+      text-align: center;
+      line-height: inherit;
+    }
 
-  input[type="button"],
-  input[type="submit"],
-  button:not(.#{$grommet-namespace}button) {
-    @include basic-button();
+    input[type="button"].grommet-like-input,
+    input[type="submit"].grommet-like-input,
+    button:not(.#{$grommet-namespace}button).grommet-like-input {
+      @include basic-button();
 
-    &:focus {
-      border-color: $focus-border-color;
-      box-shadow: 0 0 1px 1px $focus-border-color;
+      &:focus {
+        border-color: $focus-border-color;
+        box-shadow: 0 0 1px 1px $focus-border-color;
+      }
+    }
+  } @else {
+    input[type="button"],
+    input[type="submit"] {
+      text-align: center;
+      line-height: inherit;
+    }
+
+    input[type="button"],
+    input[type="submit"],
+    button:not(.#{$grommet-namespace}button) {
+      @include basic-button();
+
+      &:focus {
+        border-color: $focus-border-color;
+        box-shadow: 0 0 1px 1px $focus-border-color;
+      }
     }
   }
 
