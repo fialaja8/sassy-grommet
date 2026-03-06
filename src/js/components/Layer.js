@@ -30,7 +30,7 @@ class LayerContents extends Component {
   }
 
   componentDidMount () {
-    const { hidden, onClose, overlayClose } = this.props;
+    const { hidden, onClose, overlayClose, onAria } = this.props;
 
     if (!hidden) {
       this.anchorStepRef.focus();
@@ -51,10 +51,13 @@ class LayerContents extends Component {
       const layerParent = this.containerRef.parentNode;
       layerParent.addEventListener('click', this._onClickOverlay);
     }
+    if (onAria) {
+      onAria(hidden);
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { hidden } = this.props;
+    const { hidden, onAria } = this.props;
     if (prevProps.hidden !== hidden) {
       KeyboardAccelerators.stopListeningToKeyboard(
         this.containerRef, this._keyboardHandlers
@@ -64,6 +67,10 @@ class LayerContents extends Component {
         KeyboardAccelerators.startListeningToKeyboard(
           this.containerRef, this._keyboardHandlers
         );
+      }
+
+      if (onAria) {
+        onAria(hidden);
       }
     }
   }
@@ -159,7 +166,8 @@ LayerContents.propTypes = {
   history: PropTypes.object,
   intl: PropTypes.object,
   onClose: PropTypes.func,
-  overlayClose: PropTypes.bool
+  overlayClose: PropTypes.bool,
+  onAria: PropTypes.func
 };
 
 // Because Layer creates a new DOM render context, the context
@@ -287,17 +295,18 @@ class Layer extends Component {
       const contents = (
         <LayerContents {...this.props}
           history={this.props.history}
-          intl={this.props.intl} />
+          intl={this.props.intl}
+          onAria={(hidden) => {
+            if (hidden) {
+              this._handleAriaHidden(true);
+            } else {
+              this._handleAriaHidden(false);
+            }
+          }}
+        />
       );
       this._elementRDRoot = ReactDOM_client.createRoot(this._element);
-      this._elementRDRoot.render(contents, () => {
-        const { hidden } = this.props;
-        if (hidden) {
-          this._handleAriaHidden(true);
-        } else {
-          this._handleAriaHidden(false);
-        }
-      });
+      this._elementRDRoot.render(contents);
     }
   }
 
