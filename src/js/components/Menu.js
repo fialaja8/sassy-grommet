@@ -149,7 +149,7 @@ class MenuDrop extends Component {
     const menuDropChildren = React.Children.map(children, child => {
       let result = child;
       if (child && isFunction(child.type) &&
-        child.type.prototype._renderMenuDrop) {
+        child.type?.prototype?._renderMenuDrop) {
         result = React.cloneElement(child,
           { inline: 'expanded', direction: 'column' });
       }
@@ -494,7 +494,7 @@ class Menu extends Component {
               state: this.state.state !== 'expanded' ? 'expanded' : 'collapsed'
             })}
             onFocus={this._onFocusControl} onBlur={this._onBlurControl} />
-          {drop ? <PortalDrop content={this.renderMenuDrop()} control={drop.control} opts={drop.opts} /> : null}
+          {drop ? <PortalDrop content={this._renderMenuDrop()} control={drop.control} opts={drop.opts} /> : null}
         </Box>
       );
 
