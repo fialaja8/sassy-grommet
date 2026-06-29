@@ -7,6 +7,7 @@ fs.readFile('./package.json', 'utf8', (err, data) => {
   }
   const packageObj = JSON.parse(data);
   packageObj.main = 'index.js';
+  packageObj.module = 'esm/index.js';
   delete packageObj.resolutions;
   delete packageObj.scripts;
   delete packageObj.devDependencies;
