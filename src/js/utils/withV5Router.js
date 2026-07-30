@@ -10,7 +10,7 @@ import {
   createPath,
   useParams,
   useHref
-} from 'react-router-dom';
+} from 'react-router';
 import _startsWith from 'lodash/startsWith';
 import _endsWith from 'lodash/endsWith';
 import mapProps from './mapProps';
