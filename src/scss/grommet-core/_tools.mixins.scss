@@ -1,0 +1,35 @@
+// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
+@use "sass:math";
+
+// Create a fully formed type style (sizing and vertical rhythm) by passing in a
+// single value, e.g.:
+//
+// .foo {
+//     @include inuit-font-size(12px);
+// }
+//
+// This will generate a rem-based font-size with its pixel fallback, as well as
+// a unitless line-height which will place the element on your baseline, e.g.:
+//
+// .foo {
+//     font-size: 12px;
+//     font-size: 0.75rem;
+//     line-height: 2;
+// }
+//
+// If you do not want a line-height to be generated automatically, pass in
+// your own as a second parameter, or pass 'none'/'false' to omit it entirely.
+@mixin inuit-font-size($inuit-font-size, $inuit-line-height: auto) {
+  font-size: $inuit-font-size;
+  font-size: math.div($inuit-font-size, $inuit-base-font-size) * 1rem;
+
+  @if $inuit-line-height == auto {
+    line-height: math.ceil(math.div($inuit-font-size, $inuit-base-line-height)) * math.div($inuit-base-line-height, $inuit-font-size);
+  } @else {
+    @if (type-of($inuit-line-height) == number or $inuit-line-height == inherit or $inuit-line-height == normal) {
+      line-height: $inuit-line-height;
+    } @else if ($inuit-line-height != none and $inuit-line-height != false) {
+      @warn "D'oh! '#{$inuit-line-height}' is not a valid value for `line-height`.";
+    }
+  }
+}
