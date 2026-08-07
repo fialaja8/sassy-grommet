@@ -1,55 +1,62 @@
+@use "settings.defaults";
+@use "settings.font" as settings2;
+@use "tools.functions" as tools2;
+@use "tools.margin" as tools4;
+@use "tools.text";
+@use "tools.text-align" as tools3;
+
 // (C) Copyright 2016 Hewlett Packard Enterprise Development LP
 
-h1.#{$grommet-namespace}heading {
-  @include h1();
+h1.#{settings.$grommet-namespace}heading {
+  @include tools.h1();
 }
 
-h2.#{$grommet-namespace}heading {
-  @include h2();
+h2.#{settings.$grommet-namespace}heading {
+  @include tools.h2();
 }
 
-h3.#{$grommet-namespace}heading {
-  @include h3();
+h3.#{settings.$grommet-namespace}heading {
+  @include tools.h3();
 }
 
-h4.#{$grommet-namespace}heading {
-  @include h4();
+h4.#{settings.$grommet-namespace}heading {
+  @include tools.h4();
 }
 
-h5.#{$grommet-namespace}heading {
-  @include h5();
+h5.#{settings.$grommet-namespace}heading {
+  @include tools.h5();
 }
 
-h6.#{$grommet-namespace}heading {
-  @include h6();
+h6.#{settings.$grommet-namespace}heading {
+  @include tools.h6();
 }
 
-.#{$grommet-namespace}heading {
-  @include heading();
-  margin-bottom: halve($inuit-base-spacing-unit);
-  @include text-align();
-  @include vertical-margin();
+.#{settings.$grommet-namespace}heading {
+  @include tools.heading();
+  margin-bottom: tools2.halve(settings.$inuit-base-spacing-unit);
+  @include tools3.text-align();
+  @include tools4.vertical-margin();
 }
 
-.#{$grommet-namespace}heading--large {
+.#{settings.$grommet-namespace}heading--large {
   font-size: 125%;
 }
 
-.#{$grommet-namespace}heading--small {
+.#{settings.$grommet-namespace}heading--small {
   font-size: 75%;
 }
 
-.#{$grommet-namespace}heading--strong {
-  font-weight: $text-strong-font-weight;
+.#{settings.$grommet-namespace}heading--strong {
+  font-weight: settings2.$text-strong-font-weight;
 }
 
-.#{$grommet-namespace}heading--truncate {
+.#{settings.$grommet-namespace}heading--truncate {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.#{$grommet-namespace}heading--uppercase {
+.#{settings.$grommet-namespace}heading--uppercase {
   text-transform: uppercase;
   letter-spacing: 0.2em;
 }

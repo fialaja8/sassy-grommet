@@ -1,3 +1,9 @@
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.functions" as tools2;
+@use "tools.pad";
+@use "tools.responsive" as tools3;
+
 // (C) Copyright 2014-2017 Hewlett Packard Enterprise Development LP
 
 // IE11 fix for tiles, since hover borders will overlap with tiles
@@ -8,79 +14,79 @@
   }
 }
 
-.#{$grommet-namespace}tiles {
+.#{settings.$grommet-namespace}tiles {
   width: 100%;
 
-  @include pad();
+  @include tools.pad();
 }
 
-.#{$grommet-namespace}tiles--focus {
-  border-color: $focus-border-color;
-  box-shadow: 0 0 1px 1px $focus-border-color;
+.#{settings.$grommet-namespace}tiles--focus {
+  border-color: settings2.$focus-border-color;
+  box-shadow: 0 0 1px 1px settings2.$focus-border-color;
 }
 
-.#{$grommet-namespace}tiles__container {
+.#{settings.$grommet-namespace}tiles__container {
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
 
-  .#{$grommet-namespace}tiles__left,
-  .#{$grommet-namespace}tiles__right {
+  .#{settings.$grommet-namespace}tiles__left,
+  .#{settings.$grommet-namespace}tiles__right {
     flex: 0 0 auto;
   }
 
-  .#{$grommet-namespace}tiles {
+  .#{settings.$grommet-namespace}tiles {
     flex: 1;
     margin: 0px;
   }
 
-  .#{$grommet-namespace}tiles.#{$grommet-namespace}box--direction-row {
+  .#{settings.$grommet-namespace}tiles.#{settings.$grommet-namespace}box--direction-row {
     width: 100%;
     overflow: hidden;
   }
 }
 
-.#{$grommet-namespace}tiles:not(.#{$grommet-namespace}tiles--flush) {
-  > .#{$grommet-namespace}tile {
-    margin: halve($inuit-base-spacing-unit);
-    @include ie-tile-margin($inuit-base-spacing-unit);
+.#{settings.$grommet-namespace}tiles:not(.#{settings.$grommet-namespace}tiles--flush) {
+  > .#{settings.$grommet-namespace}tile {
+    margin: tools2.halve(settings.$inuit-base-spacing-unit);
+    @include ie-tile-margin(settings.$inuit-base-spacing-unit);
 
     &--wide {
-      flex-basis: calc(100% - #{$inuit-base-spacing-unit});
+      flex-basis: calc(100% - #{settings.$inuit-base-spacing-unit});
     }
 
-    &.#{$grommet-namespace}tile--hover-border-medium {
-      margin: quarter($inuit-base-spacing-unit);
-      @include ie-tile-margin(halve($inuit-base-spacing-unit));
+    &.#{settings.$grommet-namespace}tile--hover-border-medium {
+      margin: tools2.quarter(settings.$inuit-base-spacing-unit);
+      @include ie-tile-margin(tools2.halve(settings.$inuit-base-spacing-unit));
     }
 
-    &.#{$grommet-namespace}tile--hover-border-large {
-      margin: halve($inuit-base-spacing-unit);
-      @include ie-tile-margin($inuit-base-spacing-unit);
+    &.#{settings.$grommet-namespace}tile--hover-border-large {
+      margin: tools2.halve(settings.$inuit-base-spacing-unit);
+      @include ie-tile-margin(settings.$inuit-base-spacing-unit);
     }
   }
 }
 
-.#{$grommet-namespace}tiles--fill {
+.#{settings.$grommet-namespace}tiles--fill {
   // IE11 fix to remove extra gap in Tiles
   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     height: 100%;
   }
 
-  &.#{$grommet-namespace}box--wrap {
+  &.#{settings.$grommet-namespace}box--wrap {
     justify-content: space-around;
 
-    > .#{$grommet-namespace}tile {
+    > .#{settings.$grommet-namespace}tile {
       flex-grow: 1;
     }
   }
 }
 
-.#{$grommet-namespace}tiles--flush {
+.#{settings.$grommet-namespace}tiles--flush {
   padding: 0px;
 
-  > .#{$grommet-namespace}tile {
+  > .#{settings.$grommet-namespace}tile {
     margin: 0px;
 
     &--wide {
@@ -89,87 +95,87 @@
   }
 }
 
-.#{$grommet-namespace}tiles__more {
+.#{settings.$grommet-namespace}tiles__more {
   flex: 1 1 100%;
   text-align: center;
 }
 
-.#{$grommet-namespace}tiles--selectable {
+.#{settings.$grommet-namespace}tiles--selectable {
   outline: none;
 
-  .#{$grommet-namespace}tile {
+  .#{settings.$grommet-namespace}tile {
     cursor: pointer;
     outline: none;
     transition: all 0.2s;
   }
 
-  .#{$grommet-namespace}tile--selected {
-    background-color: $selected-background-color;
-    color: $selected-text-color;
+  .#{settings.$grommet-namespace}tile--selected {
+    background-color: settings2.$selected-background-color;
+    color: settings2.$selected-text-color;
 
-    #{$dark-background-context} {
-      background-color: $colored-active-background-color;
-      color: $active-colored-text-color;
+    #{settings2.$dark-background-context} {
+      background-color: settings2.$colored-active-background-color;
+      color: settings2.$active-colored-text-color;
     }
 
-    #{$light-background-context} {
-      background-color: $selected-background-color;
-      color: $selected-text-color;
-    }
-  }
-
-  .#{$grommet-namespace}tile--active,
-  .#{$grommet-namespace}tile:hover:not([class*="background-hover-color-index-"]) {
-    background-color: $hover-background-color;
-    color: $hover-text-color;
-
-    #{$dark-background-context} {
-      background-color: $colored-hover-background-color;
-      color: $active-colored-text-color;
-    }
-
-    #{$light-background-context} {
-      background-color: $hover-background-color;
-      color: $hover-text-color;
+    #{settings2.$light-background-context} {
+      background-color: settings2.$selected-background-color;
+      color: settings2.$selected-text-color;
     }
   }
-}
 
-.#{$grommet-namespace}tiles--small {
-  > .#{$grommet-namespace}tile:not(.#{$grommet-namespace}box--size) {
-    @include media-query(lap-and-up) {
-      flex-basis: $size-small;
+  .#{settings.$grommet-namespace}tile--active,
+  .#{settings.$grommet-namespace}tile:hover:not([class*="background-hover-color-index-"]) {
+    background-color: settings2.$hover-background-color;
+    color: settings2.$hover-text-color;
+
+    #{settings2.$dark-background-context} {
+      background-color: settings2.$colored-hover-background-color;
+      color: settings2.$active-colored-text-color;
+    }
+
+    #{settings2.$light-background-context} {
+      background-color: settings2.$hover-background-color;
+      color: settings2.$hover-text-color;
     }
   }
 }
 
-.#{$grommet-namespace}tiles--large {
-  > .#{$grommet-namespace}tile:not(.#{$grommet-namespace}box--size) {
-    @include media-query(lap-and-up) {
-      flex-basis: $size-large;
+.#{settings.$grommet-namespace}tiles--small {
+  > .#{settings.$grommet-namespace}tile:not(.#{settings.$grommet-namespace}box--size) {
+    @include tools3.media-query(lap-and-up) {
+      flex-basis: settings.$size-small;
     }
   }
 }
 
-.#{$grommet-namespace}tile {
+.#{settings.$grommet-namespace}tiles--large {
+  > .#{settings.$grommet-namespace}tile:not(.#{settings.$grommet-namespace}box--size) {
+    @include tools3.media-query(lap-and-up) {
+      flex-basis: settings.$size-large;
+    }
+  }
+}
+
+.#{settings.$grommet-namespace}tile {
   overflow: hidden;
   transition: all 0.2s;
 
-  .#{$grommet-namespace}status-icon {
-    margin-right: quarter($inuit-base-spacing-unit);
+  .#{settings.$grommet-namespace}status-icon {
+    margin-right: tools2.quarter(settings.$inuit-base-spacing-unit);
 
     html.rtl & {
       margin-right: 0;
-      margin-left: quarter($inuit-base-spacing-unit);
+      margin-left: tools2.quarter(settings.$inuit-base-spacing-unit);
     }
   }
 }
 
-.#{$grommet-namespace}tile--selectable {
+.#{settings.$grommet-namespace}tile--selectable {
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-.#{$grommet-namespace}tile--eclipsed {
+.#{settings.$grommet-namespace}tile--eclipsed {
   opacity: 0.2;
 }

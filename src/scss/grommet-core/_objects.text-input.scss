@@ -1,27 +1,32 @@
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.functions" as tools2;
+@use "tools.input";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}text-input {
-  @include input();
+.#{settings.$grommet-namespace}text-input {
+  @include tools.input();
 }
 
-.#{$grommet-namespace}text-input--active {
+.#{settings.$grommet-namespace}text-input--active {
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
-.#{$grommet-namespace}text-input__suggestions {
+.#{settings.$grommet-namespace}text-input__suggestions {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   margin: 0px;
   list-style-type: none;
 }
 
-.#{$grommet-namespace}text-input__suggestion {
-  padding: quarter($inuit-base-spacing-unit) $inuit-base-spacing-unit;
+.#{settings.$grommet-namespace}text-input__suggestion {
+  padding: tools2.quarter(settings.$inuit-base-spacing-unit) settings.$inuit-base-spacing-unit;
   cursor: pointer;
 
   &:hover,
   &--active {
-    background-color: $hover-background-color;
+    background-color: settings2.$hover-background-color;
   }
 }

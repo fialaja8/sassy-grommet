@@ -1,9 +1,15 @@
-// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 @use "sass:math";
+
+@use "sass:map";
+@use "settings.color" as settings3;
+@use "settings.defaults" as settings2;
+@use "settings.font";
+
+// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 .grommet,
 .brand-font {
-  font-family: $brand-font-family;
+  font-family: settings.$brand-font-family;
 }
 
 .grommet {
@@ -24,10 +30,10 @@
   // 5. Fonts on OSX will look more consistent with other systems that do not
   //    render text using sub-pixel anti-aliasing.
 
-  font-size: math.div($inuit-base-font-size, 16px) * 1em;
-  line-height: math.div($inuit-base-line-height, $inuit-base-font-size);
-  background-color: $background-color;
-  color: $text-color;
+  font-size: math.div(settings2.$inuit-base-font-size, 16px) * 1em;
+  line-height: math.div(settings2.$inuit-base-line-height, settings2.$inuit-base-font-size);
+  background-color: settings3.$background-color;
+  color: settings3.$text-color;
   // overflow-y: scroll; // [2]
   // min-height: 100%;   // [3]
   -webkit-text-size-adjust: 100%; // [4]
@@ -45,34 +51,34 @@
   }
 
   .large-number-font {
-    font-family: $brand-large-number-font-family;
+    font-family: settings.$brand-large-number-font-family;
   }
 
   .secondary {
-    color: $secondary-text-color;
+    color: settings3.$secondary-text-color;
   }
 
   .error {
-    color: map-get($brand-status-colors, critical);
+    color: map.get(settings3.$brand-status-colors, critical);
   }
 
-  #{$dark-background} {
+  #{settings3.$dark-background} {
     .secondary {
-      color: $colored-text-color;
+      color: settings3.$colored-text-color;
     }
 
     .error {
-      color: $brand-error-colored-color;
+      color: settings3.$brand-error-colored-color;
     }
   }
 
-  #{$light-background} {
+  #{settings3.$light-background} {
     .secondary {
-      color: $secondary-text-color;
+      color: settings3.$secondary-text-color;
     }
 
     .error {
-      color: map-get($brand-status-colors, critical);
+      color: map.get(settings3.$brand-status-colors, critical);
     }
   }
 }

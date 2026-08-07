@@ -1,8 +1,12 @@
+@use "settings.defaults";
+@use "tools.functions" as tools2;
+@use "tools.responsive";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-section:not(.#{$grommet-namespace}section) {
-  padding-top: $inuit-base-spacing-unit;
-  padding-bottom: $inuit-base-spacing-unit;
+section:not(.#{settings.$grommet-namespace}section) {
+  padding-top: settings.$inuit-base-spacing-unit;
+  padding-bottom: settings.$inuit-base-spacing-unit;
 
   &:first-of-type {
     margin-top: 0px;
@@ -10,7 +14,7 @@ section:not(.#{$grommet-namespace}section) {
   }
 }
 
-.#{$grommet-namespace}section,
+.#{settings.$grommet-namespace}section,
 .grommet section {
 
   // IE11 fix to remove white gap when Section component is inside Layer
@@ -21,32 +25,32 @@ section:not(.#{$grommet-namespace}section) {
   }
 
   > img {
-    margin-top: $inuit-base-spacing-unit;
-    margin-bottom: $inuit-base-spacing-unit;
+    margin-top: settings.$inuit-base-spacing-unit;
+    margin-bottom: settings.$inuit-base-spacing-unit;
     display: block;
     height: auto;
 
-    @include media-query(palm) {
+    @include tools.media-query(palm) {
       max-width: 100%;
     }
   }
 
   > iframe {
     width: 100%;
-    max-width: $readable-text-width;
+    max-width: settings.$readable-text-width;
   }
 
   > ol,
-  > ul:not([class^="#{$grommet-namespace}"]) {
-    @include media-query(palm) {
+  > ul:not([class^="#{settings.$grommet-namespace}"]) {
+    @include tools.media-query(palm) {
       margin-left: 2rem;
     }
   }
 
   > dl {
     > dt {
-      margin-top: $inuit-base-spacing-unit;
-      margin-bottom: quarter($inuit-base-spacing-unit);
+      margin-top: settings.$inuit-base-spacing-unit;
+      margin-bottom: tools2.quarter(settings.$inuit-base-spacing-unit);
 
       code {
         text-transform: none;
@@ -57,8 +61,8 @@ section:not(.#{$grommet-namespace}section) {
     > dd {
       margin-left: 0px;
 
-      @include media-query(palm) {
-        padding-right: $inuit-base-spacing-unit;
+      @include tools.media-query(palm) {
+        padding-right: settings.$inuit-base-spacing-unit;
       }
     }
   }

@@ -1,3 +1,8 @@
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "settings.font" as settings3;
+@use "tools.responsive";
+
 $card-hover-color: #EBEBEB;
 
 
@@ -10,7 +15,7 @@ $card-hover-color: #EBEBEB;
     // p line-height * (# lines - 1)
   }
 
-  @include media-query(palm) {
+  @include tools.media-query(palm) {
     max-height: ($truncate-p-line-height * $truncate-p-font-size * 5);
 
     &::after {
@@ -19,17 +24,17 @@ $card-hover-color: #EBEBEB;
   }
 }
 
-.#{$grommet-namespace}card {
-  @include media-query(palm) {
+.#{settings.$grommet-namespace}card {
+  @include tools.media-query(palm) {
     padding: 0;
 
     &:not(:last-child) {
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid settings2.$border-color;
     }
   }
 
-  &.#{$grommet-namespace}box--responsive {
-    @include media-query(palm) {
+  &.#{settings.$grommet-namespace}box--responsive {
+    @include tools.media-query(palm) {
       width: auto;
       margin: 0;
     }
@@ -41,13 +46,13 @@ $card-hover-color: #EBEBEB;
   }
 }
 
-.#{$grommet-namespace}card__thumbnail {
-  min-height: $size-small;
+.#{settings.$grommet-namespace}card__thumbnail {
+  min-height: settings.$size-small;
 }
 
-.#{$grommet-namespace}card__content--truncate {
+.#{settings.$grommet-namespace}card__content--truncate {
   // truncate text paragraphs after 8 lines
-  .#{$grommet-namespace}paragraph {
+  .#{settings.$grommet-namespace}paragraph {
     max-width: none;
     overflow: hidden;
     display: -webkit-box;
@@ -56,7 +61,7 @@ $card-hover-color: #EBEBEB;
     text-overflow: ellipsis;
     position: relative;
 
-    @include truncate-paragraph($paragraph-line-height, $paragraph-font-size);
+    @include truncate-paragraph(settings3.$paragraph-line-height, settings3.$paragraph-font-size);
 
     // fallback for -webkit-line-clamp
     &::after {
@@ -66,8 +71,8 @@ $card-hover-color: #EBEBEB;
       right: 0;
       display: block;
       position: absolute;
-      background: linear-gradient(to right, transparent, $background-color 50%);
-      width: $inuit-base-spacing-unit;
+      background: linear-gradient(to right, transparent, settings2.$background-color 50%);
+      width: settings.$inuit-base-spacing-unit;
     }
 
     @supports(-webkit-line-clamp: 1) {
@@ -76,41 +81,41 @@ $card-hover-color: #EBEBEB;
       }
     }
 
-    @include media-query(palm) {
+    @include tools.media-query(palm) {
       -webkit-line-clamp: 4;
     }
   }
 
-  .#{$grommet-namespace}paragraph--small {
-    @include truncate-paragraph($paragraph-small-line-height, $paragraph-small-font-size);
+  .#{settings.$grommet-namespace}paragraph--small {
+    @include truncate-paragraph(settings3.$paragraph-small-line-height, settings3.$paragraph-small-font-size);
   }
 
-  .#{$grommet-namespace}paragraph--large {
-    @include truncate-paragraph($paragraph-large-line-height, $paragraph-large-font-size);
+  .#{settings.$grommet-namespace}paragraph--large {
+    @include truncate-paragraph(settings3.$paragraph-large-line-height, settings3.$paragraph-large-font-size);
   }
 
-  .#{$grommet-namespace}paragraph--xlarge {
-    @include truncate-paragraph($paragraph-xlarge-line-height, $paragraph-xlarge-font-size);
+  .#{settings.$grommet-namespace}paragraph--xlarge {
+    @include truncate-paragraph(settings3.$paragraph-xlarge-line-height, settings3.$paragraph-xlarge-font-size);
   }
 }
 
-.#{$grommet-namespace}card--direction-row {
-  @include media-query(palm) {
-    .#{$grommet-namespace}card__thumbnail {
-      flex-basis: $size-small;  // match basis for thumbnail in Card.js
+.#{settings.$grommet-namespace}card--direction-row {
+  @include tools.media-query(palm) {
+    .#{settings.$grommet-namespace}card__thumbnail {
+      flex-basis: settings.$size-small;  // match basis for thumbnail in Card.js
     }
   }
 }
 
-.#{$grommet-namespace}card--selectable {
+.#{settings.$grommet-namespace}card--selectable {
 
   &:hover > div {
     background-color: $card-hover-color;
-    color: $hover-text-color;
+    color: settings2.$hover-text-color;
     cursor: pointer;
 
-    .#{$grommet-namespace}card__content {
-      .#{$grommet-namespace}paragraph::after {
+    .#{settings.$grommet-namespace}card__content {
+      .#{settings.$grommet-namespace}paragraph::after {
         background: linear-gradient(to right, transparent, $card-hover-color 50%);
       }
     }

@@ -1,5 +1,7 @@
 @use "sass:math";
 
+@use "settings.defaults";
+
 /*------------------------------------*\
     #SHARED
 \*------------------------------------*/
@@ -17,8 +19,8 @@ table,
 fieldset, figure,
 pre,
 %margin-bottom {
-  margin-bottom: $inuit-base-spacing-unit;
-  margin-bottom: math.div($inuit-base-spacing-unit, $inuit-base-font-size) * 1rem;
+  margin-bottom: settings.$inuit-base-spacing-unit;
+  margin-bottom: math.div(settings.$inuit-base-spacing-unit, settings.$inuit-base-font-size) * 1rem;
 }
 
 /**
@@ -27,6 +29,6 @@ pre,
  */
 ul, ol, dd,
 %margin-left {
-  margin-left: 2 * $inuit-base-spacing-unit;
-  margin-left: math.div(2 * $inuit-base-spacing-unit, $inuit-base-font-size) * 1rem;
+  margin-left: 2 * settings.$inuit-base-spacing-unit;
+  margin-left: math.div(2 * settings.$inuit-base-spacing-unit, settings.$inuit-base-font-size) * 1rem;
 }

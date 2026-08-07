@@ -1,3 +1,12 @@
+@use "sass:math";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.color-index" as tools2;
+@use "tools.functions" as tools5;
+@use "tools.input" as tools4;
+@use "tools.mixins" as tools3;
+@use "tools.text";
+
 // (C) Copyright 2014-2018 Hewlett Packard Enterprise Development LP
 
 $do-not-style-plain-inputs: false !default;
@@ -5,39 +14,39 @@ $do-not-style-plain-buttons: false !default;
 
 @mixin range-track {
   width: 100%;
-  height: $control-border-width;
-  background-color: $control-background-color;
+  height: settings.$control-border-width;
+  background-color: settings2.$control-background-color;
 }
 
 @mixin range-thumb {
   position: relative;
-  height: $control-size;
-  width: $control-size;
+  height: settings.$control-size;
+  width: settings.$control-size;
   overflow: visible;
 }
 
-.grommet a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
-  @include anchor-style;
+.grommet a:not(.#{settings.$grommet-namespace}anchor):not(.#{settings.$grommet-namespace}button) {
+  @include tools.anchor-style;
 }
 
-a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
-  @include background-context-color($link-color, $link-hover-color);
+a:not(.#{settings.$grommet-namespace}anchor):not(.#{settings.$grommet-namespace}button) {
+  @include tools2.background-context-color(settings2.$link-color, settings2.$link-hover-color);
 }
 
 .grommet {
   @if ($do-not-style-plain-inputs) {
-    input:not(.#{$grommet-namespace}input):not(.#{$grommet-namespace}check-box__input).grommet-like-input,
+    input:not(.#{settings.$grommet-namespace}input):not(.#{settings.$grommet-namespace}check-box__input).grommet-like-input,
     select.grommet-like-input,
     textarea.grommet-like-input {
-      @include inuit-font-size($inuit-base-font-size);
-      @include input();
+      @include tools3.inuit-font-size(settings.$inuit-base-font-size);
+      @include tools4.input();
     }
   } @else {
-    input:not(.#{$grommet-namespace}input):not(.#{$grommet-namespace}check-box__input),
+    input:not(.#{settings.$grommet-namespace}input):not(.#{settings.$grommet-namespace}check-box__input),
     select,
     textarea {
-      @include inuit-font-size($inuit-base-font-size);
-      @include input();
+      @include tools3.inuit-font-size(settings.$inuit-base-font-size);
+      @include tools4.input();
     }
   }
 
@@ -50,12 +59,12 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
 
     input[type="button"].grommet-like-input,
     input[type="submit"].grommet-like-input,
-    button:not(.#{$grommet-namespace}button).grommet-like-input {
-      @include basic-button();
+    button:not(.#{settings.$grommet-namespace}button).grommet-like-input {
+      @include tools4.basic-button();
 
       &:focus {
-        border-color: $focus-border-color;
-        box-shadow: 0 0 1px 1px $focus-border-color;
+        border-color: settings2.$focus-border-color;
+        box-shadow: 0 0 1px 1px settings2.$focus-border-color;
       }
     }
   } @else {
@@ -67,17 +76,17 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
 
     input[type="button"],
     input[type="submit"],
-    button:not(.#{$grommet-namespace}button) {
-      @include basic-button();
+    button:not(.#{settings.$grommet-namespace}button) {
+      @include tools4.basic-button();
 
       &:focus {
-        border-color: $focus-border-color;
-        box-shadow: 0 0 1px 1px $focus-border-color;
+        border-color: settings2.$focus-border-color;
+        box-shadow: 0 0 1px 1px settings2.$focus-border-color;
       }
     }
   }
 
-  a.#{$grommet-namespace}button {
+  a.#{settings.$grommet-namespace}button {
     text-decoration: none;
 
     &:hover {
@@ -88,11 +97,11 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
   $small-drop-caret: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAOhJREFUSA3tksENgzAMRUmrrlApuTAAxxw6QvfojYmYKtw6QpUDI1Rq6o8MStsAMT1UlbAUcMB+33FcFJttHfifDlhrT7QO31YMBlgDZw8HH5RSF3JLY0zrvX8MAZI3F1gT66y17ohz2zGgDSFc6UdF+5oDJWwUidMDXoFFfgtAfwJUjMppX7KI6CQJeOOcu48CcNaKzMFfBNaILME/BCQiOfCkQI5ILhwshceUpUAcG0/LeKEpzqwAEhIiRTSKs3Dk92MKZ8rep4vgR57zRTiYiwIIikVo29HKgiNXZGgXt0yUtwX/tgNPQqatJ1aBLFMAAAAASUVORK5CYII=);
 
   select {
-    border-color: $border-color;
-    padding-right: double($inuit-base-spacing-unit);
+    border-color: settings2.$border-color;
+    padding-right: tools5.double(settings.$inuit-base-spacing-unit);
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: $small-drop-caret no-repeat center right halve($inuit-base-spacing-unit);
+    background: $small-drop-caret no-repeat center right tools5.halve(settings.$inuit-base-spacing-unit);
     cursor: pointer;
 
     &::-moz-focus-inner {
@@ -104,7 +113,7 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
     }
 
     &:focus {
-      padding-right: double($inuit-base-spacing-unit);
+      padding-right: tools5.double(settings.$inuit-base-spacing-unit);
     }
   }
 
@@ -112,7 +121,7 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
     position: relative;
     -webkit-appearance: none;
     border-color: transparent;
-    height: $control-size;
+    height: settings.$control-size;
     padding: 0px;
     cursor: pointer;
     overflow-x: hidden;
@@ -136,14 +145,14 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       @include range-thumb();
-      margin-top: -(round($control-size * 0.45));
-      border: $control-border-width solid $brand-color;
-      border-radius: $control-size;
-      background-color: $background-color;
+      margin-top: -(math.round(settings.$control-size * 0.45));
+      border: settings.$control-border-width solid settings2.$brand-color;
+      border-radius: settings.$control-size;
+      background-color: settings2.$background-color;
       cursor: pointer;
 
       &:hover {
-        border-color: $active-icon-color;
+        border-color: settings2.$active-icon-color;
       }
     }
 
@@ -154,15 +163,15 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
     &::-moz-range-thumb {
       @include range-thumb();
       // since the :before doesn't work on the thumb, restyle a bit
-      border: $control-border-width solid $brand-color;
-      height: $control-size - ($control-border-width * 2);
-      width: $control-size - ($control-border-width * 2);
-      border-radius: $control-size;
-      background-color: $background-color;
+      border: settings.$control-border-width solid settings2.$brand-color;
+      height: settings.$control-size - (settings.$control-border-width * 2);
+      width: settings.$control-size - (settings.$control-border-width * 2);
+      border-radius: settings.$control-size;
+      background-color: settings2.$background-color;
     }
 
     &:hover::-moz-range-thumb {
-      border-color: $active-icon-color;
+      border-color: settings2.$active-icon-color;
     }
 
     // This isn't working
@@ -185,47 +194,47 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
     }
 
     &::-ms-fill-lower {
-      background: $brand-color;
+      background: settings2.$brand-color;
       border-color: transparent;
     }
 
     &::-ms-fill-upper {
-      background: $control-background-color;
+      background: settings2.$control-background-color;
       border-color: transparent;
     }
 
     &::-ms-thumb {
       @include range-thumb();
       position: relative;
-      top: quarter($inuit-base-spacing-unit);
-      border: $control-border-width solid $icon-color;
-      height: $control-size - ($control-border-width * 2);
-      width: $control-size - ($control-border-width * 2);
-      border-radius: $control-size;
-      background-color: $background-color;
+      top: tools5.quarter(settings.$inuit-base-spacing-unit);
+      border: settings.$control-border-width solid settings2.$icon-color;
+      height: settings.$control-size - (settings.$control-border-width * 2);
+      width: settings.$control-size - (settings.$control-border-width * 2);
+      border-radius: settings.$control-size;
+      background-color: settings2.$background-color;
     }
 
     &:hover::-ms-thumb {
-      border-color: $active-icon-color;
+      border-color: settings2.$active-icon-color;
     }
   }
 
-  #{$dark-background} {
+  #{settings2.$dark-background} {
 
     input[type=range] {
 
       &::-webkit-slider-runnable-track {
-        background-color: $colored-meter-background-color;
+        background-color: settings2.$colored-meter-background-color;
       }
 
       &::-webkit-slider-thumb {
-        background-color: $active-colored-icon-color;
-        border: $control-border-width solid $active-colored-icon-color;
+        background-color: settings2.$active-colored-icon-color;
+        border: settings.$control-border-width solid settings2.$active-colored-icon-color;
       }
 
       &::-moz-range-thumb {
-        background-color: $active-colored-icon-color;
-        border: $control-border-width solid $active-colored-icon-color;
+        background-color: settings2.$active-colored-icon-color;
+        border: settings.$control-border-width solid settings2.$active-colored-icon-color;
       }
 
       &::-ms-fill-lower {
@@ -233,53 +242,53 @@ a:not(.#{$grommet-namespace}anchor):not(.#{$grommet-namespace}button) {
       }
 
       &::-ms-fill-upper {
-        background: $colored-meter-background-color;
+        background: settings2.$colored-meter-background-color;
       }
 
       &::-ms-thumb {
-        border-color: $active-colored-icon-color;
+        border-color: settings2.$active-colored-icon-color;
       }
 
       &:hover::-ms-thumb {
-        border-color: $active-colored-icon-color;
-        background-color: $active-colored-icon-color;
+        border-color: settings2.$active-colored-icon-color;
+        background-color: settings2.$active-colored-icon-color;
       }
     }
   }
 
-  #{$light-background} {
+  #{settings2.$light-background} {
 
     input[type=range] {
 
       &::-webkit-slider-runnable-track {
-        background-color: $control-background-color;
+        background-color: settings2.$control-background-color;
       }
 
       &::-webkit-slider-thumb {
-        background-color: $active-icon-color;
-        border: $control-border-width solid $active-icon-color;
+        background-color: settings2.$active-icon-color;
+        border: settings.$control-border-width solid settings2.$active-icon-color;
       }
 
       &::-moz-range-thumb {
-        background-color: $active-icon-color;
-        border: $control-border-width solid $active-icon-color;
+        background-color: settings2.$active-icon-color;
+        border: settings.$control-border-width solid settings2.$active-icon-color;
       }
 
       &::-ms-fill-lower {
-        background: $brand-color;
+        background: settings2.$brand-color;
       }
 
       &::-ms-fill-upper {
-        background: $control-background-color;
+        background: settings2.$control-background-color;
       }
 
       &::-ms-thumb {
-        border-color: $icon-color;
+        border-color: settings2.$icon-color;
       }
 
       &:hover::-ms-thumb {
-        border-color: $active-icon-color;
-        background-color: $background-color;
+        border-color: settings2.$active-icon-color;
+        background-color: settings2.$background-color;
       }
     }
   }

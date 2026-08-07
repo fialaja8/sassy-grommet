@@ -1,65 +1,69 @@
+@use "sass:list";
+@use "../grommet-core/settings.color" as settings2;
+@use "../grommet-core/settings.defaults";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}button {
+.#{settings.$grommet-namespace}button {
 
-  &:not(.#{$grommet-namespace}button--disabled):not(.#{$grommet-namespace}button--plain):not(.#{$grommet-namespace}button--fill) {
+  &:not(.#{settings.$grommet-namespace}button--disabled):not(.#{settings.$grommet-namespace}button--plain):not(.#{settings.$grommet-namespace}button--fill) {
 
-    background-color: $brand-color;
-    color: nth($brand-accent-colors, 1);
+    background-color: settings2.$brand-color;
+    color: list.nth(settings2.$brand-accent-colors, 1);
     font-weight: bold;
 
-    &.#{$grommet-namespace}button--primary {
-      background-color: nth($brand-accent-colors, 1);
-      border-color: nth($brand-accent-colors, 1);
-      color: $brand-color;
+    &.#{settings.$grommet-namespace}button--primary {
+      background-color: list.nth(settings2.$brand-accent-colors, 1);
+      border-color: list.nth(settings2.$brand-accent-colors, 1);
+      color: settings2.$brand-color;
     }
 
-    &.#{$grommet-namespace}button--secondary {
-      background-color: $brand-color;
-      color: nth($brand-accent-colors, 1);
+    &.#{settings.$grommet-namespace}button--secondary {
+      background-color: settings2.$brand-color;
+      color: list.nth(settings2.$brand-accent-colors, 1);
     }
 
-    &.#{$grommet-namespace}button--accent {
+    &.#{settings.$grommet-namespace}button--accent {
       background-color: transparent;
-      color: $brand-color;
+      color: settings2.$brand-color;
     }
 
-    &.#{$grommet-namespace}button--critical {
+    &.#{settings.$grommet-namespace}button--critical {
       background-color: transparent;
-      color: $brand-color;
+      color: settings2.$brand-color;
     }
 
-    #{$dark-background-context} {
-      background-color: $background-color;
-      color: $brand-color;
+    #{settings2.$dark-background-context} {
+      background-color: settings2.$background-color;
+      color: settings2.$brand-color;
       font-weight: bold;
 
-      &.#{$grommet-namespace}button--primary {
-        background-color: nth($brand-accent-colors, 1);
-        border-color: nth($brand-accent-colors, 1);
-        color: $brand-color;
+      &.#{settings.$grommet-namespace}button--primary {
+        background-color: list.nth(settings2.$brand-accent-colors, 1);
+        border-color: list.nth(settings2.$brand-accent-colors, 1);
+        color: settings2.$brand-color;
       }
 
-      &.#{$grommet-namespace}button--secondary {
-        background-color: $background-color;
-        color: $brand-color;
+      &.#{settings.$grommet-namespace}button--secondary {
+        background-color: settings2.$background-color;
+        color: settings2.$brand-color;
       }
     }
 
-    #{$light-background-context} {
-      background-color: $brand-color;
-      color: nth($brand-accent-colors, 1);
+    #{settings2.$light-background-context} {
+      background-color: settings2.$brand-color;
+      color: list.nth(settings2.$brand-accent-colors, 1);
       font-weight: bold;
 
-      &.#{$grommet-namespace}button--primary {
-        background-color: nth($brand-accent-colors, 1);
-        border-color: nth($brand-accent-colors, 1);
-        color: $brand-color;
+      &.#{settings.$grommet-namespace}button--primary {
+        background-color: list.nth(settings2.$brand-accent-colors, 1);
+        border-color: list.nth(settings2.$brand-accent-colors, 1);
+        color: settings2.$brand-color;
       }
 
-      &.#{$grommet-namespace}button--secondary {
-        background-color: $brand-color;
-        color: nth($brand-accent-colors, 1);
+      &.#{settings.$grommet-namespace}button--secondary {
+        background-color: settings2.$brand-color;
+        color: list.nth(settings2.$brand-accent-colors, 1);
       }
     }
   }

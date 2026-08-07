@@ -1,3 +1,9 @@
+@use "sass:list";
+@use "sass:map";
+@use "settings.defaults";
+
+@use "sass:color";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 // Unbranded Grommet purple
@@ -20,8 +26,8 @@ $brand-grey-colors: (#000001, #333333, #444444, #555555, #666666) !default;
 $brand-graph-colors: $brand-neutral-colors !default;
 $brand-light-colors: (#ffffff, #f5f5f5) !default;
 
-$brand-color-lighter: lighten($brand-color, 23%) !default;
-$brand-color-darker: darken($brand-color, 9%) !default;
+$brand-color-lighter: color.adjust($brand-color, $lightness: 23%, $space: hsl) !default;
+$brand-color-darker: color.adjust($brand-color, $lightness: -9%, $space: hsl) !default;
 
 $text-color: #333 !default;
 $secondary-text-color: #666 !default; // meets AA accessibility
@@ -61,7 +67,7 @@ $disabled-icon-color: #ccc !default;
 $colored-icon-color: rgba(255, 255, 255, 0.7) !default; //#dbdbdb;
 $colored-status-color: rgba(255, 255, 255, 0.9) !default; //#dbdbdb;
 $active-colored-icon-color: #fff !default;
-$icon-badge-background-color: nth($brand-accent-colors, 1) !default;
+$icon-badge-background-color: list.nth($brand-accent-colors, 1) !default;
 $icon-badge-text-color: $text-color !default;
 
 $unset-color: #ddd !default;
@@ -76,14 +82,14 @@ $toast-background-color: rgba(#eee, 0.9) !default;
 
 // Controls
 
-$focus-border-color: nth($brand-accent-colors, 1) !default;
+$focus-border-color: list.nth($brand-accent-colors, 1) !default;
 $control-brand-color: $brand-color !default;
 
 $button-border-color: $brand-color !default;
 $button-text-color: $text-color !default;
 $button-secondary-color: rgba(#333, 0.6) !default;
-$button-accent-color: nth($brand-accent-colors, 1) !default;
-$button-critical-color: map-get($brand-status-colors, critical) !default;
+$button-accent-color: list.nth($brand-accent-colors, 1) !default;
+$button-critical-color: map.get($brand-status-colors, critical) !default;
 $button-drop-shadow-color: rgba(170, 170, 170, 0.5) !default;
 $button-colored-border-color: rgba(255, 255, 255, 0.7) !default; ///rgba(255, 255, 255, 0.7) !default;
 
@@ -101,26 +107,26 @@ $footer-background-color: rgba(255, 255, 255, 0.9) !default;
 $active-background-color: rgba(255, 255, 255, 0.8) !default;
 $sort-placeholder-background-color: rgba(0, 0, 255, 0.1) !default; // TODO: recolor
 
-$inverse-background-color: nth($brand-neutral-colors, 1) !default;
+$inverse-background-color: list.nth($brand-neutral-colors, 1) !default;
 $inverse-color: #fff !default;
 
 $pending-background:
-  '.#{$grommet-namespace}background-color-index--pending' !default;
+  '.#{settings.$grommet-namespace}background-color-index--pending' !default;
 $dark-background:
-  '.#{$grommet-namespace}background-color-index--dark, .#{$grommet-namespace}background-color-index--light .#{$grommet-namespace}background-color-index--dark' !default;
+  '.#{settings.$grommet-namespace}background-color-index--dark, .#{settings.$grommet-namespace}background-color-index--light .#{settings.$grommet-namespace}background-color-index--dark' !default;
 $light-background:
-  '.#{$grommet-namespace}background-color-index--light, .#{$grommet-namespace}background-color-index--dark .#{$grommet-namespace}background-color-index--light',  !default;
+  '.#{settings.$grommet-namespace}background-color-index--light, .#{settings.$grommet-namespace}background-color-index--dark .#{settings.$grommet-namespace}background-color-index--light',  !default;
 
 $pending-background-context:
-  '.#{$grommet-namespace}background-color-index--pending &' !default;
+  '.#{settings.$grommet-namespace}background-color-index--pending &' !default;
 $dark-background-context:
-  '.#{$grommet-namespace}background-color-index--dark &, .#{$grommet-namespace}background-color-index--light .#{$grommet-namespace}background-color-index--dark &' !default;
+  '.#{settings.$grommet-namespace}background-color-index--dark &, .#{settings.$grommet-namespace}background-color-index--light .#{settings.$grommet-namespace}background-color-index--dark &' !default;
 $light-background-context:
-  '.#{$grommet-namespace}background-color-index--light &, .#{$grommet-namespace}background-color-index--dark .#{$grommet-namespace}background-color-index--light &',  !default;
+  '.#{settings.$grommet-namespace}background-color-index--light &, .#{settings.$grommet-namespace}background-color-index--dark .#{settings.$grommet-namespace}background-color-index--light &',  !default;
 
 $pending-background-and:
-  '&.#{$grommet-namespace}background-color-index--pending' !default;
+  '&.#{settings.$grommet-namespace}background-color-index--pending' !default;
 $dark-background-and:
-  '&.#{$grommet-namespace}background-color-index--dark, .#{$grommet-namespace}background-color-index--light &.#{$grommet-namespace}background-color-index--dark' !default;
+  '&.#{settings.$grommet-namespace}background-color-index--dark, .#{settings.$grommet-namespace}background-color-index--light &.#{settings.$grommet-namespace}background-color-index--dark' !default;
 $light-background-and:
-  '&.#{$grommet-namespace}background-color-index--light, .#{$grommet-namespace}background-color-index--dark &.#{$grommet-namespace}background-color-index--light',  !default;
+  '&.#{settings.$grommet-namespace}background-color-index--light, .#{settings.$grommet-namespace}background-color-index--dark &.#{settings.$grommet-namespace}background-color-index--light',  !default;

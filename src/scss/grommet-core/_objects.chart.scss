@@ -1,6 +1,14 @@
+@use "sass:math";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.animation";
+@use "tools.color-index" as tools4;
+@use "tools.functions" as tools3;
+@use "tools.responsive" as tools2;
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-@include keyframes(fade-in-chart) {
+@include tools.keyframes(fade-in-chart) {
   0% {
     opacity: 0;
   }
@@ -12,39 +20,39 @@
 
 // New stuff
 
-.#{$grommet-namespace}chart {
+.#{settings.$grommet-namespace}chart {
   position: relative;
   display: flex;
 
-  .#{$grommet-namespace}chart {
+  .#{settings.$grommet-namespace}chart {
     min-width: 0; // looks odd but needed for flexbox to work right
     max-width: 100%;
   }
 }
 
-.#{$grommet-namespace}chart--full {
+.#{settings.$grommet-namespace}chart--full {
   width: 100%;
 }
 
-.#{$grommet-namespace}chart--vertical {
+.#{settings.$grommet-namespace}chart--vertical {
   flex-direction: column;
 }
 
-.#{$grommet-namespace}chart:not(.#{$grommet-namespace}chart--vertical) {
+.#{settings.$grommet-namespace}chart:not(.#{settings.$grommet-namespace}chart--vertical) {
   flex-direction: row;
 }
 
 // Base
 
-.#{$grommet-namespace}chart-base {
+.#{settings.$grommet-namespace}chart-base {
   display: flex;
 }
 
-.#{$grommet-namespace}chart-base--vertical {
+.#{settings.$grommet-namespace}chart-base--vertical {
   flex-direction: column;
 }
 
-.#{$grommet-namespace}chart-base:not(.#{$grommet-namespace}chart-base--vertical) {
+.#{settings.$grommet-namespace}chart-base:not(.#{settings.$grommet-namespace}chart-base--vertical) {
   flex-direction: row;
 
   > * {
@@ -52,74 +60,74 @@
   }
 }
 
-.#{$grommet-namespace}chart-base--width-small {
-  width: $size-small;
+.#{settings.$grommet-namespace}chart-base--width-small {
+  width: settings.$size-small;
 }
 
-.#{$grommet-namespace}chart-base--width-medium {
-  width: $size-medium;
+.#{settings.$grommet-namespace}chart-base--width-medium {
+  width: settings.$size-medium;
 }
 
-.#{$grommet-namespace}chart-base--width-large {
-  width: $size-large;
+.#{settings.$grommet-namespace}chart-base--width-large {
+  width: settings.$size-large;
 
-  @include media-query(palm) {
+  @include tools2.media-query(palm) {
     max-width: 100%;
   }
 }
 
-.#{$grommet-namespace}chart-base--width-full {
+.#{settings.$grommet-namespace}chart-base--width-full {
   width: 100%;
 }
 
-.#{$grommet-namespace}chart-base--height-xxsmall {
-  height: $size-xxsmall;
+.#{settings.$grommet-namespace}chart-base--height-xxsmall {
+  height: settings.$size-xxsmall;
 }
 
-.#{$grommet-namespace}chart-base--height-xsmall {
-  height: $size-xsmall;
+.#{settings.$grommet-namespace}chart-base--height-xsmall {
+  height: settings.$size-xsmall;
 }
 
-.#{$grommet-namespace}chart-base--height-small {
-  height: $size-small;
+.#{settings.$grommet-namespace}chart-base--height-small {
+  height: settings.$size-small;
 }
 
-.#{$grommet-namespace}chart-base--height-medium {
-  height: $size-medium;
+.#{settings.$grommet-namespace}chart-base--height-medium {
+  height: settings.$size-medium;
 
-  @include media-query(palm) {
-    height: $size-small;
+  @include tools2.media-query(palm) {
+    height: settings.$size-small;
   }
 }
 
-.#{$grommet-namespace}chart-base--height-large {
-  height: $size-large;
+.#{settings.$grommet-namespace}chart-base--height-large {
+  height: settings.$size-large;
 
-  @include media-query(palm) {
-    height: $size-medium;
+  @include tools2.media-query(palm) {
+    height: settings.$size-medium;
   }
 }
 
-.#{$grommet-namespace}chart-base--height-sparkline {
-  height: $sparkline-height;
-  width: $sparkline-height * 4;
+.#{settings.$grommet-namespace}chart-base--height-sparkline {
+  height: settings.$sparkline-height;
+  width: settings.$sparkline-height * 4;
 
-  &.#{$grommet-namespace}chart-base--width-xsmall {
-    width: $size-xsmall;
+  &.#{settings.$grommet-namespace}chart-base--width-xsmall {
+    width: settings.$size-xsmall;
   }
 
-  &.#{$grommet-namespace}chart-base--width-small {
-    width: $size-small;
+  &.#{settings.$grommet-namespace}chart-base--width-small {
+    width: settings.$size-small;
   }
 
-  &.#{$grommet-namespace}chart-base--width-medium {
-    width: $size-medium;
+  &.#{settings.$grommet-namespace}chart-base--width-medium {
+    width: settings.$size-medium;
   }
 
-  &.#{$grommet-namespace}chart-base--width-large {
-    width: $size-large;
+  &.#{settings.$grommet-namespace}chart-base--width-large {
+    width: settings.$size-large;
 
-    @include media-query(palm) {
+    @include tools2.media-query(palm) {
       max-width: 100%;
     }
   }
@@ -127,13 +135,13 @@
 
 // Axis
 
-.#{$grommet-namespace}chart-axis {
+.#{settings.$grommet-namespace}chart-axis {
   flex: 0 0 auto; // when in Chart
   display: flex;
   flex-direction: row;
 }
 
-.#{$grommet-namespace}chart-axis__slot {
+.#{settings.$grommet-namespace}chart-axis__slot {
   flex: 0 0;
   display: flex;
   flex-direction: column;
@@ -141,35 +149,35 @@
   -webkit-transform: translateZ(0);
 }
 
-.#{$grommet-namespace}chart-axis--ticks {
-  .#{$grommet-namespace}chart-axis__slot {
+.#{settings.$grommet-namespace}chart-axis--ticks {
+  .#{settings.$grommet-namespace}chart-axis__slot {
     &::before,
     &::after {
-      background-color: $border-color;
+      background-color: settings2.$border-color;
     }
 
-    #{$dark-background-context} {
+    #{settings2.$dark-background-context} {
       &::before,
       &::after {
-        background-color: $colored-border-color;
+        background-color: settings2.$colored-border-color;
       }
     }
 
-    #{$light-background-context} {
+    #{settings2.$light-background-context} {
       &::before,
       &::after {
-        background-color: $border-color;
+        background-color: settings2.$border-color;
       }
     }
   }
 }
 
-.#{$grommet-namespace}chart-axis--vertical {
+.#{settings.$grommet-namespace}chart-axis--vertical {
   flex-direction: column-reverse;
-  margin-left: halve($inuit-base-spacing-unit);
-  margin-right: halve($inuit-base-spacing-unit);
+  margin-left: tools3.halve(settings.$inuit-base-spacing-unit);
+  margin-right: tools3.halve(settings.$inuit-base-spacing-unit);
 
-  .#{$grommet-namespace}chart-axis__slot {
+  .#{settings.$grommet-namespace}chart-axis__slot {
     min-width: 1em;
     justify-content: flex-start;
 
@@ -178,49 +186,49 @@
     }
   }
 
-  &.#{$grommet-namespace}chart-axis--align-start {
+  &.#{settings.$grommet-namespace}chart-axis--align-start {
     align-items: flex-start;
 
-    .#{$grommet-namespace}chart-axis__slot {
+    .#{settings.$grommet-namespace}chart-axis__slot {
       align-items: flex-start;
     }
   }
 
-  &.#{$grommet-namespace}chart-axis--align-end {
+  &.#{settings.$grommet-namespace}chart-axis--align-end {
     align-items: flex-end;
 
-    .#{$grommet-namespace}chart-axis__slot {
+    .#{settings.$grommet-namespace}chart-axis__slot {
       align-items: flex-end;
     }
   }
 
-  &.#{$grommet-namespace}chart-axis--ticks {
-    .#{$grommet-namespace}chart-axis__slot:not(.#{$grommet-namespace}chart-axis__slot--placeholder) {
+  &.#{settings.$grommet-namespace}chart-axis--ticks {
+    .#{settings.$grommet-namespace}chart-axis__slot:not(.#{settings.$grommet-namespace}chart-axis__slot--placeholder) {
       &::before {
         display: block;
         content: "";
         height: 1px;
-        width: halve(halve($inuit-base-spacing-unit));
+        width: tools3.halve(tools3.halve(settings.$inuit-base-spacing-unit));
       }
     }
 
-    &.#{$grommet-namespace}chart-axis--ticks--start {
-      .#{$grommet-namespace}chart-axis__slot {
+    &.#{settings.$grommet-namespace}chart-axis--ticks--start {
+      .#{settings.$grommet-namespace}chart-axis__slot {
         align-items: flex-start;
       }
     }
 
-    &.#{$grommet-namespace}chart-axis--ticks--end {
-      .#{$grommet-namespace}chart-axis__slot {
+    &.#{settings.$grommet-namespace}chart-axis--ticks--end {
+      .#{settings.$grommet-namespace}chart-axis__slot {
         align-items: flex-end;
       }
     }
   }
 
-  &.#{$grommet-namespace}chart-axis--reverse {
+  &.#{settings.$grommet-namespace}chart-axis--reverse {
     flex-direction: column;
 
-    .#{$grommet-namespace}chart-axis__slot {
+    .#{settings.$grommet-namespace}chart-axis__slot {
       justify-content: flex-start;
       flex-direction: column-reverse;
 
@@ -234,27 +242,27 @@
       }
     }
 
-    &.#{$grommet-namespace}chart-axis--ticks--start {
-      .#{$grommet-namespace}chart-axis__slot {
+    &.#{settings.$grommet-namespace}chart-axis--ticks--start {
+      .#{settings.$grommet-namespace}chart-axis__slot {
         align-items: flex-start;
       }
     }
 
-    &.#{$grommet-namespace}chart-axis--ticks--end {
-      .#{$grommet-namespace}chart-axis__slot {
+    &.#{settings.$grommet-namespace}chart-axis--ticks--end {
+      .#{settings.$grommet-namespace}chart-axis__slot {
         align-items: flex-end;
       }
     }
   }
 }
 
-.#{$grommet-namespace}chart-axis:not(.#{$grommet-namespace}chart-axis--vertical) {
+.#{settings.$grommet-namespace}chart-axis:not(.#{settings.$grommet-namespace}chart-axis--vertical) {
   flex-direction: row;
-  margin-top: halve($inuit-base-spacing-unit);
-  margin-bottom: halve($inuit-base-spacing-unit);
+  margin-top: tools3.halve(settings.$inuit-base-spacing-unit);
+  margin-bottom: tools3.halve(settings.$inuit-base-spacing-unit);
 
-  .#{$grommet-namespace}chart-axis__slot {
-    min-height: $inuit-base-spacing-unit;
+  .#{settings.$grommet-namespace}chart-axis__slot {
+    min-height: settings.$inuit-base-spacing-unit;
     align-items: flex-start;
     justify-content: flex-end;
     flex-direction: row;
@@ -266,54 +274,54 @@
     }
   }
 
-  &.#{$grommet-namespace}chart-axis--align-start {
+  &.#{settings.$grommet-namespace}chart-axis--align-start {
     align-items: flex-start;
   }
 
-  &.#{$grommet-namespace}chart-axis--align-end {
+  &.#{settings.$grommet-namespace}chart-axis--align-end {
     align-items: flex-end;
 
-    .#{$grommet-namespace}chart-axis__slot {
+    .#{settings.$grommet-namespace}chart-axis__slot {
       justify-content: flex-end;
     }
   }
 
-  &.#{$grommet-namespace}chart-axis--ticks {
-    .#{$grommet-namespace}chart-axis__slot::after {
+  &.#{settings.$grommet-namespace}chart-axis--ticks {
+    .#{settings.$grommet-namespace}chart-axis__slot::after {
       display: block;
       content: "";
-      height: halve(halve($inuit-base-spacing-unit));
+      height: tools3.halve(tools3.halve(settings.$inuit-base-spacing-unit));
       width: 1px;
     }
 
-    &.#{$grommet-namespace}chart-axis--ticks--end {
-      .#{$grommet-namespace}chart-axis__slot:not(.#{$grommet-namespace}chart-axis__slot--placeholder) {
+    &.#{settings.$grommet-namespace}chart-axis--ticks--end {
+      .#{settings.$grommet-namespace}chart-axis__slot:not(.#{settings.$grommet-namespace}chart-axis__slot--placeholder) {
         align-items: flex-end;
       }
     }
 
-    &.#{$grommet-namespace}chart-axis--ticks--start {
-      .#{$grommet-namespace}chart-axis__slot:not(.#{$grommet-namespace}chart-axis__slot--placeholder) {
+    &.#{settings.$grommet-namespace}chart-axis--ticks--start {
+      .#{settings.$grommet-namespace}chart-axis__slot:not(.#{settings.$grommet-namespace}chart-axis__slot--placeholder) {
         align-items: flex-start;
       }
     }
 
-    .#{$grommet-namespace}chart-axis__slot:not(.#{$grommet-namespace}chart-axis__slot--placeholder) {
+    .#{settings.$grommet-namespace}chart-axis__slot:not(.#{settings.$grommet-namespace}chart-axis__slot--placeholder) {
       > span {
-        padding: 0 quarter($inuit-base-spacing-unit);
+        padding: 0 tools3.quarter(settings.$inuit-base-spacing-unit);
       }
     }
   }
 
-  &.#{$grommet-namespace}chart-axis--reverse {
+  &.#{settings.$grommet-namespace}chart-axis--reverse {
     flex-direction: row-reverse;
 
-    .#{$grommet-namespace}chart-axis__slot {
+    .#{settings.$grommet-namespace}chart-axis__slot {
       align-items: flex-start;
     }
 
-    &.#{$grommet-namespace}chart-axis--ticks {
-      .#{$grommet-namespace}chart-axis__slot {
+    &.#{settings.$grommet-namespace}chart-axis--ticks {
+      .#{settings.$grommet-namespace}chart-axis__slot {
         align-items: flex-start;
         justify-content: flex-end;
         flex-direction: row-reverse;
@@ -328,13 +336,13 @@
 
 // MarkerLabel
 
-.#{$grommet-namespace}chart-marker-label {
+.#{settings.$grommet-namespace}chart-marker-label {
   flex: 0 0 auto; // when in Chart
   display: flex;
   flex-direction: row;
 }
 
-.#{$grommet-namespace}chart-marker-label__slot {
+.#{settings.$grommet-namespace}chart-marker-label__slot {
   flex: 0 0;
   display: flex;
   flex-direction: column;
@@ -342,79 +350,79 @@
   -webkit-transform: translateZ(0);
 }
 
-.#{$grommet-namespace}chart-marker-label--vertical {
+.#{settings.$grommet-namespace}chart-marker-label--vertical {
   flex-direction: column-reverse;
   // padding-top: round($inuit-base-spacing-unit / 3);
   // padding-bottom: round($inuit-base-spacing-unit / 3);
-  margin-left: halve($inuit-base-spacing-unit);
-  margin-right: halve($inuit-base-spacing-unit);
+  margin-left: tools3.halve(settings.$inuit-base-spacing-unit);
+  margin-right: tools3.halve(settings.$inuit-base-spacing-unit);
 
-  .#{$grommet-namespace}chart-marker-label__slot {
+  .#{settings.$grommet-namespace}chart-marker-label__slot {
     min-width: 1em;
     justify-content: flex-start;
 
-    &.#{$grommet-namespace}chart-marker-label__slot--flip {
+    &.#{settings.$grommet-namespace}chart-marker-label__slot--flip {
       justify-content: flex-end;
     }
   }
 
-  &.#{$grommet-namespace}chart-marker-label--align-start {
+  &.#{settings.$grommet-namespace}chart-marker-label--align-start {
     align-items: flex-start;
 
-    .#{$grommet-namespace}chart-marker-label__slot {
+    .#{settings.$grommet-namespace}chart-marker-label__slot {
       align-items: flex-start;
     }
   }
 
-  &.#{$grommet-namespace}chart-marker-label--align-end {
+  &.#{settings.$grommet-namespace}chart-marker-label--align-end {
     align-items: flex-end;
 
-    .#{$grommet-namespace}chart-marker-label__slot {
+    .#{settings.$grommet-namespace}chart-marker-label__slot {
       align-items: flex-end;
     }
   }
 
-  &.#{$grommet-namespace}chart-marker-label--reverse {
+  &.#{settings.$grommet-namespace}chart-marker-label--reverse {
     flex-direction: column;
 
-    .#{$grommet-namespace}chart-marker-label__slot {
+    .#{settings.$grommet-namespace}chart-marker-label__slot {
       justify-content: flex-end;
 
-      &.#{$grommet-namespace}chart-marker-label__slot--flip {
+      &.#{settings.$grommet-namespace}chart-marker-label__slot--flip {
         justify-content: flex-start;
       }
     }
   }
 }
 
-.#{$grommet-namespace}chart-marker-label:not(.#{$grommet-namespace}chart-marker-label--vertical) {
+.#{settings.$grommet-namespace}chart-marker-label:not(.#{settings.$grommet-namespace}chart-marker-label--vertical) {
   flex-direction: row;
   // padding-left: round($inuit-base-spacing-unit / 3);
   // padding-right: round($inuit-base-spacing-unit / 3);
-  margin-top: halve($inuit-base-spacing-unit);
-  margin-bottom: halve($inuit-base-spacing-unit);
+  margin-top: tools3.halve(settings.$inuit-base-spacing-unit);
+  margin-bottom: tools3.halve(settings.$inuit-base-spacing-unit);
 
-  .#{$grommet-namespace}chart-marker-label__slot {
-    min-height: $inuit-base-spacing-unit;
+  .#{settings.$grommet-namespace}chart-marker-label__slot {
+    min-height: settings.$inuit-base-spacing-unit;
     align-items: flex-end;
 
-    &.#{$grommet-namespace}chart-marker-label__slot--flip {
+    &.#{settings.$grommet-namespace}chart-marker-label__slot--flip {
       align-items: flex-start;
     }
   }
 
-  &.#{$grommet-namespace}chart-marker-label--align-start {
+  &.#{settings.$grommet-namespace}chart-marker-label--align-start {
     align-items: flex-start;
 
-    .#{$grommet-namespace}chart-marker-label__slot {
+    .#{settings.$grommet-namespace}chart-marker-label__slot {
       justify-content: flex-start;
     }
   }
 
-  &.#{$grommet-namespace}chart-marker-label--align-end {
+  &.#{settings.$grommet-namespace}chart-marker-label--align-end {
     align-items: flex-end;
 
-    .#{$grommet-namespace}chart-marker-label__slot {
+    .#{settings.$grommet-namespace}chart-marker-label__slot {
       justify-content: flex-end;
     }
   }
@@ -422,12 +430,12 @@
 
 // Layers
 
-.#{$grommet-namespace}chart-layers {
+.#{settings.$grommet-namespace}chart-layers {
   position: absolute;
-  @include animation('fade-in-chart 0.5s');
+  @include tools.animation('fade-in-chart 0.5s');
 }
 
-@include keyframes(stretch-up-chart) {
+@include tools.keyframes(stretch-up-chart) {
   0% {
     max-height: 0;
   }
@@ -437,7 +445,7 @@
   }
 }
 
-@include keyframes(stretch-right-chart) {
+@include tools.keyframes(stretch-right-chart) {
   0% {
     max-width: 0;
   }
@@ -447,14 +455,14 @@
   }
 }
 
-.#{$grommet-namespace}chart-marker,
-.#{$grommet-namespace}chart-grid,
-.#{$grommet-namespace}chart-graph--line,
-.#{$grommet-namespace}chart-graph--area,
-.#{$grommet-namespace}chart-graph--bar,
-.#{$grommet-namespace}chart-hot-spots,
-.#{$grommet-namespace}chart-range,
-.#{$grommet-namespace}chart-loading {
+.#{settings.$grommet-namespace}chart-marker,
+.#{settings.$grommet-namespace}chart-grid,
+.#{settings.$grommet-namespace}chart-graph--line,
+.#{settings.$grommet-namespace}chart-graph--area,
+.#{settings.$grommet-namespace}chart-graph--bar,
+.#{settings.$grommet-namespace}chart-hot-spots,
+.#{settings.$grommet-namespace}chart-range,
+.#{settings.$grommet-namespace}chart-loading {
   position: absolute;
   left: 0;
   width: 100%;
@@ -463,17 +471,17 @@
 
 // Loading
 
-.#{$grommet-namespace}chart-loading {
+.#{settings.$grommet-namespace}chart-loading {
   top: 0;
-  stroke-width: $inuit-base-spacing-unit;
-  stroke: $unset-color;
-  stroke-dasharray: 1 $inuit-base-spacing-unit;
+  stroke-width: settings.$inuit-base-spacing-unit;
+  stroke: settings2.$unset-color;
+  stroke-dasharray: 1 settings.$inuit-base-spacing-unit;
   stroke-dashoffset: 0;
 }
 
 // HotSpots
 
-.#{$grommet-namespace}chart-hot-spots {
+.#{settings.$grommet-namespace}chart-hot-spots {
   display: flex;
   width: 100%;
 
@@ -482,15 +490,15 @@
   }
 }
 
-.#{$grommet-namespace}chart-hot-spots--vertical {
+.#{settings.$grommet-namespace}chart-hot-spots--vertical {
   flex-direction: column;
 }
 
-.#{$grommet-namespace}chart-hot-spots:not(.#{$grommet-namespace}chart-hot-spots--vertical) {
+.#{settings.$grommet-namespace}chart-hot-spots:not(.#{settings.$grommet-namespace}chart-hot-spots--vertical) {
   flex-direction: row;
 }
 
-.#{$grommet-namespace}chart-hot-spots--clickable {
+.#{settings.$grommet-namespace}chart-hot-spots--clickable {
   cursor: pointer;
 }
 
@@ -501,20 +509,20 @@ $range-inactive-colored-background-color: rgba(#000, 0.4);
 $range-control-background-color: rgba(#fff, 0.7);
 $range-control-colored-background-color: rgba(#000, 0.5);
 
-.#{$grommet-namespace}chart-range {
+.#{settings.$grommet-namespace}chart-range {
   display: flex;
   flex-direction: row;
 }
 
-.#{$grommet-namespace}chart-range__active {
+.#{settings.$grommet-namespace}chart-range__active {
   position: relative;
   height: 100%;
   flex: 1 1;
   cursor: ew-resize;
 }
 
-.#{$grommet-namespace}chart-range__before,
-.#{$grommet-namespace}chart-range__after {
+.#{settings.$grommet-namespace}chart-range__before,
+.#{settings.$grommet-namespace}chart-range__after {
   position: relative;
   flex: 0 0;
   display: flex;
@@ -523,68 +531,68 @@ $range-control-colored-background-color: rgba(#000, 0.5);
   background-color: $range-inactive-background-color;
   z-index: 1;
 
-  #{$dark-background-context} {
+  #{settings2.$dark-background-context} {
     background-color: $range-inactive-colored-background-color;
   }
 
-  #{$light-background-context} {
+  #{settings2.$light-background-context} {
     background-color: $range-inactive-background-color;
   }
 }
 
-.#{$grommet-namespace}chart-range__before {
+.#{settings.$grommet-namespace}chart-range__before {
   justify-content: flex-end;
-  border-color: $border-color;
+  border-color: settings2.$border-color;
   border-width: 1px;
   border-style: none solid none none;
 }
 
-.#{$grommet-namespace}chart-range__before--end {
+.#{settings.$grommet-namespace}chart-range__before--end {
   z-index: 2;
 }
 
-.#{$grommet-namespace}chart-range__after {
+.#{settings.$grommet-namespace}chart-range__after {
   justify-content: flex-start;
-  border-color: $border-color;
+  border-color: settings2.$border-color;
   border-width: 1px;
   border-style: none none none solid;
 }
 
-.#{$grommet-namespace}chart-range__start,
-.#{$grommet-namespace}chart-range__end {
+.#{settings.$grommet-namespace}chart-range__start,
+.#{settings.$grommet-namespace}chart-range__end {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  flex: 0 1 $inuit-base-spacing-unit;
+  flex: 0 1 settings.$inuit-base-spacing-unit;
   background-color: $range-control-background-color;
-  border: 1px solid $border-color;
-  padding: quarter($inuit-base-spacing-unit) 0;
-  height: round($inuit-base-spacing-unit * 1.5);
+  border: 1px solid settings2.$border-color;
+  padding: tools3.quarter(settings.$inuit-base-spacing-unit) 0;
+  height: math.round(settings.$inuit-base-spacing-unit * 1.5);
   cursor: col-resize;
   outline: none;
 
-  #{$dark-background-context} {
+  #{settings2.$dark-background-context} {
     background-color: $range-control-colored-background-color;
-    border-color: $colored-border-color;
+    border-color: settings2.$colored-border-color;
   }
 
-  #{$light-background-context} {
+  #{settings2.$light-background-context} {
     background-color: $range-control-background-color;
-    border-color: $border-color;
+    border-color: settings2.$border-color;
   }
 
   &:hover {
-    background-color: $background-color;
-    border-color: $strong-border-color;
+    background-color: settings2.$background-color;
+    border-color: settings2.$strong-border-color;
 
-    #{$dark-background-context} {
+    #{settings2.$dark-background-context} {
       background-color: $range-control-colored-background-color;
-      border-color: $colored-strong-border-color;
+      border-color: settings2.$colored-strong-border-color;
     }
 
-    #{$light-background-context} {
-      background-color: $background-color;
-      border-color: $strong-border-color;
+    #{settings2.$light-background-context} {
+      background-color: settings2.$background-color;
+      border-color: settings2.$strong-border-color;
     }
   }
 
@@ -596,75 +604,75 @@ $range-control-colored-background-color: rgba(#000, 0.5);
   }
 }
 
-.#{$grommet-namespace}chart-range__start {
+.#{settings.$grommet-namespace}chart-range__start {
   right: -1px;
 }
 
-.#{$grommet-namespace}chart-range__start--edge {
-  right: -($inuit-base-spacing-unit + 2px); // account for border
+.#{settings.$grommet-namespace}chart-range__start--edge {
+  right: -(settings.$inuit-base-spacing-unit + 2px); // account for border
 }
 
-.#{$grommet-namespace}chart-range__end {
+.#{settings.$grommet-namespace}chart-range__end {
   left: -1px;
 }
 
-.#{$grommet-namespace}chart-range__end--edge {
-  left: -($inuit-base-spacing-unit + 2px); // account for border
+.#{settings.$grommet-namespace}chart-range__end--edge {
+  left: -(settings.$inuit-base-spacing-unit + 2px); // account for border
 }
 
-.#{$grommet-namespace}chart-range__start--focus,
-.#{$grommet-namespace}chart-range__end--focus {
-  border-color: $focus-border-color;
-  box-shadow: 0 0 1px 1px $focus-border-color;
+.#{settings.$grommet-namespace}chart-range__start--focus,
+.#{settings.$grommet-namespace}chart-range__end--focus {
+  border-color: settings2.$focus-border-color;
+  box-shadow: 0 0 1px 1px settings2.$focus-border-color;
 }
 
-.#{$grommet-namespace}chart-range--vertical {
+.#{settings.$grommet-namespace}chart-range--vertical {
   flex-direction: column;
 
-  .#{$grommet-namespace}chart-range__active {
+  .#{settings.$grommet-namespace}chart-range__active {
     width: 100%;
     cursor: ns-resize;
   }
 
-  .#{$grommet-namespace}chart-range__before,
-  .#{$grommet-namespace}chart-range__after {
+  .#{settings.$grommet-namespace}chart-range__before,
+  .#{settings.$grommet-namespace}chart-range__after {
     flex-direction: column;
   }
 
-  .#{$grommet-namespace}chart-range__before {
+  .#{settings.$grommet-namespace}chart-range__before {
     border-style: none none solid;
   }
 
-  .#{$grommet-namespace}chart-range__after {
+  .#{settings.$grommet-namespace}chart-range__after {
     border-style: solid none none;
   }
 
-  .#{$grommet-namespace}chart-range__start,
-  .#{$grommet-namespace}chart-range__end {
+  .#{settings.$grommet-namespace}chart-range__start,
+  .#{settings.$grommet-namespace}chart-range__end {
     top: auto;
     transform: none;
-    padding: 0 quarter($inuit-base-spacing-unit);
-    height: $inuit-base-spacing-unit + 2px;
+    padding: 0 tools3.quarter(settings.$inuit-base-spacing-unit);
+    height: settings.$inuit-base-spacing-unit + 2px;
     // width: round($inuit-base-spacing-unit * 1.5);
     cursor: row-resize;
   }
 
-  .#{$grommet-namespace}chart-range__start {
+  .#{settings.$grommet-namespace}chart-range__start {
     right: auto;
     bottom: -1px;
   }
 
-  .#{$grommet-namespace}chart-range__start--edge {
-    bottom: -($inuit-base-spacing-unit + 2px); // account for border
+  .#{settings.$grommet-namespace}chart-range__start--edge {
+    bottom: -(settings.$inuit-base-spacing-unit + 2px); // account for border
   }
 
-  .#{$grommet-namespace}chart-range__end {
+  .#{settings.$grommet-namespace}chart-range__end {
     left: auto;
     top: -1px;
   }
 
-  .#{$grommet-namespace}chart-range__end--edge {
-    top: -($inuit-base-spacing-unit + 2px); // account for border
+  .#{settings.$grommet-namespace}chart-range__end--edge {
+    top: -(settings.$inuit-base-spacing-unit + 2px); // account for border
   }
 
   svg {
@@ -674,92 +682,92 @@ $range-control-colored-background-color: rgba(#000, 0.5);
 
 // Grid
 
-.#{$grommet-namespace}chart-grid {
+.#{settings.$grommet-namespace}chart-grid {
   path {
-    stroke: $border-color;
+    stroke: settings2.$border-color;
 
-    #{$dark-background-context} {
-      stroke: $colored-border-color;
+    #{settings2.$dark-background-context} {
+      stroke: settings2.$colored-border-color;
     }
 
-    #{$light-background-context} {
-      stroke: $border-color;
+    #{settings2.$light-background-context} {
+      stroke: settings2.$border-color;
     }
   }
 }
 
 // Marker
 
-.#{$grommet-namespace}chart-marker {
-  stroke: $border-color;
-  @include graph-stroke-color-translucent(0.7);
-  @include animation('fade-in-chart 1s');
+.#{settings.$grommet-namespace}chart-marker {
+  stroke: settings2.$border-color;
+  @include tools4.graph-stroke-color-translucent(0.7);
+  @include tools.animation('fade-in-chart 1s');
 
-  #{$dark-background-context} {
-    @include graph-stroke-color();
+  #{settings2.$dark-background-context} {
+    @include tools4.graph-stroke-color();
   }
 
-  #{$light-background-context} {
-    @include graph-stroke-color-translucent(0.7);
+  #{settings2.$light-background-context} {
+    @include tools4.graph-stroke-color-translucent(0.7);
   }
 }
 
 // Graph
 
-.#{$grommet-namespace}chart-graph--line {
+.#{settings.$grommet-namespace}chart-graph--line {
   stroke-width: 3px;
-  @include graph-stroke-color-translucent(0.7);
+  @include tools4.graph-stroke-color-translucent(0.7);
 }
 
-.#{$grommet-namespace}chart-graph--bar {
+.#{settings.$grommet-namespace}chart-graph--bar {
   stroke-width: 4px;
-  @include graph-stroke-color-translucent(0.7);
+  @include tools4.graph-stroke-color-translucent(0.7);
 
-  &.#{$grommet-namespace}chart-graph--vertical {
-    @include animation('stretch-right-chart 1.5s');
+  &.#{settings.$grommet-namespace}chart-graph--vertical {
+    @include tools.animation('stretch-right-chart 1.5s');
   }
 
-  &:not(.#{$grommet-namespace}chart-graph--vertical) {
+  &:not(.#{settings.$grommet-namespace}chart-graph--vertical) {
     bottom: 0;
-    @include animation('stretch-up-chart 1.5s');
+    @include tools.animation('stretch-up-chart 1.5s');
   }
 }
 
-.#{$grommet-namespace}chart-graph--area {
+.#{settings.$grommet-namespace}chart-graph--area {
   stroke-width: 3px;
-  @include graph-fill-color-translucent(0.7);
+  @include tools4.graph-fill-color-translucent(0.7);
 
-  &.#{$grommet-namespace}chart-graph--vertical {
-    @include animation('stretch-right-chart 1.5s');
+  &.#{settings.$grommet-namespace}chart-graph--vertical {
+    @include tools.animation('stretch-right-chart 1.5s');
   }
 
-  &:not(.#{$grommet-namespace}chart-graph--vertical) {
+  &:not(.#{settings.$grommet-namespace}chart-graph--vertical) {
     bottom: 0;
-    @include animation('stretch-up-chart 1.5s');
+    @include tools.animation('stretch-up-chart 1.5s');
   }
 
-  .#{$grommet-namespace}chart-graph__point {
-    stroke: $background-color;
+  .#{settings.$grommet-namespace}chart-graph__point {
+    stroke: settings2.$background-color;
   }
 }
 
-.#{$grommet-namespace}chart-graph__point {
+.#{settings.$grommet-namespace}chart-graph__point {
   stroke: none;
-  @include graph-fill-color-translucent(0.9);
+  @include tools4.graph-fill-color-translucent(0.9);
   // fill: $background-color;
-  transition: r $base-animation-duration;
-  @include animation('fade-in-chart 0.3s');
+  transition: r settings.$base-animation-duration;
+  @include tools.animation('fade-in-chart 0.3s');
 }
 
-.#{$grommet-namespace}chart-graph__point--active {
-  stroke: $background-color;
-  @include graph-fill-color();
+.#{settings.$grommet-namespace}chart-graph__point--active {
+  stroke: settings2.$background-color;
+  @include tools4.graph-fill-color();
 
-  #{$dark-background-context} {
-    stroke: $colored-active-background-color;
+  #{settings2.$dark-background-context} {
+    stroke: settings2.$colored-active-background-color;
   }
 
-  #{$light-background-context} {
-    stroke: $background-color;
+  #{settings2.$light-background-context} {
+    stroke: settings2.$background-color;
   }
 }

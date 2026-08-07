@@ -1,79 +1,83 @@
+@use "objects.meter";
+@use "settings.defaults";
+@use "tools.responsive";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 // CIRCLE
 
-.#{$grommet-namespace}meter--circle {
+.#{settings.$grommet-namespace}meter--circle {
 
-  .#{$grommet-namespace}meter__graphic {
-    width: $meter-size-default;
-    min-width: $size-xsmall;
+  .#{settings.$grommet-namespace}meter__graphic {
+    width: objects.$meter-size-default;
+    min-width: settings.$size-xsmall;
     height: auto;
   }
 
-  .#{$grommet-namespace}meter__label {
+  .#{settings.$grommet-namespace}meter__label {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 
-  &.#{$grommet-namespace}meter--xsmall {
+  &.#{settings.$grommet-namespace}meter--xsmall {
 
-    .#{$grommet-namespace}meter__graphic {
-      width: $size-xsmall;
-      height: $size-xsmall;
+    .#{settings.$grommet-namespace}meter__graphic {
+      width: settings.$size-xsmall;
+      height: settings.$size-xsmall;
     }
   }
 
-  &.#{$grommet-namespace}meter--small {
+  &.#{settings.$grommet-namespace}meter--small {
 
-    .#{$grommet-namespace}meter__graphic {
-      width: $size-small;
-      height: $size-small;
+    .#{settings.$grommet-namespace}meter__graphic {
+      width: settings.$size-small;
+      height: settings.$size-small;
     }
   }
 
-  &.#{$grommet-namespace}meter--medium {
+  &.#{settings.$grommet-namespace}meter--medium {
 
-    .#{$grommet-namespace}meter__graphic {
-      @include media-query(palm) {
-        width: $size-small;
-        height: $size-small;
+    .#{settings.$grommet-namespace}meter__graphic {
+      @include tools.media-query(palm) {
+        width: settings.$size-small;
+        height: settings.$size-small;
       }
 
-      @include media-query(lap-and-up) {
-        width: $size-medium;
-        height: $size-medium;
-      }
-    }
-  }
-
-  &.#{$grommet-namespace}meter--large {
-
-    .#{$grommet-namespace}meter__graphic {
-      @include media-query(palm) {
-        width: $size-small;
-        height: $size-small;
-      }
-
-      @include media-query(lap-and-up) {
-        width: $size-large;
-        height: $size-large;
+      @include tools.media-query(lap-and-up) {
+        width: settings.$size-medium;
+        height: settings.$size-medium;
       }
     }
   }
 
-  &.#{$grommet-namespace}meter--xlarge {
+  &.#{settings.$grommet-namespace}meter--large {
 
-    .#{$grommet-namespace}meter__graphic {
-      @include media-query(palm) {
-        width: $size-small;
-        height: $size-small;
+    .#{settings.$grommet-namespace}meter__graphic {
+      @include tools.media-query(palm) {
+        width: settings.$size-small;
+        height: settings.$size-small;
       }
 
-      @include media-query(lap-and-up) {
-        width: $size-xlarge;
-        height: $size-xlarge;
+      @include tools.media-query(lap-and-up) {
+        width: settings.$size-large;
+        height: settings.$size-large;
+      }
+    }
+  }
+
+  &.#{settings.$grommet-namespace}meter--xlarge {
+
+    .#{settings.$grommet-namespace}meter__graphic {
+      @include tools.media-query(palm) {
+        width: settings.$size-small;
+        height: settings.$size-small;
+      }
+
+      @include tools.media-query(lap-and-up) {
+        width: settings.$size-xlarge;
+        height: settings.$size-xlarge;
       }
     }
   }

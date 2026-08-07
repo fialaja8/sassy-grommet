@@ -1,5 +1,8 @@
+@use "settings.defaults";
+@use "tools.responsive";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
-.#{$grommet-namespace}article {
+.#{settings.$grommet-namespace}article {
   position: relative;
 
   > * { // too generic, change
@@ -7,109 +10,109 @@
   }
 }
 
-.#{$grommet-namespace}article--scroll-step {
+.#{settings.$grommet-namespace}article--scroll-step {
   text-align: center;
   height: 100vh;
   width: 100vw;
   max-width: 100%;
 
-  &.#{$grommet-namespace}box--direction-column {
+  &.#{settings.$grommet-namespace}box--direction-column {
     overflow-x: hidden;
     overflow-y: auto;
 
-    .#{$grommet-namespace}article__control-carousel {
+    .#{settings.$grommet-namespace}article__control-carousel {
       top: 50%;
-      left: $inuit-base-spacing-unit;
+      left: settings.$inuit-base-spacing-unit;
       transform: translateY(-50%);
     }
   }
 
-  &.#{$grommet-namespace}box--direction-row {
+  &.#{settings.$grommet-namespace}box--direction-row {
     overflow-x: auto;
     overflow-y: hidden;
 
-    > *:not(.#{$grommet-namespace}article__controls) { // too generic, change
+    > *:not(.#{settings.$grommet-namespace}article__controls) { // too generic, change
       overflow-y: auto;
 
       // https://css-tricks.com/snippets/css/momentum-scrolling-on-ios-overflow-elements/
-      @include media-query(palm) {
+      @include tools.media-query(palm) {
         overflow-y: scroll; // has to be scroll, not auto
         -webkit-overflow-scrolling: touch;
       }
     }
 
-    .#{$grommet-namespace}article__control-carousel {
-      top: $inuit-base-spacing-unit;
+    .#{settings.$grommet-namespace}article__control-carousel {
+      top: settings.$inuit-base-spacing-unit;
       left: 50%;
       transform: translateX(-50%);
     }
   }
 
-  @include media-query(palm) {
-    &.#{$grommet-namespace}box--responsive {
-      &.#{$grommet-namespace}box--direction-row {
+  @include tools.media-query(palm) {
+    &.#{settings.$grommet-namespace}box--responsive {
+      &.#{settings.$grommet-namespace}box--direction-row {
         flex-direction: row;
       }
     }
   }
 }
 
-.#{$grommet-namespace}article__control {
+.#{settings.$grommet-namespace}article__control {
   position: fixed;
   z-index: 10;
   // using margin instead of padding for article control
   // to prevent arrow from overlapping scrollbar and
   // hindering scrollbar usage
-  margin: $inuit-base-spacing-unit;
+  margin: settings.$inuit-base-spacing-unit;
 
   // removes scrollbars from article control arrows in mobile
-  &.#{$grommet-namespace}button--plain.#{$grommet-namespace}button--icon {
+  &.#{settings.$grommet-namespace}button--plain.#{settings.$grommet-namespace}button--icon {
     overflow: hidden;
   }
 
-  .#{$grommet-namespace}button__icon {
+  .#{settings.$grommet-namespace}button__icon {
     padding: 0;
   }
 }
 
-.#{$grommet-namespace}article__control-up {
+.#{settings.$grommet-namespace}article__control-up {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.#{$grommet-namespace}article__control-down {
+.#{settings.$grommet-namespace}article__control-down {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.#{$grommet-namespace}article__control-left {
-  @include media-query(lap-and-up) {
+.#{settings.$grommet-namespace}article__control-left {
+  @include tools.media-query(lap-and-up) {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
   }
 
-  @include media-query(palm) {
+  @include tools.media-query(palm) {
     left: 0;
     bottom: 0;
   }
 }
 
-.#{$grommet-namespace}article__control-right {
-  @include media-query(lap-and-up) {
+.#{settings.$grommet-namespace}article__control-right {
+  @include tools.media-query(lap-and-up) {
     top: 50%;
     transform: translateY(-50%);
     right: 0;
   }
 
-  @include media-query(palm) {
+  @include tools.media-query(palm) {
     right: 0;
     bottom: 0;
   }
 }
 
-.grommet article:not(.#{$grommet-namespace}article) {
+.grommet article:not(.#{settings.$grommet-namespace}article) {
   width: 100%;
 }

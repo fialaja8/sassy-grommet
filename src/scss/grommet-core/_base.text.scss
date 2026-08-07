@@ -1,83 +1,90 @@
+@use "settings.color" as settings3;
+@use "settings.defaults";
+@use "settings.font" as settings2;
+@use "tools.functions" as tools2;
+@use "tools.mixins" as tools3;
+@use "tools.text";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 .grommet {
-  h1:not(.#{$grommet-namespace}heading) {
-    @include h1();
+  h1:not(.#{settings.$grommet-namespace}heading) {
+    @include tools.h1();
   }
 
-  h2:not(.#{$grommet-namespace}heading) {
-    @include h2();
+  h2:not(.#{settings.$grommet-namespace}heading) {
+    @include tools.h2();
   }
 
-  h3:not(.#{$grommet-namespace}heading) {
-    @include h3();
+  h3:not(.#{settings.$grommet-namespace}heading) {
+    @include tools.h3();
   }
 
-  h4:not(.#{$grommet-namespace}heading) {
-    @include h4();
+  h4:not(.#{settings.$grommet-namespace}heading) {
+    @include tools.h4();
   }
 
-  h5:not(.#{$grommet-namespace}heading) {
-    @include h5();
+  h5:not(.#{settings.$grommet-namespace}heading) {
+    @include tools.h5();
   }
 
-  h6:not(.#{$grommet-namespace}heading) {
-    @include h6();
+  h6:not(.#{settings.$grommet-namespace}heading) {
+    @include tools.h6();
   }
 
-  h1:not(.#{$grommet-namespace}heading),
-  h2:not(.#{$grommet-namespace}heading),
-  h3:not(.#{$grommet-namespace}heading),
-  h4:not(.#{$grommet-namespace}heading),
-  h5:not(.#{$grommet-namespace}heading),
-  h6:not(.#{$grommet-namespace}heading) {
-    @include heading();
+  h1:not(.#{settings.$grommet-namespace}heading),
+  h2:not(.#{settings.$grommet-namespace}heading),
+  h3:not(.#{settings.$grommet-namespace}heading),
+  h4:not(.#{settings.$grommet-namespace}heading),
+  h5:not(.#{settings.$grommet-namespace}heading),
+  h6:not(.#{settings.$grommet-namespace}heading) {
+    @include tools.heading();
   }
 
   dd,
-  li:not([class^="#{$grommet-namespace}"]) {
-    max-width: $readable-text-width;
+  li:not([class^="#{settings.$grommet-namespace}"]) {
+    max-width: settings.$readable-text-width;
     margin-left: 0px;
-    @include text();
+    @include tools.text();
   }
 
   dd {
-    font-size: $paragraph-font-size;
-    font-weight: $text-font-weight;
-    line-height: $paragraph-line-height;
-    margin-bottom: halve($inuit-base-spacing-unit);
+    font-size: settings2.$paragraph-font-size;
+    font-weight: settings2.$text-font-weight;
+    line-height: settings2.$paragraph-line-height;
+    margin-bottom: tools2.halve(settings.$inuit-base-spacing-unit);
   }
 
-  p:not(.#{$grommet-namespace}paragraph) {
-    @include paragraph();
+  p:not(.#{settings.$grommet-namespace}paragraph) {
+    @include tools.paragraph();
   }
 
   blockquote {
-    @include inuit-font-size(36px);
-    margin-top: $inuit-base-spacing-unit;
-    margin-bottom: $inuit-base-spacing-unit;
+    @include tools3.inuit-font-size(36px);
+    margin-top: settings.$inuit-base-spacing-unit;
+    margin-bottom: settings.$inuit-base-spacing-unit;
   }
 
   b,
   strong {
-    font-weight: $text-strong-font-weight;
+    font-weight: settings2.$text-strong-font-weight;
   }
 
   code {
-    font-family: $code-font-family;
+    font-family: settings2.$code-font-family;
   }
 
-  #{$dark-background} {
-    p:not(.#{$grommet-namespace}paragraph),
+  #{settings3.$dark-background} {
+    p:not(.#{settings.$grommet-namespace}paragraph),
     dd {
-      color: $colored-text-color;
+      color: settings3.$colored-text-color;
     }
   }
 
-  #{$light-background} {
-    p:not(.#{$grommet-namespace}paragraph),
+  #{settings3.$light-background} {
+    p:not(.#{settings.$grommet-namespace}paragraph),
     dd {
-      color: $text-color;
+      color: settings3.$text-color;
     }
   }
 }

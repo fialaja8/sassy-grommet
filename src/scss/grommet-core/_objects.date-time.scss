@@ -1,45 +1,52 @@
+@use "sass:math";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.functions" as tools2;
+@use "tools.input";
+@use "tools.mixins" as tools3;
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}date-time {
+.#{settings.$grommet-namespace}date-time {
   position: relative;
   display: inline-block;
   // min-width: round($inuit-base-spacing-unit * 8);
 }
 
-.#{$grommet-namespace}date-time__input {
-  @include input();
-  padding-right: round($inuit-base-spacing-unit * 2.5);
+.#{settings.$grommet-namespace}date-time__input {
+  @include tools.input();
+  padding-right: math.round(settings.$inuit-base-spacing-unit * 2.5);
 }
 
-.#{$grommet-namespace}date-time__input:focus {
-  padding-right: round($inuit-base-spacing-unit * 2.5 -
-    ($input-border-width + 1));
+.#{settings.$grommet-namespace}date-time__input:focus {
+  padding-right: math.round(settings.$inuit-base-spacing-unit * 2.5 -
+    (settings.$input-border-width + 1));
 }
 
 // Disable IE's clear icon
-.#{$grommet-namespace}date-time__input::-ms-clear {
+.#{settings.$grommet-namespace}date-time__input::-ms-clear {
   display: none;
 }
 
-.#{$grommet-namespace}date-time__control {
+.#{settings.$grommet-namespace}date-time__control {
   position: absolute;
   top: 50%;
-  right: halve($inuit-base-spacing-unit);
+  right: tools2.halve(settings.$inuit-base-spacing-unit);
   transform: translateY(-50%);
 }
 
-.#{$grommet-namespace}date-time-drop {
+.#{settings.$grommet-namespace}date-time-drop {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 }
 
-.#{$grommet-namespace}date-time-drop__title {
+.#{settings.$grommet-namespace}date-time-drop__title {
   text-align: center;
 }
 
-.#{$grommet-namespace}date-time-drop__grid {
+.#{settings.$grommet-namespace}date-time-drop__grid {
   width: 100%;
-  padding: halve($inuit-base-spacing-unit);
+  padding: tools2.halve(settings.$inuit-base-spacing-unit);
 
   table {
     width: 100%;
@@ -53,46 +60,46 @@
   }
 
   th {
-    color: $secondary-text-color;
+    color: settings2.$secondary-text-color;
     font-weight: normal;
-    padding: quarter($inuit-base-spacing-unit);
+    padding: tools2.quarter(settings.$inuit-base-spacing-unit);
   }
 }
 
-.#{$grommet-namespace}date-time-drop__grid--focus {
+.#{settings.$grommet-namespace}date-time-drop__grid--focus {
   table {
-    border-color: $focus-border-color;
-    box-shadow: 0 0 1px 1px $focus-border-color;
+    border-color: settings2.$focus-border-color;
+    box-shadow: 0 0 1px 1px settings2.$focus-border-color;
   }
 }
 
-.#{$grommet-namespace}date-time-drop__day {
+.#{settings.$grommet-namespace}date-time-drop__day {
   display: inline-block;
   cursor: pointer;
   outline: none;
-  width: round($inuit-base-spacing-unit * 1.5);
-  height: round($inuit-base-spacing-unit * 1.5);
-  padding: quarter($inuit-base-spacing-unit);
+  width: math.round(settings.$inuit-base-spacing-unit * 1.5);
+  height: math.round(settings.$inuit-base-spacing-unit * 1.5);
+  padding: tools2.quarter(settings.$inuit-base-spacing-unit);
   transition: background-color 0.3s;
 }
 
-.#{$grommet-namespace}date-time-drop__day:hover,
-.#{$grommet-namespace}date-time-drop__day--hover {
-  background-color: $hover-background-color;
-  color: $hover-text-color;
+.#{settings.$grommet-namespace}date-time-drop__day:hover,
+.#{settings.$grommet-namespace}date-time-drop__day--hover {
+  background-color: settings2.$hover-background-color;
+  color: settings2.$hover-text-color;
 }
 
-.#{$grommet-namespace}date-time-drop__day--other-month {
-  color: $secondary-text-color;
+.#{settings.$grommet-namespace}date-time-drop__day--other-month {
+  color: settings2.$secondary-text-color;
 }
 
-.#{$grommet-namespace}date-time-drop__day--active {
-  background-color: $brand-color;
-  color: $colored-text-color;
+.#{settings.$grommet-namespace}date-time-drop__day--active {
+  background-color: settings2.$brand-color;
+  color: settings2.$colored-text-color;
   font-weight: 700;
 }
 
-.#{$grommet-namespace}date-time-drop__time {
-  @include inuit-font-size(18px);
+.#{settings.$grommet-namespace}date-time-drop__time {
+  @include tools3.inuit-font-size(18px);
   font-weight: 700;
 }

@@ -1,25 +1,31 @@
-// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 @use "sass:math";
+@use "objects.meter";
+@use "settings.defaults";
+@use "tools.animation";
+@use "tools.color-index" as tools2;
+@use "tools.responsive" as tools3;
+
+// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 // BAR
 
 // For each size of meter, we calculate the proportional cross dimension
 $meter-bar-cross-xsmall:
-  round($inuit-base-spacing-unit * math.div($size-xsmall, $size-small));
+  math.round(settings.$inuit-base-spacing-unit * math.div(settings.$size-xsmall, settings.$size-small));
 $meter-bar-cross-small:
-  round($inuit-base-spacing-unit * math.div($size-small, $size-small));
+  math.round(settings.$inuit-base-spacing-unit * math.div(settings.$size-small, settings.$size-small));
 $meter-bar-cross-medium:
-  round($inuit-base-spacing-unit * math.div($size-medium, $size-small));
+  math.round(settings.$inuit-base-spacing-unit * math.div(settings.$size-medium, settings.$size-small));
 $meter-bar-cross-large:
-  round($inuit-base-spacing-unit * math.div($size-large, $size-small));
+  math.round(settings.$inuit-base-spacing-unit * math.div(settings.$size-large, settings.$size-small));
 $meter-bar-cross-xlarge:
-  round($inuit-base-spacing-unit * math.div($size-xlarge, $size-small));
+  math.round(settings.$inuit-base-spacing-unit * math.div(settings.$size-xlarge, settings.$size-small));
 $meter-bar-cross-default:
-  round($inuit-base-spacing-unit * math.div($meter-size-default, $size-small));
+  math.round(settings.$inuit-base-spacing-unit * math.div(objects.$meter-size-default, settings.$size-small));
 
-@include keyframes(draw-meter-bar-small) {
+@include tools.keyframes(draw-meter-bar-small) {
   0% {
-    stroke-dashoffset: $meter-size-default;
+    stroke-dashoffset: objects.$meter-size-default;
   }
 
   100% {
@@ -27,201 +33,201 @@ $meter-bar-cross-default:
   }
 }
 
-.#{$grommet-namespace}meter--bar {
+.#{settings.$grommet-namespace}meter--bar {
   line-height: 0;
 
-  .#{$grommet-namespace}meter__slice {
+  .#{settings.$grommet-namespace}meter__slice {
     stroke-linecap: butt;
   }
 
-  .#{$grommet-namespace}meter__values .#{$grommet-namespace}meter__slice {
-    @include graph-stroke-color();
+  .#{settings.$grommet-namespace}meter__values .#{settings.$grommet-namespace}meter__slice {
+    @include tools2.graph-stroke-color();
 
     &--clickable {
       cursor: pointer;
     }
 
-    @include media-query(lap-and-up) {
-      stroke-dasharray: $meter-size-default $meter-size-default;
+    @include tools3.media-query(lap-and-up) {
+      stroke-dasharray: objects.$meter-size-default objects.$meter-size-default;
       stroke-dashoffset: 0;
       transition: stroke-width 0.2s;
-      @include animation('draw-meter-bar-small 1s ease-in');
+      @include tools.animation('draw-meter-bar-small 1s ease-in');
     }
   }
 
-  .#{$grommet-namespace}meter__thresholds .#{$grommet-namespace}meter__slice,
-  .#{$grommet-namespace}meter__tracks .#{$grommet-namespace}meter__slice {
-    @include graph-stroke-color-translucent(0.5);
+  .#{settings.$grommet-namespace}meter__thresholds .#{settings.$grommet-namespace}meter__slice,
+  .#{settings.$grommet-namespace}meter__tracks .#{settings.$grommet-namespace}meter__slice {
+    @include tools2.graph-stroke-color-translucent(0.5);
   }
 
   // This should be a separate section but SCSS MergableSelector won't allow it. :(
-  &.#{$grommet-namespace}meter--vertical {
+  &.#{settings.$grommet-namespace}meter--vertical {
     white-space: nowrap;
 
-    .#{$grommet-namespace}meter__graphic {
-      height: $meter-size-default;
+    .#{settings.$grommet-namespace}meter__graphic {
+      height: objects.$meter-size-default;
       width: $meter-bar-cross-default;
     }
 
-    &:not(.#{$grommet-namespace}meter--stacked) {
-      &.#{$grommet-namespace}meter--count-2 {
-        .#{$grommet-namespace}meter__graphic {
-          width: round($meter-bar-cross-default * 2);
+    &:not(.#{settings.$grommet-namespace}meter--stacked) {
+      &.#{settings.$grommet-namespace}meter--count-2 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          width: math.round($meter-bar-cross-default * 2);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-3 {
-        .#{$grommet-namespace}meter__graphic {
-          width: round($meter-bar-cross-default * 3);
+      &.#{settings.$grommet-namespace}meter--count-3 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          width: math.round($meter-bar-cross-default * 3);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-4 {
-        .#{$grommet-namespace}meter__graphic {
-          width: round($meter-bar-cross-default * 4);
+      &.#{settings.$grommet-namespace}meter--count-4 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          width: math.round($meter-bar-cross-default * 4);
         }
       }
     }
 
-    .#{$grommet-namespace}meter__labeled-graphic {
+    .#{settings.$grommet-namespace}meter__labeled-graphic {
       display: inline-block;
     }
 
-    &.#{$grommet-namespace}meter--xsmall {
+    &.#{settings.$grommet-namespace}meter--xsmall {
 
-      .#{$grommet-namespace}meter__graphic {
-        height: $size-xsmall;
+      .#{settings.$grommet-namespace}meter__graphic {
+        height: settings.$size-xsmall;
         width: $meter-bar-cross-xsmall;
       }
 
-      &:not(.#{$grommet-namespace}meter--stacked) {
-        &.#{$grommet-namespace}meter--count-2 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-xsmall * 2);
+      &:not(.#{settings.$grommet-namespace}meter--stacked) {
+        &.#{settings.$grommet-namespace}meter--count-2 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-xsmall * 2);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-3 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-xsmall * 3);
+        &.#{settings.$grommet-namespace}meter--count-3 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-xsmall * 3);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-4 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-xsmall * 4);
+        &.#{settings.$grommet-namespace}meter--count-4 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-xsmall * 4);
           }
         }
       }
     }
 
-    &.#{$grommet-namespace}meter--small {
+    &.#{settings.$grommet-namespace}meter--small {
 
-      .#{$grommet-namespace}meter__graphic {
-        height: $size-small;
+      .#{settings.$grommet-namespace}meter__graphic {
+        height: settings.$size-small;
         width: $meter-bar-cross-small;
       }
 
-      &:not(.#{$grommet-namespace}meter--stacked) {
-        &.#{$grommet-namespace}meter--count-2 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-small * 2);
+      &:not(.#{settings.$grommet-namespace}meter--stacked) {
+        &.#{settings.$grommet-namespace}meter--count-2 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-small * 2);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-3 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-small * 3);
+        &.#{settings.$grommet-namespace}meter--count-3 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-small * 3);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-4 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-small * 4);
+        &.#{settings.$grommet-namespace}meter--count-4 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-small * 4);
           }
         }
       }
     }
 
-    &.#{$grommet-namespace}meter--medium {
+    &.#{settings.$grommet-namespace}meter--medium {
 
-      .#{$grommet-namespace}meter__graphic {
-        height: $size-medium;
+      .#{settings.$grommet-namespace}meter__graphic {
+        height: settings.$size-medium;
         width: $meter-bar-cross-medium;
       }
 
-      &:not(.#{$grommet-namespace}meter--stacked) {
-        &.#{$grommet-namespace}meter--count-2 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-medium * 2);
+      &:not(.#{settings.$grommet-namespace}meter--stacked) {
+        &.#{settings.$grommet-namespace}meter--count-2 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-medium * 2);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-3 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-medium * 3);
+        &.#{settings.$grommet-namespace}meter--count-3 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-medium * 3);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-4 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-medium * 4);
+        &.#{settings.$grommet-namespace}meter--count-4 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-medium * 4);
           }
         }
       }
     }
 
-    &.#{$grommet-namespace}meter--large {
+    &.#{settings.$grommet-namespace}meter--large {
 
-      .#{$grommet-namespace}meter__graphic {
-        height: $size-large;
+      .#{settings.$grommet-namespace}meter__graphic {
+        height: settings.$size-large;
         width: $meter-bar-cross-large;
       }
 
-      &:not(.#{$grommet-namespace}meter--stacked) {
-        &.#{$grommet-namespace}meter--count-2 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-large * 2);
+      &:not(.#{settings.$grommet-namespace}meter--stacked) {
+        &.#{settings.$grommet-namespace}meter--count-2 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-large * 2);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-3 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-large * 3);
+        &.#{settings.$grommet-namespace}meter--count-3 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-large * 3);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-4 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-large * 4);
+        &.#{settings.$grommet-namespace}meter--count-4 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-large * 4);
           }
         }
       }
     }
 
-    &.#{$grommet-namespace}meter--xlarge {
+    &.#{settings.$grommet-namespace}meter--xlarge {
 
-      .#{$grommet-namespace}meter__graphic {
-        height: $size-xlarge;
+      .#{settings.$grommet-namespace}meter__graphic {
+        height: settings.$size-xlarge;
         width: $meter-bar-cross-xlarge;
       }
 
-      &:not(.#{$grommet-namespace}meter--stacked) {
-        &.#{$grommet-namespace}meter--count-2 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-xlarge * 2);
+      &:not(.#{settings.$grommet-namespace}meter--stacked) {
+        &.#{settings.$grommet-namespace}meter--count-2 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-xlarge * 2);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-3 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-xlarge * 3);
+        &.#{settings.$grommet-namespace}meter--count-3 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-xlarge * 3);
           }
         }
 
-        &.#{$grommet-namespace}meter--count-4 {
-          .#{$grommet-namespace}meter__graphic {
-            width: round($meter-bar-cross-xlarge * 4);
+        &.#{settings.$grommet-namespace}meter--count-4 {
+          .#{settings.$grommet-namespace}meter__graphic {
+            width: math.round($meter-bar-cross-xlarge * 4);
           }
         }
       }
@@ -229,184 +235,184 @@ $meter-bar-cross-default:
   }
 }
 
-.#{$grommet-namespace}meter--bar:not(.#{$grommet-namespace}meter--vertical) {
+.#{settings.$grommet-namespace}meter--bar:not(.#{settings.$grommet-namespace}meter--vertical) {
 
-  .#{$grommet-namespace}meter__graphic {
-    width: $size-small;
-    min-width: $size-xsmall;
+  .#{settings.$grommet-namespace}meter__graphic {
+    width: settings.$size-small;
+    min-width: settings.$size-xsmall;
   }
 
-  &.#{$grommet-namespace}meter--xsmall {
+  &.#{settings.$grommet-namespace}meter--xsmall {
 
-    .#{$grommet-namespace}meter__graphic {
-      width: $size-xsmall;
+    .#{settings.$grommet-namespace}meter__graphic {
+      width: settings.$size-xsmall;
       height: $meter-bar-cross-xsmall;
     }
 
-    &.#{$grommet-namespace}meter--single,
-    &.#{$grommet-namespace}meter--stacked {
-      .#{$grommet-namespace}meter__graphic {
+    &.#{settings.$grommet-namespace}meter--single,
+    &.#{settings.$grommet-namespace}meter--stacked {
+      .#{settings.$grommet-namespace}meter__graphic {
         height: $meter-bar-cross-xsmall;
       }
     }
 
-    &:not(.#{$grommet-namespace}meter--stacked) {
-      &.#{$grommet-namespace}meter--count-2 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-xsmall * 2);
+    &:not(.#{settings.$grommet-namespace}meter--stacked) {
+      &.#{settings.$grommet-namespace}meter--count-2 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-xsmall * 2);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-3 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-xsmall * 3);
+      &.#{settings.$grommet-namespace}meter--count-3 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-xsmall * 3);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-4 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-xsmall * 4);
+      &.#{settings.$grommet-namespace}meter--count-4 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-xsmall * 4);
         }
       }
     }
   }
 
-  &.#{$grommet-namespace}meter--small {
+  &.#{settings.$grommet-namespace}meter--small {
 
-    .#{$grommet-namespace}meter__graphic {
-      width: $size-small;
+    .#{settings.$grommet-namespace}meter__graphic {
+      width: settings.$size-small;
       height: $meter-bar-cross-small;
     }
 
-    &.#{$grommet-namespace}meter--single,
-    &.#{$grommet-namespace}meter--stacked {
-      .#{$grommet-namespace}meter__graphic {
+    &.#{settings.$grommet-namespace}meter--single,
+    &.#{settings.$grommet-namespace}meter--stacked {
+      .#{settings.$grommet-namespace}meter__graphic {
         height: $meter-bar-cross-small;
       }
     }
 
-    &:not(.#{$grommet-namespace}meter--stacked) {
-      &.#{$grommet-namespace}meter--count-2 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-small * 2);
+    &:not(.#{settings.$grommet-namespace}meter--stacked) {
+      &.#{settings.$grommet-namespace}meter--count-2 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-small * 2);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-3 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-small * 3);
+      &.#{settings.$grommet-namespace}meter--count-3 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-small * 3);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-4 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-small * 4);
+      &.#{settings.$grommet-namespace}meter--count-4 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-small * 4);
         }
       }
     }
   }
 
-  &.#{$grommet-namespace}meter--medium {
+  &.#{settings.$grommet-namespace}meter--medium {
 
-    .#{$grommet-namespace}meter__graphic {
-      @include media-query(palm) {
-        width: $size-small;
+    .#{settings.$grommet-namespace}meter__graphic {
+      @include tools3.media-query(palm) {
+        width: settings.$size-small;
       }
 
-      @include media-query(lap-and-up) {
-        width: $size-medium;
+      @include tools3.media-query(lap-and-up) {
+        width: settings.$size-medium;
       }
 
       height: $meter-bar-cross-medium;
     }
 
-    &:not(.#{$grommet-namespace}meter--stacked) {
-      &.#{$grommet-namespace}meter--count-2 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-medium * 2);
+    &:not(.#{settings.$grommet-namespace}meter--stacked) {
+      &.#{settings.$grommet-namespace}meter--count-2 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-medium * 2);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-3 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-medium * 3);
+      &.#{settings.$grommet-namespace}meter--count-3 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-medium * 3);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-4 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-medium * 4);
+      &.#{settings.$grommet-namespace}meter--count-4 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-medium * 4);
         }
       }
     }
   }
 
-  &.#{$grommet-namespace}meter--large {
+  &.#{settings.$grommet-namespace}meter--large {
     // line-height: round($inuit-base-spacing-unit * 1.5);
 
-    .#{$grommet-namespace}meter__graphic {
-      @include media-query(palm) {
-        width: $size-small;
+    .#{settings.$grommet-namespace}meter__graphic {
+      @include tools3.media-query(palm) {
+        width: settings.$size-small;
       }
 
-      @include media-query(lap-and-up) {
-        width: $size-large;
+      @include tools3.media-query(lap-and-up) {
+        width: settings.$size-large;
       }
 
       height: $meter-bar-cross-large;
     }
 
-    &:not(.#{$grommet-namespace}meter--stacked) {
-      &.#{$grommet-namespace}meter--count-2 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-large * 2);
+    &:not(.#{settings.$grommet-namespace}meter--stacked) {
+      &.#{settings.$grommet-namespace}meter--count-2 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-large * 2);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-3 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-large * 3);
+      &.#{settings.$grommet-namespace}meter--count-3 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-large * 3);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-4 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-large * 4);
+      &.#{settings.$grommet-namespace}meter--count-4 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-large * 4);
         }
       }
     }
   }
 
-  &.#{$grommet-namespace}meter--xlarge {
+  &.#{settings.$grommet-namespace}meter--xlarge {
 
-    .#{$grommet-namespace}meter__graphic {
-      @include media-query(palm) {
-        width: $size-small;
+    .#{settings.$grommet-namespace}meter__graphic {
+      @include tools3.media-query(palm) {
+        width: settings.$size-small;
       }
 
-      @include media-query(lap-and-up) {
-        width: $size-xlarge;
+      @include tools3.media-query(lap-and-up) {
+        width: settings.$size-xlarge;
       }
 
       height: $meter-bar-cross-xlarge;
     }
 
-    &:not(.#{$grommet-namespace}meter--stacked) {
-      &.#{$grommet-namespace}meter--count-2 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-xlarge * 2);
+    &:not(.#{settings.$grommet-namespace}meter--stacked) {
+      &.#{settings.$grommet-namespace}meter--count-2 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-xlarge * 2);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-3 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-xlarge * 3);
+      &.#{settings.$grommet-namespace}meter--count-3 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-xlarge * 3);
         }
       }
 
-      &.#{$grommet-namespace}meter--count-4 {
-        .#{$grommet-namespace}meter__graphic {
-          height: round($meter-bar-cross-xlarge * 4);
+      &.#{settings.$grommet-namespace}meter--count-4 {
+        .#{settings.$grommet-namespace}meter__graphic {
+          height: math.round($meter-bar-cross-xlarge * 4);
         }
       }
     }

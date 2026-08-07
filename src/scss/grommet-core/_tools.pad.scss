@@ -1,21 +1,26 @@
+@use "sass:math";
+@use "settings.defaults";
+@use "tools.functions";
+@use "tools.responsive" as tools2;
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-$small-pad-lap: halve($inuit-base-spacing-unit);
-$medium-pad-lap: $inuit-base-spacing-unit;
-$large-pad-lap: double($inuit-base-spacing-unit);
-$xlarge-pad-lap: round($inuit-base-spacing-unit * 8);
+$small-pad-lap: tools.halve(settings.$inuit-base-spacing-unit);
+$medium-pad-lap: settings.$inuit-base-spacing-unit;
+$large-pad-lap: tools.double(settings.$inuit-base-spacing-unit);
+$xlarge-pad-lap: math.round(settings.$inuit-base-spacing-unit * 8);
 
-$small-pad-palm: quarter($inuit-base-spacing-unit);
-$medium-pad-palm: halve($inuit-base-spacing-unit);
-$large-pad-palm: $inuit-base-spacing-unit;
-$xlarge-pad-palm: double($inuit-base-spacing-unit);
+$small-pad-palm: tools.quarter(settings.$inuit-base-spacing-unit);
+$medium-pad-palm: tools.halve(settings.$inuit-base-spacing-unit);
+$large-pad-palm: settings.$inuit-base-spacing-unit;
+$xlarge-pad-palm: tools.double(settings.$inuit-base-spacing-unit);
 
 @mixin pad {
   &--pad-none {
     padding: 0px;
   }
 
-  @include media-query(lap-and-up) {
+  @include tools2.media-query(lap-and-up) {
     &--pad-small {
       padding: $small-pad-lap;
     }
@@ -33,7 +38,7 @@ $xlarge-pad-palm: double($inuit-base-spacing-unit);
     }
   }
 
-  @include media-query(palm) {
+  @include tools2.media-query(palm) {
     &--pad-small {
       padding: $small-pad-palm;
     }
@@ -56,7 +61,7 @@ $xlarge-pad-palm: double($inuit-base-spacing-unit);
     padding-right: 0px;
   }
 
-  @include media-query(lap-and-up) {
+  @include tools2.media-query(lap-and-up) {
     &--pad-horizontal-small {
       padding-left: $small-pad-lap;
       padding-right: $small-pad-lap;
@@ -78,7 +83,7 @@ $xlarge-pad-palm: double($inuit-base-spacing-unit);
     }
   }
 
-  @include media-query(palm) {
+  @include tools2.media-query(palm) {
     &--pad-horizontal-small {
       padding-left: $small-pad-palm;
       padding-right: $small-pad-palm;
@@ -105,7 +110,7 @@ $xlarge-pad-palm: double($inuit-base-spacing-unit);
     padding-bottom: 0px;
   }
 
-  @include media-query(lap-and-up) {
+  @include tools2.media-query(lap-and-up) {
     &--pad-vertical-small {
       padding-top: $small-pad-lap;
       padding-bottom: $small-pad-lap;
@@ -127,7 +132,7 @@ $xlarge-pad-palm: double($inuit-base-spacing-unit);
     }
   }
 
-  @include media-query(palm) {
+  @include tools2.media-query(palm) {
     &--pad-vertical-small {
       padding-top: $small-pad-palm;
       padding-bottom: $small-pad-palm;
