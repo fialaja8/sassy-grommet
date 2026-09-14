@@ -1,21 +1,27 @@
+@use "sass:math";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.animation";
+@use "tools.functions" as tools2;
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-@include keyframes(carousel-reveal) {
+@include tools.keyframes(carousel-reveal) {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
 
-@include keyframes(carousel-hide) {
+@include tools.keyframes(carousel-hide) {
   0% { opacity: 1; }
   100% { opacity: 0; }
 }
 
-.#{$grommet-namespace}carousel {
+.#{settings.$grommet-namespace}carousel {
   position: relative;
   max-width: 100%;
   overflow: hidden;
 
-  .#{$grommet-namespace}tiles.#{$grommet-namespace}box--direction-row > .#{$grommet-namespace}tile.#{$grommet-namespace}carousel__item {
+  .#{settings.$grommet-namespace}tiles.#{settings.$grommet-namespace}box--direction-row > .#{settings.$grommet-namespace}tile.#{settings.$grommet-namespace}carousel__item {
     flex: 1 1 100%;
     box-sizing: border-box;
 
@@ -24,11 +30,11 @@
     }
   }
 
-  .#{$grommet-namespace}control-icon-next {
+  .#{settings.$grommet-namespace}control-icon-next {
     right: 0;
   }
 
-  .#{$grommet-namespace}control-icon-previous {
+  .#{settings.$grommet-namespace}control-icon-previous {
     left: 0;
   }
 
@@ -42,111 +48,111 @@
   }
 }
 
-.#{$grommet-namespace}carousel-controls__control {
-  width: round($inuit-base-spacing-unit * 1.5);
-  height: round($inuit-base-spacing-unit * 1.5);
+.#{settings.$grommet-namespace}carousel-controls__control {
+  width: math.round(settings.$inuit-base-spacing-unit * 1.5);
+  height: math.round(settings.$inuit-base-spacing-unit * 1.5);
   stroke: #fff;
   fill: transparent;
   cursor: pointer;
-  filter: drop-shadow(1px 1px 1px $button-drop-shadow-color);
-  -webkit-filter: drop-shadow(1px 1px 1px $button-drop-shadow-color);
+  filter: drop-shadow(1px 1px 1px settings2.$button-drop-shadow-color);
+  -webkit-filter: drop-shadow(1px 1px 1px settings2.$button-drop-shadow-color);
 }
 
-.#{$grommet-namespace}carousel-controls__control:hover {
+.#{settings.$grommet-namespace}carousel-controls__control:hover {
   stroke-width: 2px;
 }
 
-.#{$grommet-namespace}carousel-controls__control--active {
-  stroke: $brand-color;
-  fill: $brand-color;
+.#{settings.$grommet-namespace}carousel-controls__control--active {
+  stroke: settings2.$brand-color;
+  fill: settings2.$brand-color;
 }
 
-.#{$grommet-namespace}carousel__track {
+.#{settings.$grommet-namespace}carousel__track {
   display: flex;
   max-width: none;
 }
 
-.#{$grommet-namespace}carousel__track--animate {
+.#{settings.$grommet-namespace}carousel__track--animate {
   transition: all 0.8s;
 }
 
-.#{$grommet-namespace}carousel__arrow {
-  @include animation('carousel-reveal 1s');
+.#{settings.$grommet-namespace}carousel__arrow {
+  @include tools.animation('carousel-reveal 1s');
   z-index: 1;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
 
-  .#{$grommet-namespace}control-icon {
-    filter: drop-shadow(1px 1px 1px $button-drop-shadow-color);
-    -webkit-filter: drop-shadow(1px 1px 1px $button-drop-shadow-color);
+  .#{settings.$grommet-namespace}control-icon {
+    filter: drop-shadow(1px 1px 1px settings2.$button-drop-shadow-color);
+    -webkit-filter: drop-shadow(1px 1px 1px settings2.$button-drop-shadow-color);
 
     polyline {
-      stroke: $colored-icon-color;
+      stroke: settings2.$colored-icon-color;
       stroke-width: 1px;
     }
   }
 }
 
-.#{$grommet-namespace}carousel__arrow:hover {
-  .#{$grommet-namespace}control-icon polyline {
-    stroke: $active-colored-icon-color;
+.#{settings.$grommet-namespace}carousel__arrow:hover {
+  .#{settings.$grommet-namespace}control-icon polyline {
+    stroke: settings2.$active-colored-icon-color;
   }
 }
 
-.#{$grommet-namespace}carousel__arrow--next {
+.#{settings.$grommet-namespace}carousel__arrow--next {
   right: 0;
 }
 
-.#{$grommet-namespace}carousel__arrow--prev {
+.#{settings.$grommet-namespace}carousel__arrow--prev {
   left: 0;
 }
 
-.#{$grommet-namespace}carousel__controls {
-  @include animation('carousel-reveal 1s');
+.#{settings.$grommet-namespace}carousel__controls {
+  @include tools.animation('carousel-reveal 1s');
   margin-left: 50%;
   transform: translateX(-50%);
   position: absolute;
-  bottom: halve($inuit-base-spacing-unit);
+  bottom: tools2.halve(settings.$inuit-base-spacing-unit);
   text-align: center;
   z-index: 1;
 }
 
-.#{$grommet-namespace}carousel__control {
+.#{settings.$grommet-namespace}carousel__control {
   display: inline-block;
-  width: round($inuit-base-spacing-unit * 1.5);
-  height: round($inuit-base-spacing-unit * 1.5);
-  stroke: $colored-icon-color;
+  width: math.round(settings.$inuit-base-spacing-unit * 1.5);
+  height: math.round(settings.$inuit-base-spacing-unit * 1.5);
+  stroke: settings2.$colored-icon-color;
   fill: transparent;
   cursor: pointer;
-  filter: drop-shadow(1px 1px 1px $button-drop-shadow-color);
-  -webkit-filter: drop-shadow(1px 1px 1px $button-drop-shadow-color);
+  filter: drop-shadow(1px 1px 1px settings2.$button-drop-shadow-color);
+  -webkit-filter: drop-shadow(1px 1px 1px settings2.$button-drop-shadow-color);
 }
 
-.#{$grommet-namespace}carousel__control--active {
-  stroke: $brand-color;
-  fill: $brand-color;
+.#{settings.$grommet-namespace}carousel__control--active {
+  stroke: settings2.$brand-color;
+  fill: settings2.$brand-color;
 }
 
-.#{$grommet-namespace}carousel--hide-controls {
-  .#{$grommet-namespace}control-icon-previous,
-  .#{$grommet-namespace}control-icon-next,
-  .#{$grommet-namespace}carousel__controls {
+.#{settings.$grommet-namespace}carousel--hide-controls {
+  .#{settings.$grommet-namespace}control-icon-previous,
+  .#{settings.$grommet-namespace}control-icon-next,
+  .#{settings.$grommet-namespace}carousel__controls {
     opacity: 0;
-    @include animation('carousel-hide 1s');
+    @include tools.animation('carousel-hide 1s');
   }
 }
 
 // workaround for missing controls in Safari
 _::-webkit-:not(:root:root),
-.#{$grommet-namespace}carousel__control,
-.#{$grommet-namespace}carousel__arrow .#{$grommet-namespace}control-icon {
+.#{settings.$grommet-namespace}carousel__control,
+.#{settings.$grommet-namespace}carousel__arrow .#{settings.$grommet-namespace}control-icon {
   -webkit-filter: none;
-  -webkit-svg-shadow: 1px 1px 1px $button-drop-shadow-color;
+  -webkit-svg-shadow: 1px 1px 1px settings2.$button-drop-shadow-color;
 }
 
 // Set carousel width to render correctly in Layer
-.#{$grommet-namespace}layer .#{$grommet-namespace}carousel {
+.#{settings.$grommet-namespace}layer .#{settings.$grommet-namespace}carousel {
   width: 100vw;
 }

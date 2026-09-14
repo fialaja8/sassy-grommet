@@ -1,7 +1,10 @@
+@use "settings.defaults";
+@use "tools.input";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}number-input__input {
-  @include input();
+.#{settings.$grommet-namespace}number-input__input {
+  @include tools.input();
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {

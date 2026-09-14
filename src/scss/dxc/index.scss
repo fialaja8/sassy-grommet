@@ -1,45 +1,67 @@
-@import 'dxc.defaults';
-@import '../grommet-core/index';
-@import 'objects.button-dxc';
+@use 'dxc.defaults' as defaults;
+@use '../grommet-core/settings.defaults' with (
+  $border-radius: defaults.$border-radius
+);
+@use '../grommet-core/settings.font' as settingsFont with (
+  $brand-font-family: defaults.$brand-font-family
+);
+@use '../grommet-core/settings.color' as settings2 with (
+  $brand-color: defaults.$brand-color,
+  $brand-color-lighter: defaults.$brand-color-lighter,
+  $brand-neutral-colors: defaults.$brand-neutral-colors,
+  $brand-accent-colors: defaults.$brand-accent-colors,
+  $brand-status-colors: defaults.$brand-status-colors,
+  $brand-link-color: defaults.$brand-link-color,
+  $brand-grey-colors: defaults.$brand-grey-colors,
+  $brand-light-colors: defaults.$brand-light-colors,
+  $brand-graph-colors: defaults.$brand-graph-colors,
+  $focus-border-color: defaults.$focus-border-color,
+  $hover-background-color: defaults.$hover-background-color,
+  $selected-background-color: defaults.$selected-background-color,
+  $colored-text-color: defaults.$colored-text-color
+);
+@use '../grommet-core/index';
+@use 'objects.button-dxc';
 
-.#{$grommet-namespace}list--selectable .#{$grommet-namespace}list-item--selected {
-  color: $colored-text-color;
 
-  #{$dark-background-context} {
+.#{settings.$grommet-namespace}list--selectable .#{settings.$grommet-namespace}list-item--selected {
+  color: settings2.$colored-text-color;
+
+  #{settings2.$dark-background-context} {
     background-color: #333333;
-    color: $active-colored-text-color;
+    color: settings2.$active-colored-text-color;
   }
 
-  #{$light-background-context} {
-    background-color: $selected-background-color;
-    color: $colored-text-color;
+  #{settings2.$light-background-context} {
+    background-color: settings2.$selected-background-color;
+    color: settings2.$colored-text-color;
   }
 }
 
-.#{$grommet-namespace}tiles--selectable .#{$grommet-namespace}tile--selected {
-  color: $colored-text-color;
+.#{settings.$grommet-namespace}tiles--selectable .#{settings.$grommet-namespace}tile--selected {
+  color: settings2.$colored-text-color;
 
-  #{$dark-background-context} {
+  #{settings2.$dark-background-context} {
     background-color: #333333;
-    color: $active-colored-text-color;
+    color: settings2.$active-colored-text-color;
   }
 
-  #{$light-background-context} {
-    background-color: $selected-background-color;
-    color: $colored-text-color;
+  #{settings2.$light-background-context} {
+    background-color: settings2.$selected-background-color;
+    color: settings2.$colored-text-color;
   }
 }
 
-.#{$grommet-namespace}table--selectable tbody tr.#{$grommet-namespace}table-row--selected td {
-  color: $colored-text-color;
+.#{settings.$grommet-namespace}table--selectable tbody tr.#{settings.$grommet-namespace}table-row--selected td {
+  color: settings2.$colored-text-color;
 
-  #{$dark-background-context} {
+  #{settings2.$dark-background-context} {
     background-color: #333333;
-    color: $active-colored-text-color;
+    color: settings2.$active-colored-text-color;
   }
 
-  #{$light-background-context} {
-    background-color: $selected-background-color;
-    color: $colored-text-color;
+  #{settings2.$light-background-context} {
+    background-color: settings2.$selected-background-color;
+    color: settings2.$colored-text-color;
   }
 }

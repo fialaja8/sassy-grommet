@@ -1,97 +1,104 @@
+@use "sass:list";
+@use "../grommet-core/settings.color";
+@use "../grommet-core/settings.defaults" as settings2;
+@use "../grommet-core/tools.functions" as tools2;
+@use "../grommet-core/tools.input";
+@use "../grommet-core/tools.responsive" as tools3;
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-$button-accent-color: nth($brand-accent-colors, 1);
+settings.$button-accent-color: list.nth(settings.$brand-accent-colors, 1);
 $hover-darken: 15%;
 $active-darken: 20%;
 
 @mixin light-shadows() {
   &:hover {
-    box-shadow: 0px 0px 0px 2px $button-border-color;
+    box-shadow: 0px 0px 0px 2px settings.$button-border-color;
   }
 
-  &.#{$grommet-namespace}button--primary {
+  &.#{settings2.$grommet-namespace}button--primary {
     &:hover {
-      box-shadow: 0px 0px 0px 2px $brand-color;
+      box-shadow: 0px 0px 0px 2px settings.$brand-color;
     }
   }
 
-  &.#{$grommet-namespace}button--secondary {
+  &.#{settings2.$grommet-namespace}button--secondary {
     &:hover {
-      box-shadow: 0px 0px 0px 2px $button-secondary-color;
+      box-shadow: 0px 0px 0px 2px settings.$button-secondary-color;
     }
   }
 
-  &.#{$grommet-namespace}button--accent {
+  &.#{settings2.$grommet-namespace}button--accent {
     &:hover {
-      box-shadow: 0px 0px 0px 2px $button-accent-color;
+      box-shadow: 0px 0px 0px 2px settings.$button-accent-color;
     }
   }
 
-  &.#{$grommet-namespace}button--critical {
+  &.#{settings2.$grommet-namespace}button--critical {
     &:hover {
-      box-shadow: 0px 0px 0px 2px $button-critical-color;
+      box-shadow: 0px 0px 0px 2px settings.$button-critical-color;
     }
   }
 }
 
-.#{$grommet-namespace}button {
+.#{settings2.$grommet-namespace}button {
   border-radius: 5px;
 
-  &:not(.#{$grommet-namespace}button--disabled):not(.#{$grommet-namespace}button--plain):not(.#{$grommet-namespace}button--fill) {
+  &:not(.#{settings2.$grommet-namespace}button--disabled):not(.#{settings2.$grommet-namespace}button--plain):not(.#{settings2.$grommet-namespace}button--fill) {
 
     @include light-shadows();
 
-    #{$dark-background-context} {
+    #{settings.$dark-background-context} {
 
       &:hover {
-        box-shadow: 0px 0px 0px 2px $button-colored-border-color;
+        box-shadow: 0px 0px 0px 2px settings.$button-colored-border-color;
       }
 
-      &.#{$grommet-namespace}button--primary {
+      &.#{settings2.$grommet-namespace}button--primary {
         &:hover {
-          box-shadow: 0px 0px 0px 2px $brand-color;
+          box-shadow: 0px 0px 0px 2px settings.$brand-color;
         }
       }
 
-      &.#{$grommet-namespace}button--secondary {
+      &.#{settings2.$grommet-namespace}button--secondary {
         &:hover {
-          box-shadow: 0px 0px 0px 2px $button-secondary-color;
+          box-shadow: 0px 0px 0px 2px settings.$button-secondary-color;
         }
       }
 
-      &.#{$grommet-namespace}button--accent {
+      &.#{settings2.$grommet-namespace}button--accent {
         &:hover {
-          box-shadow: 0px 0px 0px 2px $button-accent-color;
+          box-shadow: 0px 0px 0px 2px settings.$button-accent-color;
         }
       }
 
-      &.#{$grommet-namespace}button--critical {
-        border-color: $button-critical-color;
+      &.#{settings2.$grommet-namespace}button--critical {
+        border-color: settings.$button-critical-color;
 
         &:hover {
-          box-shadow: 0px 0px 0px 2px $button-critical-color;
+          box-shadow: 0px 0px 0px 2px settings.$button-critical-color;
         }
       }
     }
 
-    #{$light-background-context} {
+    #{settings.$light-background-context} {
       @include light-shadows();
     }
   }
 
-  &--fill:not(.#{$grommet-namespace}button--disabled):not(.#{$grommet-namespace}button--plain) {
+  &--fill:not(.#{settings2.$grommet-namespace}button--disabled):not(.#{settings2.$grommet-namespace}button--plain) {
     &:hover {
-      padding: ($button-vertical-padding - ($button-border-width))
-        ($button-horizontal-padding - ($button-border-width));
-      border-width: double($button-border-width);
+      padding: (tools.$button-vertical-padding - (settings2.$button-border-width))
+        (tools.$button-horizontal-padding - (settings2.$button-border-width));
+      border-width: tools2.double(settings2.$button-border-width);
     }
 
-    @include media-query(lap-and-up) {
+    @include tools3.media-query(lap-and-up) {
       transition: none;
     }
   }
 }
 
-.#{$grommet-namespace}tab__button {
+.#{settings2.$grommet-namespace}tab__button {
   border-radius: 0;
 }

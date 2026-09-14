@@ -1,3 +1,9 @@
+@use "settings.color" as settings3;
+@use "settings.defaults" as settings2;
+@use "settings.font";
+@use "tools.functions" as tools2;
+@use "tools.mixins";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 @mixin small-table {
@@ -10,26 +16,26 @@
     display: block;
 
     &:before {
-      font-weight: $text-font-weight;
-      @include inuit-font-size($control-font-size, $inuit-base-spacing-unit);
+      font-weight: settings.$text-font-weight;
+      @include tools.inuit-font-size(settings.$control-font-size, settings2.$inuit-base-spacing-unit);
       content: attr(data-th);
       display: block;
 
-      padding-right: halve($inuit-base-spacing-unit);
+      padding-right: tools2.halve(settings2.$inuit-base-spacing-unit);
     }
   }
 
   tr {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid settings3.$border-color;
   }
 
   td,
   th {
-    padding-left: $inuit-base-spacing-unit;
+    padding-left: settings2.$inuit-base-spacing-unit;
   }
 }
 
-.#{$grommet-namespace}table {
+.#{settings2.$grommet-namespace}table {
 
   width: 100%;
   max-width: 100%;
@@ -43,34 +49,34 @@
   td,
   th {
     // -1 to accommodate border
-    padding: (halve($inuit-base-spacing-unit) - 1) halve($inuit-base-spacing-unit);
+    padding: (tools2.halve(settings2.$inuit-base-spacing-unit) - 1) tools2.halve(settings2.$inuit-base-spacing-unit);
     text-align: left;
 
     &:first-child {
-      padding-left: $inuit-base-spacing-unit;
+      padding-left: settings2.$inuit-base-spacing-unit;
     }
 
     &:last-child {
-      padding-right: $inuit-base-spacing-unit;
+      padding-right: settings2.$inuit-base-spacing-unit;
     }
   }
 
   th {
-    font-weight: $text-font-weight;
+    font-weight: settings.$text-font-weight;
     // @include inuit-font-size(20px);
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid settings3.$border-color;
 
-    #{$dark-background-context} {
-      border-color: $colored-border-color;
+    #{settings3.$dark-background-context} {
+      border-color: settings3.$colored-border-color;
     }
 
-    #{$light-background-context} {
-      border-color: $border-color;
+    #{settings3.$light-background-context} {
+      border-color: settings3.$border-color;
     }
   }
 }
 
-.#{$grommet-namespace}table__mirror {
+.#{settings2.$grommet-namespace}table__mirror {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -78,19 +84,19 @@
 
   > thead {
     position: fixed;
-    background-color: $header-background-color;
+    background-color: settings3.$header-background-color;
   }
 }
 
-.#{$grommet-namespace}table__more {
-  margin-top: $inuit-base-spacing-unit;
+.#{settings2.$grommet-namespace}table__more {
+  margin-top: settings2.$inuit-base-spacing-unit;
   text-align: center;
 }
 
-.#{$grommet-namespace}table--scrollable {
+.#{settings2.$grommet-namespace}table--scrollable {
   position: relative;
 
-  .#{$grommet-namespace}table__table {
+  .#{settings2.$grommet-namespace}table__table {
     thead {
       visibility: hidden;
     }
@@ -101,14 +107,14 @@
   }
 }
 
-.#{$grommet-namespace}table--selectable {
-  .#{$grommet-namespace}table__table {
+.#{settings2.$grommet-namespace}table--selectable {
+  .#{settings2.$grommet-namespace}table__table {
     outline: none;
   }
 
-  .#{$grommet-namespace}table__table--focus {
-    border-color: $focus-border-color;
-    box-shadow: 0 0 1px 1px $focus-border-color;
+  .#{settings2.$grommet-namespace}table__table--focus {
+    border-color: settings3.$focus-border-color;
+    box-shadow: 0 0 1px 1px settings3.$focus-border-color;
   }
 
   tbody {
@@ -120,37 +126,37 @@
         transition: background-color 0.2s;
       }
 
-      &.#{$grommet-namespace}table-row--selected {
+      &.#{settings2.$grommet-namespace}table-row--selected {
         td {
-          background-color: $selected-background-color;
-          color: $selected-text-color;
+          background-color: settings3.$selected-background-color;
+          color: settings3.$selected-text-color;
 
-          #{$dark-background-context} {
-            background-color: $colored-active-background-color;
-            color: $active-colored-text-color;
+          #{settings3.$dark-background-context} {
+            background-color: settings3.$colored-active-background-color;
+            color: settings3.$active-colored-text-color;
           }
 
-          #{$light-background-context} {
-            background-color: $selected-background-color;
-            color: $selected-text-color;
+          #{settings3.$light-background-context} {
+            background-color: settings3.$selected-background-color;
+            color: settings3.$selected-text-color;
           }
         }
       }
 
-      &.#{$grommet-namespace}table-row--active,
+      &.#{settings2.$grommet-namespace}table-row--active,
       &:hover {
         td {
-          background-color: $hover-background-color;
-          color: $hover-text-color;
+          background-color: settings3.$hover-background-color;
+          color: settings3.$hover-text-color;
 
-          #{$dark-background-context} {
-            background-color: $colored-hover-background-color;
-            color: $active-colored-text-color;
+          #{settings3.$dark-background-context} {
+            background-color: settings3.$colored-hover-background-color;
+            color: settings3.$active-colored-text-color;
           }
 
-          #{$light-background-context} {
-            background-color: $hover-background-color;
-            color: $hover-text-color;
+          #{settings3.$light-background-context} {
+            background-color: settings3.$hover-background-color;
+            color: settings3.$hover-text-color;
           }
         }
       }
@@ -158,6 +164,6 @@
   }
 }
 
-.#{$grommet-namespace}table--small {
+.#{settings2.$grommet-namespace}table--small {
   @include small-table();
 }

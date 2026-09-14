@@ -1,42 +1,49 @@
+@use "settings.defaults";
+@use "settings.font" as settings2;
+@use "tools.margin" as tools2;
+@use "tools.mixins" as tools3;
+@use "tools.responsive" as tools4;
+@use "tools.text-align";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}headline {
-  font-weight: $text-font-weight;
-  margin-bottom: $inuit-base-spacing-unit;
+.#{settings.$grommet-namespace}headline {
+  font-weight: settings2.$text-font-weight;
+  margin-bottom: settings.$inuit-base-spacing-unit;
   max-width: 100%;
-  @include text-align();
-  @include vertical-margin();
+  @include tools.text-align();
+  @include tools2.vertical-margin();
 
-  @include media-query(lap-and-up) {
-    @include inuit-font-size($headline-font-size, 1);
+  @include tools4.media-query(lap-and-up) {
+    @include tools3.inuit-font-size(settings2.$headline-font-size, 1);
   }
-  @include media-query(palm) {
-    @include inuit-font-size($headline-palm-font-size, 1);
+  @include tools4.media-query(palm) {
+    @include tools3.inuit-font-size(settings2.$headline-palm-font-size, 1);
   }
 }
 
-.#{$grommet-namespace}headline--small {
-  @include inuit-font-size($headline-small-font-size, 1);
+.#{settings.$grommet-namespace}headline--small {
+  @include tools3.inuit-font-size(settings2.$headline-small-font-size, 1);
 }
 
-.#{$grommet-namespace}headline--large {
-  @include media-query(lap-and-up) {
-    @include inuit-font-size($headline-large-font-size, 1);
+.#{settings.$grommet-namespace}headline--large {
+  @include tools4.media-query(lap-and-up) {
+    @include tools3.inuit-font-size(settings2.$headline-large-font-size, 1);
   }
-  @include media-query(palm) {
-    @include inuit-font-size($headline-large-palm-font-size, 1);
-  }
-}
-
-.#{$grommet-namespace}headline--xlarge {
-  @include media-query(lap-and-up) {
-    @include inuit-font-size($headline-xlarge-font-size, 1);
-  }
-  @include media-query(palm) {
-    @include inuit-font-size($headline-xlarge-palm-font-size, 1);
+  @include tools4.media-query(palm) {
+    @include tools3.inuit-font-size(settings2.$headline-large-palm-font-size, 1);
   }
 }
 
-.#{$grommet-namespace}headline--strong {
-  font-weight: $text-strong-font-weight;
+.#{settings.$grommet-namespace}headline--xlarge {
+  @include tools4.media-query(lap-and-up) {
+    @include tools3.inuit-font-size(settings2.$headline-xlarge-font-size, 1);
+  }
+  @include tools4.media-query(palm) {
+    @include tools3.inuit-font-size(settings2.$headline-xlarge-palm-font-size, 1);
+  }
+}
+
+.#{settings.$grommet-namespace}headline--strong {
+  font-weight: settings2.$text-strong-font-weight;
 }

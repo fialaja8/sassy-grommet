@@ -1,12 +1,19 @@
-.#{$grommet-namespace}label {
-  @include inuit-font-size($control-font-size);
-  @include text-align();
-  @include vertical-margin();
-  font-weight: $text-font-weight;
+@use "settings.color" as settings3;
+@use "settings.defaults";
+@use "settings.font" as settings2;
+@use "tools.margin" as tools3;
+@use "tools.mixins";
+@use "tools.text-align" as tools2;
+
+.#{settings.$grommet-namespace}label {
+  @include tools.inuit-font-size(settings2.$control-font-size);
+  @include tools2.text-align();
+  @include tools3.vertical-margin();
+  font-weight: settings2.$text-font-weight;
   cursor: inherit;
 }
 
-.#{$grommet-namespace}label--truncate {
+.#{settings.$grommet-namespace}label--truncate {
   display: inline-block;
   max-width: 100%;
   white-space: nowrap;
@@ -14,24 +21,24 @@
   text-overflow: ellipsis;
 }
 
-.#{$grommet-namespace}label--uppercase {
+.#{settings.$grommet-namespace}label--uppercase {
   text-transform: uppercase;
   letter-spacing: 0.2em;
 }
 
-.#{$grommet-namespace}label--small {
-  @include inuit-font-size($content-small-font-size);
-  color: $secondary-text-color;
+.#{settings.$grommet-namespace}label--small {
+  @include tools.inuit-font-size(settings2.$content-small-font-size);
+  color: settings3.$secondary-text-color;
 
-  #{$dark-background-context} {
-    color: $inactive-colored-text-color;
+  #{settings3.$dark-background-context} {
+    color: settings3.$inactive-colored-text-color;
   }
 
-  #{$light-background-context} {
-    color: $secondary-text-color;
+  #{settings3.$light-background-context} {
+    color: settings3.$secondary-text-color;
   }
 }
 
-.#{$grommet-namespace}label--large {
-  @include inuit-font-size($content-large-font-size);
+.#{settings.$grommet-namespace}label--large {
+  @include tools.inuit-font-size(settings2.$content-large-font-size);
 }

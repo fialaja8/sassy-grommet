@@ -1,177 +1,185 @@
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "settings.font" as settings3;
+@use "tools.functions" as tools3;
+@use "tools.mixins" as tools2;
+@use "tools.responsive" as tools4;
+@use "tools.text-align";
+
 // (C) Copyright 2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}value {
+.#{settings.$grommet-namespace}value {
   display: inline-block;
-  @include text-align();
+  @include tools.text-align();
 }
 
-.#{$grommet-namespace}value--active {
-  color: $hover-text-color;
+.#{settings.$grommet-namespace}value--active {
+  color: settings2.$hover-text-color;
 
-  #{$dark-background-context} {
-    color: $active-colored-text-color;
+  #{settings2.$dark-background-context} {
+    color: settings2.$active-colored-text-color;
   }
 
-  #{$light-background-context} {
-    color: $hover-text-color;
+  #{settings2.$light-background-context} {
+    color: settings2.$hover-text-color;
   }
 }
 
-.#{$grommet-namespace}value__annotated {
+.#{settings.$grommet-namespace}value__annotated {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  @include inuit-font-size($value-font-size);
+  @include tools2.inuit-font-size(settings3.$value-font-size);
 
-  .#{$grommet-namespace}control-icon:first-child {
-    margin-right: quarter($inuit-base-spacing-unit);
+  .#{settings.$grommet-namespace}control-icon:first-child {
+    margin-right: tools3.quarter(settings.$inuit-base-spacing-unit);
   }
 
-  .#{$grommet-namespace}control-icon:last-child {
-    margin-left: quarter($inuit-base-spacing-unit);
+  .#{settings.$grommet-namespace}control-icon:last-child {
+    margin-left: tools3.quarter(settings.$inuit-base-spacing-unit);
   }
 }
 
-.#{$grommet-namespace}value__label {
+.#{settings.$grommet-namespace}value__label {
   display: inline-block;
-  margin-top: quarter($inuit-base-spacing-unit);
-  @include inuit-font-size($control-font-size);
+  margin-top: tools3.quarter(settings.$inuit-base-spacing-unit);
+  @include tools2.inuit-font-size(settings3.$control-font-size);
 }
 
-.#{$grommet-namespace}value__value {
-  font-weight: $text-strong-font-weight;
+.#{settings.$grommet-namespace}value__value {
+  font-weight: settings3.$text-strong-font-weight;
 }
 
-.#{$grommet-namespace}value__units {
+.#{settings.$grommet-namespace}value__units {
   margin-left: 0.5rem;
-  font-weight: $text-font-weight;
+  font-weight: settings3.$text-font-weight;
 }
 
-.#{$grommet-namespace}value--align-start {
-  .#{$grommet-namespace}value__annotated {
+.#{settings.$grommet-namespace}value--align-start {
+  .#{settings.$grommet-namespace}value__annotated {
     justify-content: flex-start;
   }
 }
 
-.#{$grommet-namespace}value--align-end {
-  .#{$grommet-namespace}value__annotated {
+.#{settings.$grommet-namespace}value--align-end {
+  .#{settings.$grommet-namespace}value__annotated {
     justify-content: flex-end;
   }
 }
 
-.#{$grommet-namespace}value--xsmall {
-  .#{$grommet-namespace}value__annotated {
-    @include inuit-font-size($value-xsmall-font-size);
+.#{settings.$grommet-namespace}value--xsmall {
+  .#{settings.$grommet-namespace}value__annotated {
+    @include tools2.inuit-font-size(settings3.$value-xsmall-font-size);
   }
 
-  .#{$grommet-namespace}value__label {
-    margin-top: quarter($inuit-base-spacing-unit);
-    @include inuit-font-size($content-small-font-size);
-  }
-}
-
-.#{$grommet-namespace}value--small {
-  .#{$grommet-namespace}value__annotated {
-    @include inuit-font-size($value-small-font-size);
-  }
-
-  .#{$grommet-namespace}value__label {
-    margin-top: quarter($inuit-base-spacing-unit);
-    @include inuit-font-size($content-small-font-size);
+  .#{settings.$grommet-namespace}value__label {
+    margin-top: tools3.quarter(settings.$inuit-base-spacing-unit);
+    @include tools2.inuit-font-size(settings3.$content-small-font-size);
   }
 }
 
-.#{$grommet-namespace}value--large {
-  .#{$grommet-namespace}value__annotated {
-    @include inuit-font-size($value-large-font-size);
+.#{settings.$grommet-namespace}value--small {
+  .#{settings.$grommet-namespace}value__annotated {
+    @include tools2.inuit-font-size(settings3.$value-small-font-size);
+  }
 
-    .#{$grommet-namespace}control-icon:first-child {
-      margin-right: halve($inuit-base-spacing-unit);
+  .#{settings.$grommet-namespace}value__label {
+    margin-top: tools3.quarter(settings.$inuit-base-spacing-unit);
+    @include tools2.inuit-font-size(settings3.$content-small-font-size);
+  }
+}
+
+.#{settings.$grommet-namespace}value--large {
+  .#{settings.$grommet-namespace}value__annotated {
+    @include tools2.inuit-font-size(settings3.$value-large-font-size);
+
+    .#{settings.$grommet-namespace}control-icon:first-child {
+      margin-right: tools3.halve(settings.$inuit-base-spacing-unit);
     }
 
-    .#{$grommet-namespace}control-icon:last-child {
-      margin-left: halve($inuit-base-spacing-unit);
+    .#{settings.$grommet-namespace}control-icon:last-child {
+      margin-left: tools3.halve(settings.$inuit-base-spacing-unit);
     }
   }
 
-  .#{$grommet-namespace}value__label {
-    margin-top: halve($inuit-base-spacing-unit);
-    @include inuit-font-size($content-large-font-size);
+  .#{settings.$grommet-namespace}value__label {
+    margin-top: tools3.halve(settings.$inuit-base-spacing-unit);
+    @include tools2.inuit-font-size(settings3.$content-large-font-size);
   }
 }
 
-.#{$grommet-namespace}value--align-center {
+.#{settings.$grommet-namespace}value--align-center {
   justify-content: center;
 
-  .#{$grommet-namespace}value__annotated {
+  .#{settings.$grommet-namespace}value__annotated {
     justify-content: center;
   }
 }
 
-@include media-query(palm) {
+@include tools4.media-query(palm) {
 
   // same as large
-  .#{$grommet-namespace}value--xlarge {
-    .#{$grommet-namespace}value__annotated {
-      @include inuit-font-size($value-large-font-size);
+  .#{settings.$grommet-namespace}value--xlarge {
+    .#{settings.$grommet-namespace}value__annotated {
+      @include tools2.inuit-font-size(settings3.$value-large-font-size);
 
-      .#{$grommet-namespace}control-icon:first-child {
-        margin-right: halve($inuit-base-spacing-unit);
+      .#{settings.$grommet-namespace}control-icon:first-child {
+        margin-right: tools3.halve(settings.$inuit-base-spacing-unit);
       }
 
-      .#{$grommet-namespace}control-icon:last-child {
-        margin-left: halve($inuit-base-spacing-unit);
+      .#{settings.$grommet-namespace}control-icon:last-child {
+        margin-left: tools3.halve(settings.$inuit-base-spacing-unit);
       }
     }
 
-    .#{$grommet-namespace}value__label {
-      margin-top: halve($inuit-base-spacing-unit);
-      @include inuit-font-size($content-large-font-size);
+    .#{settings.$grommet-namespace}value__label {
+      margin-top: tools3.halve(settings.$inuit-base-spacing-unit);
+      @include tools2.inuit-font-size(settings3.$content-large-font-size);
     }
   }
 
-  .#{$grommet-namespace}value--responsive {
-    &.#{$grommet-namespace}value--large,
-    &.#{$grommet-namespace}value--xlarge {
-      .#{$grommet-namespace}value__annotated {
-        @include inuit-font-size($value-font-size);
+  .#{settings.$grommet-namespace}value--responsive {
+    &.#{settings.$grommet-namespace}value--large,
+    &.#{settings.$grommet-namespace}value--xlarge {
+      .#{settings.$grommet-namespace}value__annotated {
+        @include tools2.inuit-font-size(settings3.$value-font-size);
 
-        .#{$grommet-namespace}control-icon:first-child {
-          margin-right: quarter($inuit-base-spacing-unit);
+        .#{settings.$grommet-namespace}control-icon:first-child {
+          margin-right: tools3.quarter(settings.$inuit-base-spacing-unit);
         }
 
-        .#{$grommet-namespace}control-icon:last-child {
-          margin-left: quarter($inuit-base-spacing-unit);
+        .#{settings.$grommet-namespace}control-icon:last-child {
+          margin-left: tools3.quarter(settings.$inuit-base-spacing-unit);
         }
       }
 
-      .#{$grommet-namespace}value__label {
-        margin-top: quarter($inuit-base-spacing-unit);
-        @include inuit-font-size($control-font-size);
+      .#{settings.$grommet-namespace}value__label {
+        margin-top: tools3.quarter(settings.$inuit-base-spacing-unit);
+        @include tools2.inuit-font-size(settings3.$control-font-size);
       }
     }
   }
 }
 
-@include media-query(lap-and-up) {
-  .#{$grommet-namespace}value--xlarge {
-    .#{$grommet-namespace}value__annotated {
-      @include inuit-font-size($value-xlarge-font-size);
+@include tools4.media-query(lap-and-up) {
+  .#{settings.$grommet-namespace}value--xlarge {
+    .#{settings.$grommet-namespace}value__annotated {
+      @include tools2.inuit-font-size(settings3.$value-xlarge-font-size);
 
-      .#{$grommet-namespace}control-icon:first-child {
-        margin-right: ($inuit-base-spacing-unit);
+      .#{settings.$grommet-namespace}control-icon:first-child {
+        margin-right: (settings.$inuit-base-spacing-unit);
       }
 
-      .#{$grommet-namespace}control-icon:last-child {
-        margin-left: ($inuit-base-spacing-unit);
+      .#{settings.$grommet-namespace}control-icon:last-child {
+        margin-left: (settings.$inuit-base-spacing-unit);
       }
     }
 
-    .#{$grommet-namespace}value__label {
-      margin-top: $inuit-base-spacing-unit;
-      @include inuit-font-size($value-font-size);
+    .#{settings.$grommet-namespace}value__label {
+      margin-top: settings.$inuit-base-spacing-unit;
+      @include tools2.inuit-font-size(settings3.$value-font-size);
     }
   }
 }

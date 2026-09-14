@@ -1,71 +1,78 @@
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.color-index" as tools2;
+@use "tools.functions" as tools4;
+@use "tools.icon" as tools3;
+@use "tools.input";
+
 // (C) Copyright 2014-2018 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}button {
-  @include basic-button();
+.#{settings.$grommet-namespace}button {
+  @include tools.basic-button();
 
   &--focus {
-    border: $button-border-width solid $focus-border-color;
-    box-shadow: 0 0 1px 1px $focus-border-color;
+    border: settings.$button-border-width solid settings2.$focus-border-color;
+    box-shadow: 0 0 1px 1px settings2.$focus-border-color;
   }
 
-  @include background-context-color($button-text-color, $button-text-color);
+  @include tools2.background-context-color(settings2.$button-text-color, settings2.$button-text-color);
 }
 
-.#{$grommet-namespace}button--hover-background:hover {
-  background-color: $hover-background-color;
-  color: $hover-text-color;
+.#{settings.$grommet-namespace}button--hover-background:hover {
+  background-color: settings2.$hover-background-color;
+  color: settings2.$hover-text-color;
 
-  #{$dark-background-context} {
-    background-color: $colored-hover-background-color;
-    color: $active-colored-text-color;
+  #{settings2.$dark-background-context} {
+    background-color: settings2.$colored-hover-background-color;
+    color: settings2.$active-colored-text-color;
   }
 
-  #{$light-background-context} {
-    background-color: $hover-background-color;
-    color: $hover-text-color;
+  #{settings2.$light-background-context} {
+    background-color: settings2.$hover-background-color;
+    color: settings2.$hover-text-color;
   }
 }
 
-.#{$grommet-namespace}button:hover {
-  .#{$grommet-namespace}control-icon {
-    @include icon-color($active-icon-color);
+.#{settings.$grommet-namespace}button:hover {
+  .#{settings.$grommet-namespace}control-icon {
+    @include tools3.icon-color(settings2.$active-icon-color);
     transition: none;
   }
 
-  #{$dark-background-context} {
-    .#{$grommet-namespace}control-icon {
-      @include icon-color($active-colored-icon-color);
+  #{settings2.$dark-background-context} {
+    .#{settings.$grommet-namespace}control-icon {
+      @include tools3.icon-color(settings2.$active-colored-icon-color);
     }
   }
 
-  #{$light-background-context} {
-    .#{$grommet-namespace}control-icon {
-      @include icon-color($active-icon-color);
+  #{settings2.$light-background-context} {
+    .#{settings.$grommet-namespace}control-icon {
+      @include tools3.icon-color(settings2.$active-icon-color);
     }
   }
 }
 
-.#{$grommet-namespace}button__icon {
+.#{settings.$grommet-namespace}button__icon {
   display: inline-block;
 
-  .#{$grommet-namespace}control-icon {
+  .#{settings.$grommet-namespace}control-icon {
     vertical-align: bottom;
   }
 }
 
-.#{$grommet-namespace}button--secondary:not(.#{$grommet-namespace}button--focus) {
-  border-color: $button-secondary-color;
+.#{settings.$grommet-namespace}button--secondary:not(.#{settings.$grommet-namespace}button--focus) {
+  border-color: settings2.$button-secondary-color;
 }
 
-.#{$grommet-namespace}button--accent:not(.#{$grommet-namespace}button--focus) {
-  border-color: $button-accent-color;
+.#{settings.$grommet-namespace}button--accent:not(.#{settings.$grommet-namespace}button--focus) {
+  border-color: settings2.$button-accent-color;
 }
 
-.#{$grommet-namespace}button--critical:not(.#{$grommet-namespace}button--focus) {
-  border-color: $button-critical-color;
+.#{settings.$grommet-namespace}button--critical:not(.#{settings.$grommet-namespace}button--focus) {
+  border-color: settings2.$button-critical-color;
 }
 
-.#{$grommet-namespace}button--align-start {
+.#{settings.$grommet-namespace}button--align-start {
   text-align: left;
 
   html.rtl & {
@@ -73,11 +80,11 @@
   }
 }
 
-.#{$grommet-namespace}button--plain:not(.#{$grommet-namespace}button--box) {
+.#{settings.$grommet-namespace}button--plain:not(.#{settings.$grommet-namespace}button--box) {
   padding: 0;
 }
 
-.#{$grommet-namespace}button--plain {
+.#{settings.$grommet-namespace}button--plain {
   width: auto;
   height: auto;
   min-width: 0;
@@ -85,76 +92,76 @@
   text-align: inherit;
   font-weight: inherit;
 
-  .#{$grommet-namespace}button__label {
-    margin: 0 halve($inuit-base-spacing-unit);
+  .#{settings.$grommet-namespace}button__label {
+    margin: 0 tools4.halve(settings.$inuit-base-spacing-unit);
   }
 
-  .#{$grommet-namespace}button__icon {
-    padding: halve($inuit-base-spacing-unit) - $button-border-width;
+  .#{settings.$grommet-namespace}button__icon {
+    padding: tools4.halve(settings.$inuit-base-spacing-unit) - settings.$button-border-width;
 
-    + .#{$grommet-namespace}button__label {
+    + .#{settings.$grommet-namespace}button__label {
       margin-left: 0;
     }
   }
 }
 
-.#{$grommet-namespace}button--plain:not(.#{$grommet-namespace}button--focus) {
-  border: $button-border-width solid transparent;
+.#{settings.$grommet-namespace}button--plain:not(.#{settings.$grommet-namespace}button--focus) {
+  border: settings.$button-border-width solid transparent;
 }
 
-.#{$grommet-namespace}button:not(.#{$grommet-namespace}button--plain) {
-  .#{$grommet-namespace}button__icon {
+.#{settings.$grommet-namespace}button:not(.#{settings.$grommet-namespace}button--plain) {
+  .#{settings.$grommet-namespace}button__icon {
 
     // @include background-context-icon($button-text-color, $button-text-color);
 
-    + .#{$grommet-namespace}button__label {
-      margin-left: halve($inuit-base-spacing-unit);
+    + .#{settings.$grommet-namespace}button__label {
+      margin-left: tools4.halve(settings.$inuit-base-spacing-unit);
     }
   }
 }
 
-.#{$grommet-namespace}button--primary {
-  &:not(.#{$grommet-namespace}button--focus) {
-    border-color: $brand-color;
+.#{settings.$grommet-namespace}button--primary {
+  &:not(.#{settings.$grommet-namespace}button--focus) {
+    border-color: settings2.$brand-color;
   }
-  background-color: $brand-color;
-  color: $active-colored-text-color;
+  background-color: settings2.$brand-color;
+  color: settings2.$active-colored-text-color;
 
-  &:hover:not(.#{$grommet-namespace}button--disabled) {
-    color: $active-colored-text-color;
+  &:hover:not(.#{settings.$grommet-namespace}button--disabled) {
+    color: settings2.$active-colored-text-color;
 
-   .#{$grommet-namespace}button__icon .#{$grommet-namespace}control-icon {
-      @include icon-color($active-colored-icon-color)
+   .#{settings.$grommet-namespace}button__icon .#{settings.$grommet-namespace}control-icon {
+      @include tools3.icon-color(settings2.$active-colored-icon-color)
     }
   }
 
-  .#{$grommet-namespace}control-icon {
-    @include icon-color($active-colored-icon-color);
+  .#{settings.$grommet-namespace}control-icon {
+    @include tools3.icon-color(settings2.$active-colored-icon-color);
   }
 
-  @include background-context-color($active-colored-text-color,
-    $active-colored-text-color);
+  @include tools2.background-context-color(settings2.$active-colored-text-color,
+    settings2.$active-colored-text-color);
 
-  @include background-context-icon($active-colored-text-color, $active-colored-text-color);
+  @include tools3.background-context-icon(settings2.$active-colored-text-color, settings2.$active-colored-text-color);
 }
 
-.#{$grommet-namespace}button--disabled {
+.#{settings.$grommet-namespace}button--disabled {
   opacity: 0.3;
   cursor: default;
 }
 
-.#{$grommet-namespace}button:not(.#{$grommet-namespace}button--fill) {
+.#{settings.$grommet-namespace}button:not(.#{settings.$grommet-namespace}button--fill) {
   flex: 0 0 auto;
 }
 
-.#{$grommet-namespace}button--fill {
+.#{settings.$grommet-namespace}button--fill {
   width: 100%;
   max-width: none;
   // used to add full height for button inside a flex container
   flex-grow: 1;
 }
 
-a.#{$grommet-namespace}button {
+a.#{settings.$grommet-namespace}button {
   text-decoration: none;
 
   &:hover {

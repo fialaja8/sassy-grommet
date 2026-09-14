@@ -1,5 +1,13 @@
-// (C) Copyright 2014-2018 Hewlett Packard Enterprise Development LP
+@use "sass:map";
 @use "sass:math";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "settings.font" as settings3;
+@use "tools.functions";
+@use "tools.mixins" as tools2;
+@use "tools.responsive" as tools3;
+
+// (C) Copyright 2014-2018 Hewlett Packard Enterprise Development LP
 
 // We use mixins for some text styles to make it easier to modularize the
 // CSS. For example `.grommet p` uses the same styles as
@@ -11,10 +19,10 @@
 @mixin input() {
   // Align overall height with regular text line height, reduce
   // top and bottom padding by an extra 2px.
-  padding: (halve($inuit-base-spacing-unit) - $input-border-width)
-    ($inuit-base-spacing-unit - $input-border-width);
-  border: $input-border-width solid $border-color;
-  border-radius: $border-radius;
+  padding: (tools.halve(settings.$inuit-base-spacing-unit) - settings.$input-border-width)
+    (settings.$inuit-base-spacing-unit - settings.$input-border-width);
+  border: settings.$input-border-width solid settings2.$border-color;
+  border-radius: settings.$border-radius;
   outline: none;
   background-color: transparent; // inherit; doesn't work on IE
   color: inherit;
@@ -22,10 +30,10 @@
   margin: 0;
 
   &:focus {
-    border-width: $input-focus-border-width;
-    border-color: $focus-border-color;
-    padding: (halve($inuit-base-spacing-unit) - ($input-border-width + 1))
-      ($inuit-base-spacing-unit - ($input-border-width + 1));
+    border-width: settings.$input-focus-border-width;
+    border-color: settings2.$focus-border-color;
+    padding: (tools.halve(settings.$inuit-base-spacing-unit) - (settings.$input-border-width + 1))
+      (settings.$inuit-base-spacing-unit - (settings.$input-border-width + 1));
   }
 
   &::-moz-focus-inner {
@@ -34,53 +42,53 @@
   }
 
   &::-webkit-input-placeholder {
-    color: $placeholder-text-color;
+    color: settings2.$placeholder-text-color;
   }
 
   &::-moz-placeholder {
-    color: $placeholder-text-color;
+    color: settings2.$placeholder-text-color;
   }
 
   &:-ms-input-placeholder {
-     color: $placeholder-text-color;
+     color: settings2.$placeholder-text-color;
   }
 
   &.error {
-    border-color: map-get($brand-status-colors, critical);
+    border-color: map.get(settings2.$brand-status-colors, critical);
   }
 }
 
 $button-vertical-padding:
-  round(math.div($inuit-base-spacing-unit, 3)) - $button-border-width;
+  math.round(math.div(settings.$inuit-base-spacing-unit, 3)) - settings.$button-border-width;
 $button-horizontal-padding:
-  round($inuit-base-spacing-unit) - $button-border-width;
+  math.round(settings.$inuit-base-spacing-unit) - settings.$button-border-width;
 
 @mixin basic-button {
-  &:not(.#{$grommet-namespace}button--box) {
+  &:not(.#{settings.$grommet-namespace}button--box) {
     padding: $button-vertical-padding $button-horizontal-padding;
   }
 
   background-color: transparent;
-  border: $button-border-width solid $button-border-color;
-  border-radius: $border-radius;
-  color: $button-text-color;
-  @include inuit-font-size($control-font-size, $inuit-base-spacing-unit);
-  font-weight: $control-font-weight;
+  border: settings.$button-border-width solid settings2.$button-border-color;
+  border-radius: settings.$border-radius;
+  color: settings2.$button-text-color;
+  @include tools2.inuit-font-size(settings3.$control-font-size, settings.$inuit-base-spacing-unit);
+  font-weight: settings3.$control-font-weight;
   cursor: pointer;
   text-align: center;
   outline: none;
-  min-width: $button-min-width;
-  max-width: $button-max-width;
+  min-width: settings.$button-min-width;
+  max-width: settings.$button-max-width;
 
-  @include media-query(lap-and-up) {
+  @include tools3.media-query(lap-and-up) {
     transition: 0.1s ease-in-out;
   }
 
-  #{$dark-background-context} {
-    border-color: $button-colored-border-color;
+  #{settings2.$dark-background-context} {
+    border-color: settings2.$button-colored-border-color;
   }
 
-  #{$light-background-context} {
-    border-color: $button-border-color;
+  #{settings2.$light-background-context} {
+    border-color: settings2.$button-border-color;
   }
 }

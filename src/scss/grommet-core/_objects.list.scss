@@ -1,42 +1,46 @@
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.functions";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}list {
+.#{settings.$grommet-namespace}list {
   list-style-type: none;
   margin: 0px;
   padding: 0px;
   overflow: auto;
 }
 
-.#{$grommet-namespace}list--focus {
-  border-color: $focus-border-color;
-  box-shadow: 0 0 1px 1px $focus-border-color;
+.#{settings.$grommet-namespace}list--focus {
+  border-color: settings2.$focus-border-color;
+  box-shadow: 0 0 1px 1px settings2.$focus-border-color;
 }
 
-.#{$grommet-namespace}list__more,
-.#{$grommet-namespace}list__empty {
-  padding-left: $inuit-base-spacing-unit;
-  padding-right: $inuit-base-spacing-unit;
-  padding-top: halve($inuit-base-spacing-unit);
-  padding-bottom: halve($inuit-base-spacing-unit);
+.#{settings.$grommet-namespace}list__more,
+.#{settings.$grommet-namespace}list__empty {
+  padding-left: settings.$inuit-base-spacing-unit;
+  padding-right: settings.$inuit-base-spacing-unit;
+  padding-top: tools.halve(settings.$inuit-base-spacing-unit);
+  padding-bottom: tools.halve(settings.$inuit-base-spacing-unit);
 }
 
-.#{$grommet-namespace}list__empty {
-  color: $secondary-text-color;
+.#{settings.$grommet-namespace}list__empty {
+  color: settings2.$secondary-text-color;
   font-style: italic;
 }
 
-.#{$grommet-namespace}list-item {
+.#{settings.$grommet-namespace}list-item {
   max-width: none;
 }
 
-.#{$grommet-namespace}list-item:focus {
-  outline: $focus-border-color solid 1px;
+.#{settings.$grommet-namespace}list-item:focus {
+  outline: settings2.$focus-border-color solid 1px;
 }
 
-.#{$grommet-namespace}list-item__image {
-  height: $inuit-base-spacing-unit;
-  width: $inuit-base-spacing-unit;
-  margin-right: $inuit-base-spacing-unit;
+.#{settings.$grommet-namespace}list-item__image {
+  height: settings.$inuit-base-spacing-unit;
+  width: settings.$inuit-base-spacing-unit;
+  margin-right: settings.$inuit-base-spacing-unit;
   overflow: hidden;
   flex: 0 0 auto;
 
@@ -48,88 +52,88 @@
   }
 }
 
-.#{$grommet-namespace}list-item__label,
-.#{$grommet-namespace}list-item__annotation {
+.#{settings.$grommet-namespace}list-item__label,
+.#{settings.$grommet-namespace}list-item__annotation {
   flex: 1;
 }
 
-.#{$grommet-namespace}list-item__annotation {
-  margin-left: $inuit-base-spacing-unit;
-  color: $secondary-text-color;
+.#{settings.$grommet-namespace}list-item__annotation {
+  margin-left: settings.$inuit-base-spacing-unit;
+  color: settings2.$secondary-text-color;
 }
 
-.#{$grommet-namespace}list-item--selectable {
+.#{settings.$grommet-namespace}list-item--selectable {
   cursor: pointer;
   outline: none;
 
   &:hover {
-    background-color: $hover-background-color;
+    background-color: settings2.$hover-background-color;
   }
 }
 
-.#{$grommet-namespace}list-item--selected {
-  background-color: $selected-background-color;
-  color: $selected-text-color;
+.#{settings.$grommet-namespace}list-item--selected {
+  background-color: settings2.$selected-background-color;
+  color: settings2.$selected-text-color;
 
-  #{$dark-background-context} {
-    background-color: $colored-active-background-color;
-    color: $active-colored-text-color;
+  #{settings2.$dark-background-context} {
+    background-color: settings2.$colored-active-background-color;
+    color: settings2.$active-colored-text-color;
   }
 
-  #{$light-background-context} {
-    background-color: $selected-background-color;
-    color: $selected-text-color;
+  #{settings2.$light-background-context} {
+    background-color: settings2.$selected-background-color;
+    color: settings2.$selected-text-color;
   }
 }
 
-.#{$grommet-namespace}list-item--row {
-  .#{$grommet-namespace}list-item__annotation {
+.#{settings.$grommet-namespace}list-item--row {
+  .#{settings.$grommet-namespace}list-item__annotation {
     text-align: right;
   }
 }
 
-.#{$grommet-namespace}list--selectable {
+.#{settings.$grommet-namespace}list--selectable {
   outline: none;
 
-  .#{$grommet-namespace}list-item {
+  .#{settings.$grommet-namespace}list-item {
     cursor: pointer;
     outline: none;
     transition: background-color 0.2s;
   }
 
-  .#{$grommet-namespace}list-item--active,
-  .#{$grommet-namespace}list-item:hover {
-    background-color: $hover-background-color;
-    color: $hover-text-color;
+  .#{settings.$grommet-namespace}list-item--active,
+  .#{settings.$grommet-namespace}list-item:hover {
+    background-color: settings2.$hover-background-color;
+    color: settings2.$hover-text-color;
 
-    #{$dark-background-context} {
-      background-color: $colored-hover-background-color;
-      color: $active-colored-text-color;
+    #{settings2.$dark-background-context} {
+      background-color: settings2.$colored-hover-background-color;
+      color: settings2.$active-colored-text-color;
     }
 
-    #{$light-background-context} {
-      background-color: $hover-background-color;
-      color: $hover-text-color;
-    }
-  }
-}
-
-.#{$grommet-namespace}list--small {
-  .#{$grommet-namespace}list-item,
-  .#{$grommet-namespace}list__more {
-    &__image {
-      height: halve($inuit-base-spacing-unit);
-      width: halve($inuit-base-spacing-unit);
+    #{settings2.$light-background-context} {
+      background-color: settings2.$hover-background-color;
+      color: settings2.$hover-text-color;
     }
   }
 }
 
-.#{$grommet-namespace}list--large {
-  .#{$grommet-namespace}list-item,
-  .#{$grommet-namespace}list__more {
+.#{settings.$grommet-namespace}list--small {
+  .#{settings.$grommet-namespace}list-item,
+  .#{settings.$grommet-namespace}list__more {
     &__image {
-      height: double($inuit-base-spacing-unit);
-      width: double($inuit-base-spacing-unit);
+      height: tools.halve(settings.$inuit-base-spacing-unit);
+      width: tools.halve(settings.$inuit-base-spacing-unit);
+    }
+  }
+}
+
+.#{settings.$grommet-namespace}list--large {
+  .#{settings.$grommet-namespace}list-item,
+  .#{settings.$grommet-namespace}list__more {
+    &__image {
+      height: tools.double(settings.$inuit-base-spacing-unit);
+      width: tools.double(settings.$inuit-base-spacing-unit);
     }
   }
 }

@@ -1,2 +1,32 @@
-@import 'aruba.defaults';
-@import '../grommet-core/index';
+@use 'aruba.defaults' as defaults;
+@use '../grommet-core/settings.defaults' with (
+  $border-radius: defaults.$border-radius
+);
+@use '../grommet-core/settings.font' as settingsFont with (
+  $brand-font-family: defaults.$brand-font-family
+);
+@use '../grommet-core/settings.color' as settingsColor with (
+  $brand-color: defaults.$brand-color,
+  $brand-color-lighter: defaults.$brand-color-lighter,
+  $brand-neutral-colors: defaults.$brand-neutral-colors,
+  $brand-accent-colors: defaults.$brand-accent-colors,
+  $brand-status-colors: defaults.$brand-status-colors,
+  $brand-link-color: defaults.$brand-link-color,
+  $brand-grey-colors: defaults.$brand-grey-colors,
+  $brand-graph-colors: defaults.$brand-graph-colors,
+  $focus-border-color: defaults.$focus-border-color
+);
+@use '../grommet-core/index';
+
+.#{settings.$grommet-namespace}control-icon {
+  path,
+  line,
+  polyline,
+  circle,
+  rect,
+  polygon {
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}

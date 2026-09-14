@@ -1,99 +1,106 @@
+@use "sass:math";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.functions" as tools2;
+@use "tools.input";
+@use "tools.text" as tools3;
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}select {
+.#{settings.$grommet-namespace}select {
   position: relative;
   cursor: pointer;
   overflow: hidden;
 }
 
-.#{$grommet-namespace}select__input {
-  @include input();
+.#{settings.$grommet-namespace}select__input {
+  @include tools.input();
   width: 100%;
-  padding-right: round($inuit-base-spacing-unit * 2.5);
+  padding-right: math.round(settings.$inuit-base-spacing-unit * 2.5);
   cursor: inherit;
   color: inherit;
   pointer-events: none;
 
   &[readonly] {
-    color: $text-color;
+    color: settings2.$text-color;
 
-    #{$dark-background-context} {
-      color: $colored-text-color;
+    #{settings2.$dark-background-context} {
+      color: settings2.$colored-text-color;
     }
 
-    #{$light-background-context} {
-      color: $text-color;
+    #{settings2.$light-background-context} {
+      color: settings2.$text-color;
     }
   }
 }
 
-.#{$grommet-namespace}select__input:focus {
-  padding-right: round($inuit-base-spacing-unit * 2.5 -
-    ($input-border-width + 1));
+.#{settings.$grommet-namespace}select__input:focus {
+  padding-right: math.round(settings.$inuit-base-spacing-unit * 2.5 -
+    (settings.$input-border-width + 1));
 }
 
 // Disable IE's clear icon
-.#{$grommet-namespace}select__input::-ms-clear {
+.#{settings.$grommet-namespace}select__input::-ms-clear {
   display: none;
 }
 
-.#{$grommet-namespace}select__value {
+.#{settings.$grommet-namespace}select__value {
   // leave room for control
-  padding: quarter($inuit-base-spacing-unit) double($inuit-base-spacing-unit) quarter($inuit-base-spacing-unit) 0;
-  border: $input-border-width solid $border-color;
-  border-radius: $border-radius;
+  padding: tools2.quarter(settings.$inuit-base-spacing-unit) tools2.double(settings.$inuit-base-spacing-unit) tools2.quarter(settings.$inuit-base-spacing-unit) 0;
+  border: settings.$input-border-width solid settings2.$border-color;
+  border-radius: settings.$border-radius;
 }
 
-.#{$grommet-namespace}select__control {
+.#{settings.$grommet-namespace}select__control {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: quarter($inuit-base-spacing-unit);
+  right: tools2.quarter(settings.$inuit-base-spacing-unit);
 
   // Hide text behind select__control
   svg {
-    background-color: $background-color;
+    background-color: settings2.$background-color;
   }
 }
 
-.#{$grommet-namespace}select__search {
+.#{settings.$grommet-namespace}select__search {
   width: 100%;
 }
 
-.#{$grommet-namespace}select__options {
+.#{settings.$grommet-namespace}select__options {
   margin: 0px;
   list-style-type: none;
 }
 
-.#{$grommet-namespace}select__option {
+.#{settings.$grommet-namespace}select__option {
   // min-height handles blank options
-  min-height: $inuit-base-spacing-unit + halve($inuit-base-spacing-unit);
-  padding: quarter($inuit-base-spacing-unit) 0;
+  min-height: settings.$inuit-base-spacing-unit + tools2.halve(settings.$inuit-base-spacing-unit);
+  padding: tools2.quarter(settings.$inuit-base-spacing-unit) 0;
   cursor: pointer;
 }
 
-.#{$grommet-namespace}select__drop {
+.#{settings.$grommet-namespace}select__drop {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 
-  .#{$grommet-namespace}select__option {
-    @include text();
-    color: $text-color;
-    padding: quarter($inuit-base-spacing-unit) $inuit-base-spacing-unit;
+  .#{settings.$grommet-namespace}select__option {
+    @include tools3.text();
+    color: settings2.$text-color;
+    padding: tools2.quarter(settings.$inuit-base-spacing-unit) settings.$inuit-base-spacing-unit;
 
-    &.#{$grommet-namespace}select__option--element {
-      padding: quarter($inuit-base-spacing-unit) 0;
+    &.#{settings.$grommet-namespace}select__option--element {
+      padding: tools2.quarter(settings.$inuit-base-spacing-unit) 0;
     }
 
 
     &:hover,
     &--active {
-      background-color: $hover-background-color;
+      background-color: settings2.$hover-background-color;
     }
 
     &--selected {
-      color: $hover-text-color;
-      background-color: $hover-background-color;
+      color: settings2.$hover-text-color;
+      background-color: settings2.$hover-background-color;
     }
   }
 }

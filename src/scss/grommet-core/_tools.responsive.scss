@@ -1,3 +1,6 @@
+@use "sass:list";
+@use "settings.defaults";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 // A simple mixin to quickly generate whole media queries from the aliases and
@@ -16,9 +19,9 @@
 @mixin media-query($mq) {
   $breakpoint-found: false;
 
-  @each $breakpoint in $breakpoints {
-    $alias: nth($breakpoint, 1);
-    $condition: nth($breakpoint, 2);
+  @each $breakpoint in settings.$breakpoints {
+    $alias: list.nth($breakpoint, 1);
+    $condition: list.nth($breakpoint, 2);
 
     @if $mq == $alias and $condition {
       $breakpoint-found: true;

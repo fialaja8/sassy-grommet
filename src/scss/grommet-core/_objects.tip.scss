@@ -1,13 +1,18 @@
+@use "sass:list";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.functions";
+
 // (C) Copyright 2016 Hewlett Packard Enterprise Development LP
 
-$tip-after-size: calc(halve($inuit-base-spacing-unit) - 1px);
+$tip-after-size: calc(tools.halve(settings.$inuit-base-spacing-unit) - 1px);
 
-.grommet.#{$grommet-namespace}tip__drop {
+.grommet.#{settings.$grommet-namespace}tip__drop {
   overflow: visible; // needed so caret can be seen
-  max-width: $size-medium;
+  max-width: settings.$size-medium;
 }
 
-.#{$grommet-namespace}tip__drop {
+.#{settings.$grommet-namespace}tip__drop {
 
   &:after {
     content: '';
@@ -19,60 +24,60 @@ $tip-after-size: calc(halve($inuit-base-spacing-unit) - 1px);
   }
 }
 
-.#{$grommet-namespace}tip__drop--top {
-  transform: translateY(#{halve($inuit-base-spacing-unit)});
+.#{settings.$grommet-namespace}tip__drop--top {
+  transform: translateY(#{tools.halve(settings.$inuit-base-spacing-unit)});
 
   &:after {
     content: '';
     top: - $tip-after-size;
-    border-bottom: $tip-after-size solid $border-color;
+    border-bottom: $tip-after-size solid settings2.$border-color;
   }
 
-  @for $i from 1 through length($brand-accent-colors) {
-    &.#{$grommet-namespace}background-color-index-accent-#{$i},
-    &.#{$grommet-namespace}background-color-index-accent-#{$i + length($brand-accent-colors)} {
+  @for $i from 1 through list.length(settings2.$brand-accent-colors) {
+    &.#{settings.$grommet-namespace}background-color-index-accent-#{$i},
+    &.#{settings.$grommet-namespace}background-color-index-accent-#{$i + list.length(settings2.$brand-accent-colors)} {
       &:after {
         content: '';
-        border-bottom-color: nth($brand-accent-colors, $i);
+        border-bottom-color: list.nth(settings2.$brand-accent-colors, $i);
       }
     }
   }
 }
 
-.#{$grommet-namespace}tip__drop--bottom {
-  transform: translateY(#{- halve($inuit-base-spacing-unit)});
+.#{settings.$grommet-namespace}tip__drop--bottom {
+  transform: translateY(#{- tools.halve(settings.$inuit-base-spacing-unit)});
 
   &:after {
     content: '';
     bottom: - $tip-after-size;
-    border-top: $tip-after-size solid $border-color;
+    border-top: $tip-after-size solid settings2.$border-color;
   }
 
-  @for $i from 1 through length($brand-accent-colors) {
-    &.#{$grommet-namespace}background-color-index-accent-#{$i},
-    &.#{$grommet-namespace}background-color-index-accent-#{$i + length($brand-accent-colors)} {
+  @for $i from 1 through list.length(settings2.$brand-accent-colors) {
+    &.#{settings.$grommet-namespace}background-color-index-accent-#{$i},
+    &.#{settings.$grommet-namespace}background-color-index-accent-#{$i + list.length(settings2.$brand-accent-colors)} {
       &:after {
         content: '';
-        border-top-color: nth($brand-accent-colors, $i);
+        border-top-color: list.nth(settings2.$brand-accent-colors, $i);
       }
     }
   }
 }
 
-.#{$grommet-namespace}tip__drop--left {
+.#{settings.$grommet-namespace}tip__drop--left {
   &:after {
     content: '';
     left: $tip-after-size;
   }
 }
 
-.#{$grommet-namespace}tip__drop--right {
+.#{settings.$grommet-namespace}tip__drop--right {
   &:after {
     content: '';
     right: $tip-after-size;
   }
 }
 
-.#{$grommet-namespace}tip {
+.#{settings.$grommet-namespace}tip {
   overflow: hidden;
 }

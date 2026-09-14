@@ -1,28 +1,35 @@
-// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 @use "sass:math";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "settings.font" as settings3;
+@use "tools.color-index";
+@use "tools.functions" as tools3;
+@use "tools.responsive" as tools2;
 
-$outer-pad: round($inuit-base-spacing-unit * 2);
-$inner-pad: round($inuit-base-spacing-unit * 0.25);
-$topology-stroke-width: round(math.div($inuit-base-spacing-unit, 12));
-$topology-active-stroke-width: round(math.div($inuit-base-spacing-unit, 4));
+// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}topology {
+$outer-pad: math.round(settings.$inuit-base-spacing-unit * 2);
+$inner-pad: math.round(settings.$inuit-base-spacing-unit * 0.25);
+$topology-stroke-width: math.round(math.div(settings.$inuit-base-spacing-unit, 12));
+$topology-active-stroke-width: math.round(settings.$inuit-base-spacing-unit * 0.25);
+
+.#{settings.$grommet-namespace}topology {
   position: relative;
   outline: none;
 
   // put status icons above canvas so lines start under them
-  .#{$grommet-namespace}status-icon {
+  .#{settings.$grommet-namespace}status-icon {
     position: relative;
     z-index: 2;
   }
 }
 
-.#{$grommet-namespace}topology--focus {
-  border-color: $focus-border-color;
-  box-shadow: 0 0 1px 1px $focus-border-color;
+.#{settings.$grommet-namespace}topology--focus {
+  border-color: settings2.$focus-border-color;
+  box-shadow: 0 0 1px 1px settings2.$focus-border-color;
 }
 
-.#{$grommet-namespace}topology__links {
+.#{settings.$grommet-namespace}topology__links {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -30,20 +37,20 @@ $topology-active-stroke-width: round(math.div($inuit-base-spacing-unit, 4));
   pointer-events: none;
 }
 
-.#{$grommet-namespace}topology__path {
+.#{settings.$grommet-namespace}topology__path {
   stroke-width: $topology-stroke-width;
-  @include graph-stroke-color();
+  @include tools.graph-stroke-color();
 }
 
-.#{$grommet-namespace}topology__path--active {
+.#{settings.$grommet-namespace}topology__path--active {
   stroke-width: $topology-active-stroke-width;
 }
 
-.#{$grommet-namespace}topology__contents
-> .#{$grommet-namespace}topology__parts--direction-row
-> .#{$grommet-namespace}topology__part {
+.#{settings.$grommet-namespace}topology__contents
+> .#{settings.$grommet-namespace}topology__parts--direction-row
+> .#{settings.$grommet-namespace}topology__part {
 
-  @include media-query(lap-and-up) {
+  @include tools2.media-query(lap-and-up) {
     margin-right: $outer-pad;
 
     &:last-child {
@@ -51,7 +58,7 @@ $topology-active-stroke-width: round(math.div($inuit-base-spacing-unit, 4));
     }
   }
 
-  @include media-query(palm) {
+  @include tools2.media-query(palm) {
     margin-bottom: $outer-pad;
 
     &:last-child {
@@ -60,9 +67,9 @@ $topology-active-stroke-width: round(math.div($inuit-base-spacing-unit, 4));
   }
 }
 
-.#{$grommet-namespace}topology__contents
-> .#{$grommet-namespace}topology__parts--direction-column
-> .#{$grommet-namespace}topology__part {
+.#{settings.$grommet-namespace}topology__contents
+> .#{settings.$grommet-namespace}topology__parts--direction-column
+> .#{settings.$grommet-namespace}topology__part {
 
   margin-bottom: $outer-pad;
 
@@ -71,134 +78,134 @@ $topology-active-stroke-width: round(math.div($inuit-base-spacing-unit, 4));
   }
 }
 
-.#{$grommet-namespace}topology__parts {
+.#{settings.$grommet-namespace}topology__parts {
   display: flex;
   align-items: stretch;
   outline: none;
 }
 
-.#{$grommet-namespace}topology__parts--direction-row {
+.#{settings.$grommet-namespace}topology__parts--direction-row {
   flex-direction: row;
   flex-grow: 1;
 }
 
-.#{$grommet-namespace}topology__parts--direction-column {
+.#{settings.$grommet-namespace}topology__parts--direction-column {
   flex-direction: column;
   flex-grow: 1;
 }
 
-.#{$grommet-namespace}topology__parts--align-start {
+.#{settings.$grommet-namespace}topology__parts--align-start {
   align-items: flex-start;
 }
 
-.#{$grommet-namespace}topology__parts--align-center {
+.#{settings.$grommet-namespace}topology__parts--align-center {
   align-items: center;
 }
 
-.#{$grommet-namespace}topology__parts--align-end {
+.#{settings.$grommet-namespace}topology__parts--align-end {
   align-items: flex-end;
 }
 
-.#{$grommet-namespace}topology__parts--align-stretch {
+.#{settings.$grommet-namespace}topology__parts--align-stretch {
   align-items: stretch;
 }
 
-.#{$grommet-namespace}topology__part {
+.#{settings.$grommet-namespace}topology__part {
   display: flex;
   justify-content: center;
   align-items: stretch;
   overflow: hidden;
   outline: none;
 
-  > .#{$grommet-namespace}topology__parts .#{$grommet-namespace}topology__part {
+  > .#{settings.$grommet-namespace}topology__parts .#{settings.$grommet-namespace}topology__part {
     flex: 1;
   }
 }
 
-.#{$grommet-namespace}topology__part--demarcate {
-  border: 1px solid $border-color;
+.#{settings.$grommet-namespace}topology__part--demarcate {
+  border: 1px solid settings2.$border-color;
 
-  #{$dark-background-context} {
-    border-color: $colored-border-color;
+  #{settings2.$dark-background-context} {
+    border-color: settings2.$colored-border-color;
   }
 
-  #{$light-background-context} {
-    border-color: $border-color;
+  #{settings2.$light-background-context} {
+    border-color: settings2.$border-color;
   }
 
-  &.#{$grommet-namespace}topology__part--empty {
-    background-color: $secondary-background-color;
-    min-width: $inuit-base-spacing-unit;
-    min-height: $inuit-base-spacing-unit;
+  &.#{settings.$grommet-namespace}topology__part--empty {
+    background-color: settings2.$secondary-background-color;
+    min-width: settings.$inuit-base-spacing-unit;
+    min-height: settings.$inuit-base-spacing-unit;
 
-    #{$dark-background-context} {
-      background-color: $colored-active-background-color;
+    #{settings2.$dark-background-context} {
+      background-color: settings2.$colored-active-background-color;
     }
 
-    #{$light-background-context} {
-      background-color: $secondary-background-color;
+    #{settings2.$light-background-context} {
+      background-color: settings2.$secondary-background-color;
     }
   }
 }
 
-.#{$grommet-namespace}topology__part--justify-start {
+.#{settings.$grommet-namespace}topology__part--justify-start {
   justify-content: flex-start;
 }
 
-.#{$grommet-namespace}topology__part--justify-center {
+.#{settings.$grommet-namespace}topology__part--justify-center {
   justify-content: center;
 }
 
-.#{$grommet-namespace}topology__part--justify-between {
+.#{settings.$grommet-namespace}topology__part--justify-between {
   justify-content: space-between;
 }
 
-.#{$grommet-namespace}topology__part--justify-end {
+.#{settings.$grommet-namespace}topology__part--justify-end {
   justify-content: flex-end;
 }
 
-.#{$grommet-namespace}topology__part--align-start {
+.#{settings.$grommet-namespace}topology__part--align-start {
   align-items: flex-start;
 }
 
-.#{$grommet-namespace}topology__part--align-center {
+.#{settings.$grommet-namespace}topology__part--align-center {
   align-items: center;
 }
 
-.#{$grommet-namespace}topology__part--align-end {
+.#{settings.$grommet-namespace}topology__part--align-end {
   align-items: flex-end;
 }
 
-.#{$grommet-namespace}topology__part--align-stretch {
+.#{settings.$grommet-namespace}topology__part--align-stretch {
   align-items: stretch;
 }
 
-.#{$grommet-namespace}topology__part--direction-row {
+.#{settings.$grommet-namespace}topology__part--direction-row {
   flex-direction: row;
 
-  &.#{$grommet-namespace}topology__part--reverse {
+  &.#{settings.$grommet-namespace}topology__part--reverse {
     flex-direction: row-reverse;
   }
 
-  > *:not(.#{$grommet-namespace}topology__parts):not(.#{$grommet-namespace}topology__part) {
+  > *:not(.#{settings.$grommet-namespace}topology__parts):not(.#{settings.$grommet-namespace}topology__part) {
     margin: $inner-pad;
   }
 }
 
-.#{$grommet-namespace}topology__part--direction-column {
+.#{settings.$grommet-namespace}topology__part--direction-column {
   flex-direction: column;
 
-  &.#{$grommet-namespace}topology__part--reverse {
+  &.#{settings.$grommet-namespace}topology__part--reverse {
     flex-direction: column-reverse;
   }
 
-  > *:not(.#{$grommet-namespace}topology__parts):not(.#{$grommet-namespace}topology__part) {
+  > *:not(.#{settings.$grommet-namespace}topology__parts):not(.#{settings.$grommet-namespace}topology__part) {
     margin: $inner-pad;
   }
 }
 
-.#{$grommet-namespace}topology__label {
-  font-size: $content-small-font-size;
-  margin-left: halve($inuit-base-spacing-unit);
-  margin-right: halve($inuit-base-spacing-unit);
+.#{settings.$grommet-namespace}topology__label {
+  font-size: settings3.$content-small-font-size;
+  margin-left: tools3.halve(settings.$inuit-base-spacing-unit);
+  margin-right: tools3.halve(settings.$inuit-base-spacing-unit);
 }

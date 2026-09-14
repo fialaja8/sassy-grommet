@@ -1,36 +1,41 @@
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.functions";
+@use "tools.responsive" as tools2;
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}tabs {
-  margin: halve($inuit-base-spacing-unit) 0;
+.#{settings.$grommet-namespace}tabs {
+  margin: tools.halve(settings.$inuit-base-spacing-unit) 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   list-style: none;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid settings2.$border-color;
 
   + div:focus {
     outline: none;
   }
 }
 
-.#{$grommet-namespace}tabs--justify-center {
+.#{settings.$grommet-namespace}tabs--justify-center {
   justify-content: center;
 }
 
-.#{$grommet-namespace}tabs--justify-start {
+.#{settings.$grommet-namespace}tabs--justify-start {
   justify-content: flex-start;
 }
 
-.#{$grommet-namespace}tabs--justify-end {
+.#{settings.$grommet-namespace}tabs--justify-end {
   justify-content: flex-end;
 }
 
-.#{$grommet-namespace}tabs--justify-start,
-.#{$grommet-namespace}tabs--justify-center,
-.#{$grommet-namespace}tabs--justify-end {
-  &.#{$grommet-namespace}tabs--responsive {
-    @include media-query(palm) {
+.#{settings.$grommet-namespace}tabs--justify-start,
+.#{settings.$grommet-namespace}tabs--justify-center,
+.#{settings.$grommet-namespace}tabs--justify-end {
+  &.#{settings.$grommet-namespace}tabs--responsive {
+    @include tools2.media-query(palm) {
       flex-direction: column;
       text-align: center;
     }

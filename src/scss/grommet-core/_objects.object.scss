@@ -1,9 +1,16 @@
+@use "sass:math";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "settings.font" as settings3;
+@use "tools.functions";
+@use "tools.mixins" as tools2;
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-$attribute-name-width: round($inuit-base-spacing-unit * 8);
-$attribute-value-width: round($inuit-base-spacing-unit * 16);
+$attribute-name-width: math.round(settings.$inuit-base-spacing-unit * 8);
+$attribute-value-width: math.round(settings.$inuit-base-spacing-unit * 16);
 
-.#{$grommet-namespace}object {
+.#{settings.$grommet-namespace}object {
   overflow: auto;
 
   ul,
@@ -17,53 +24,53 @@ $attribute-value-width: round($inuit-base-spacing-unit * 16);
   }
 }
 
-.#{$grommet-namespace}object__container {
-  padding: $inuit-base-spacing-unit;
+.#{settings.$grommet-namespace}object__container {
+  padding: settings.$inuit-base-spacing-unit;
 }
 
-.#{$grommet-namespace}object__attribute {
-  margin-bottom: halve($inuit-base-spacing-unit);
+.#{settings.$grommet-namespace}object__attribute {
+  margin-bottom: tools.halve(settings.$inuit-base-spacing-unit);
 }
 
-.#{$grommet-namespace}object__attribute-name {
+.#{settings.$grommet-namespace}object__attribute-name {
   display: block;
-  color: $secondary-text-color;
-  @include inuit-font-size($content-small-font-size);
+  color: settings2.$secondary-text-color;
+  @include tools2.inuit-font-size(settings3.$content-small-font-size);
 }
 
-.#{$grommet-namespace}object__attribute-value {
+.#{settings.$grommet-namespace}object__attribute-value {
   display: block;
-  @include inuit-font-size($content-font-size);
+  @include tools2.inuit-font-size(settings3.$content-font-size);
 
   ul,
   ol {
-    margin-left: $inuit-base-spacing-unit;
-    padding-top: $inuit-base-spacing-unit;
-    padding-bottom: $inuit-base-spacing-unit;
+    margin-left: settings.$inuit-base-spacing-unit;
+    padding-top: settings.$inuit-base-spacing-unit;
+    padding-bottom: settings.$inuit-base-spacing-unit;
   }
 }
 
-.#{$grommet-namespace}object__attribute--container {
-  > .#{$grommet-namespace}object__attribute-name {
-    font-weight: $text-strong-font-weight;
+.#{settings.$grommet-namespace}object__attribute--container {
+  > .#{settings.$grommet-namespace}object__attribute-name {
+    font-weight: settings3.$text-strong-font-weight;
   }
 }
 
-.#{$grommet-namespace}object__attribute--unset {
-  .#{$grommet-namespace}object__attribute-value {
+.#{settings.$grommet-namespace}object__attribute--unset {
+  .#{settings.$grommet-namespace}object__attribute-value {
     font-style: italic;
-    color: $secondary-text-color;
+    color: settings2.$secondary-text-color;
   }
 }
 
-.#{$grommet-namespace}object__attribute--array {
-  > .#{$grommet-namespace}object__attribute-value > ol {
+.#{settings.$grommet-namespace}object__attribute--array {
+  > .#{settings.$grommet-namespace}object__attribute-value > ol {
 
     > li {
-      border-top: 1px solid $border-color;
+      border-top: 1px solid settings2.$border-color;
 
       &:last-child {
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid settings2.$border-color;
       }
 
       > ul {

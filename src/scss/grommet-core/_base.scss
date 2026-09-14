@@ -1,6 +1,6 @@
 // (C) Copyright 2014-2017 Hewlett Packard Enterprise Development LP
 
-@import "base.grommet-only";
-@import "base.text";
-@import "base.input";
-@import "base.page";
+@use "base.grommet-only";
+@use "base.text" as base2;
+@use "base.input" as base3;
+@use "base.page" as base4;

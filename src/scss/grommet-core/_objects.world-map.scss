@@ -1,6 +1,9 @@
+@use "settings.defaults";
+@use "tools.color-index";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}world-map {
+.#{settings.$grommet-namespace}world-map {
   width: 100%;
 
   // IE11 fix world map height
@@ -11,39 +14,39 @@
   }
 }
 
-.#{$grommet-namespace}world-map__container {
+.#{settings.$grommet-namespace}world-map__container {
   position: relative;
   width: 100%;
 }
 
-.#{$grommet-namespace}world-map__flag {
+.#{settings.$grommet-namespace}world-map__flag {
   position: absolute;
   top: 0px;
   left: 0px;
 }
 
-.#{$grommet-namespace}world-map__continent,
-.#{$grommet-namespace}world-map__place {
-  @include graph-stroke-color();
+.#{settings.$grommet-namespace}world-map__continent,
+.#{settings.$grommet-namespace}world-map__place {
+  @include tools.graph-stroke-color();
   stroke-linecap: round;
-  transition: stroke-width $base-animation-duration;
+  transition: stroke-width settings.$base-animation-duration;
   outline: none;
 }
 
-.#{$grommet-namespace}world-map__continent {
+.#{settings.$grommet-namespace}world-map__continent {
   stroke-width: 6px;
 }
 
-.#{$grommet-namespace}world-map__place {
+.#{settings.$grommet-namespace}world-map__place {
   stroke-width: 8px;
 }
 
-.#{$grommet-namespace}world-map__continent--active {
+.#{settings.$grommet-namespace}world-map__continent--active {
   stroke-width: 8px;
   cursor: pointer;
 }
 
-.#{$grommet-namespace}world-map__place--active {
+.#{settings.$grommet-namespace}world-map__place--active {
   stroke-width: 20px;
   cursor: pointer;
 }

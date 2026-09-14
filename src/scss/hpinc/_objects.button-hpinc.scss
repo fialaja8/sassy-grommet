@@ -1,96 +1,102 @@
+@use "sass:list";
+@use "../grommet-core/settings.color";
+@use "../grommet-core/settings.defaults" as settings2;
+
+@use "sass:color";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-$button-accent-color: nth($brand-accent-colors, 1);
+settings.$button-accent-color: list.nth(settings.$brand-accent-colors, 1);
 $hover-darken: 15%;
 $active-darken: 20%;
 
-.#{$grommet-namespace}button {
+.#{settings2.$grommet-namespace}button {
 
   &--accent {
-    background-color: $button-accent-color;
-    color: $colored-text-color;
+    background-color: settings.$button-accent-color;
+    color: settings.$colored-text-color;
   }
 
-  &:not(.#{$grommet-namespace}button--disabled) {
+  &:not(.#{settings2.$grommet-namespace}button--disabled) {
 
     &:hover {
-      border-color: darken($brand-color, $hover-darken);
+      border-color: color.adjust(settings.$brand-color, $lightness: -$hover-darken, $space: hsl);
     }
 
     &:active {
-      border-color: darken($brand-color, $active-darken);
+      border-color: color.adjust(settings.$brand-color, $lightness: -$active-darken, $space: hsl);
     }
 
-    &.#{$grommet-namespace}button--primary {
+    &.#{settings2.$grommet-namespace}button--primary {
 
       &:hover {
-        border-color: darken($brand-color, $hover-darken);
-        background-color: darken($brand-color, $hover-darken);
+        border-color: color.adjust(settings.$brand-color, $lightness: -$hover-darken, $space: hsl);
+        background-color: color.adjust(settings.$brand-color, $lightness: -$hover-darken, $space: hsl);
       }
 
       &:active {
-        border-color: darken($brand-color, $active-darken);
-        background-color: darken($brand-color, $active-darken);
+        border-color: color.adjust(settings.$brand-color, $lightness: -$active-darken, $space: hsl);
+        background-color: color.adjust(settings.$brand-color, $lightness: -$active-darken, $space: hsl);
       }
     }
 
-    &.#{$grommet-namespace}button--secondary {
+    &.#{settings2.$grommet-namespace}button--secondary {
 
       &:hover {
-        border-color: darken($button-secondary-color, $hover-darken);
+        border-color: color.adjust(settings.$button-secondary-color, $lightness: -$hover-darken, $space: hsl);
       }
 
       &:active {
-        border-color: darken($button-secondary-color, $active-darken);
+        border-color: color.adjust(settings.$button-secondary-color, $lightness: -$active-darken, $space: hsl);
       }
     }
 
-    &.#{$grommet-namespace}button--critical {
+    &.#{settings2.$grommet-namespace}button--critical {
 
       &:hover {
-        border-color: darken($button-critical-color, $hover-darken);
+        border-color: color.adjust(settings.$button-critical-color, $lightness: -$hover-darken, $space: hsl);
       }
 
       &:active {
-        border-color: darken($button-critical-color, $active-darken);
+        border-color: color.adjust(settings.$button-critical-color, $lightness: -$active-darken, $space: hsl);
       }
     }
 
-    &.#{$grommet-namespace}button--accent {
+    &.#{settings2.$grommet-namespace}button--accent {
 
       &:hover {
-        border-color: darken($button-accent-color, $hover-darken);
-        background-color: darken($button-accent-color, $hover-darken);
+        border-color: color.adjust(settings.$button-accent-color, $lightness: -$hover-darken, $space: hsl);
+        background-color: color.adjust(settings.$button-accent-color, $lightness: -$hover-darken, $space: hsl);
       }
 
       &:active {
-        border-color: darken($button-accent-color, $active-darken);
-        background-color: darken($button-accent-color, $active-darken);
+        border-color: color.adjust(settings.$button-accent-color, $lightness: -$active-darken, $space: hsl);
+        background-color: color.adjust(settings.$button-accent-color, $lightness: -$active-darken, $space: hsl);
       }
     }
 
-    #{$dark-background-context} {
+    #{settings.$dark-background-context} {
 
       &:hover {
-        border-color: darken($button-colored-border-color, $hover-darken);
+        border-color: color.adjust(settings.$button-colored-border-color, $lightness: -$hover-darken, $space: hsl);
       }
 
-      &.#{$grommet-namespace}button--primary {
+      &.#{settings2.$grommet-namespace}button--primary {
         &:hover {
-          border-color: darken($brand-color, $hover-darken);
-          background-color: darken($brand-color, $hover-darken);
+          border-color: color.adjust(settings.$brand-color, $lightness: -$hover-darken, $space: hsl);
+          background-color: color.adjust(settings.$brand-color, $lightness: -$hover-darken, $space: hsl);
         }
       }
 
-      &.#{$grommet-namespace}button--accent {
+      &.#{settings2.$grommet-namespace}button--accent {
         &:hover {
-          border-color: darken($button-accent-color, $hover-darken);
+          border-color: color.adjust(settings.$button-accent-color, $lightness: -$hover-darken, $space: hsl);
         }
       }
 
-      &.#{$grommet-namespace}button--critical {
+      &.#{settings2.$grommet-namespace}button--critical {
         &:hover {
-          border-color: darken($button-critical-color, $hover-darken);
+          border-color: color.adjust(settings.$button-critical-color, $lightness: -$hover-darken, $space: hsl);
         }
       }
     }

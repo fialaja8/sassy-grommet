@@ -1,9 +1,11 @@
+@use "sass:color";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 $brand-font-family: 'HPSimplified', Arial, sans-serif;
 $brand-large-number-font-family: 'HPSimplified', Arial, sans-serif;
 $brand-color: #0096D6;
-$brand-color-lighter: desaturate(lighten($brand-color, 50%), 20%);
+$brand-color-lighter: color.adjust(color.adjust($brand-color, $lightness: 50%, $space: hsl), $saturation: -20%, $space: hsl);
 $brand-neutral-colors: (#006996, #A65336, #A69136, #774677);
 $brand-accent-colors: (#E6734B, #E6C84B, #915591);
 $brand-status-colors: (
@@ -23,21 +25,6 @@ $hpinc-fonts-path: "https://hpincfonts.s3.amazonaws.com";
 @font-face {
   font-family: "HPSimplified";
   src: url("#{$hpinc-fonts-path}/hps-me-w27-regular-woff.woff") format('woff');
-}
-
-@import '../grommet-core/settings';
-
-.#{$grommet-namespace}control-icon {
-  path,
-  line,
-  polyline,
-  circle,
-  rect,
-  polygon {
-    stroke-width: 2.1px;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
 }
 
 $border-radius: 0px 5px;

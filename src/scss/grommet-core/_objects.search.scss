@@ -1,50 +1,59 @@
+@use "sass:math";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "settings.font" as settings3;
+@use "tools.functions" as tools4;
+@use "tools.input";
+@use "tools.mixins" as tools2;
+@use "tools.responsive" as tools3;
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}search {
+.#{settings.$grommet-namespace}search {
   display: inline-block;
 
   &:focus {
     outline: none;
     margin: -1px;
-    border: 1px solid $focus-border-color;
-    box-shadow: 0 0 1px 1px $focus-border-color;
+    border: 1px solid settings2.$focus-border-color;
+    box-shadow: 0 0 1px 1px settings2.$focus-border-color;
   }
 }
 
-.#{$grommet-namespace}search--controlled {
+.#{settings.$grommet-namespace}search--controlled {
   cursor: pointer;
 }
 
-.#{$grommet-namespace}search__input {
+.#{settings.$grommet-namespace}search__input {
   margin-right: 0px;
-  @include input();
+  @include tools.input();
 
   // Disable IE's clear icon
   &::-ms-clear {
     display: none;
   }
 
-  #{$dark-background-context} {
-    border-color: $colored-border-color;
+  #{settings2.$dark-background-context} {
+    border-color: settings2.$colored-border-color;
 
     &:focus {
-      border-color: $focus-border-color;
+      border-color: settings2.$focus-border-color;
     }
   }
 
-  #{$light-background-context} {
-    border-color: $border-color;
+  #{settings2.$light-background-context} {
+    border-color: settings2.$border-color;
 
     &:focus {
-      border-color: $focus-border-color;
+      border-color: settings2.$focus-border-color;
     }
   }
 }
 
-.#{$grommet-namespace}search__drop {
-  @include inuit-font-size($h4-font-size, inherit);
+.#{settings.$grommet-namespace}search__drop {
+  @include tools2.inuit-font-size(settings3.$h4-font-size, inherit);
 
-  @include media-query(palm) {
+  @include tools3.media-query(palm) {
     max-width: 100%;
     width: 100vw;
   }
@@ -53,221 +62,221 @@
     margin-right: 0px;
     box-sizing: border-box;
     width: 100%;
-    padding: halve($inuit-base-spacing-unit);
+    padding: tools4.halve(settings.$inuit-base-spacing-unit);
 
-    @include media-query(palm) {
-      width: calc(100vw - #{round($inuit-base-spacing-unit * 3)});
+    @include tools3.media-query(palm) {
+      width: calc(100vw - #{math.round(settings.$inuit-base-spacing-unit * 3)});
     }
 
     &:focus {
-      padding: (halve($inuit-base-spacing-unit) - $input-border-width);
+      padding: (tools4.halve(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
     }
   }
 
-  .#{$grommet-namespace}search__suggestion {
-    padding: quarter($inuit-base-spacing-unit) $inuit-base-spacing-unit;
+  .#{settings.$grommet-namespace}search__suggestion {
+    padding: tools4.quarter(settings.$inuit-base-spacing-unit) settings.$inuit-base-spacing-unit;
     cursor: pointer;
     outline: none;
 
     // limit width of suggestions so that search icon + input do not wrap
     // for long suggestions
-    @include media-query(palm) {
+    @include tools3.media-query(palm) {
       width: 100vw;
     }
 
     &:hover,
     &--active {
-      background-color: $hover-background-color;
+      background-color: settings2.$hover-background-color;
     }
   }
 }
 
-.#{$grommet-namespace}search__drop-control {
+.#{settings.$grommet-namespace}search__drop-control {
   vertical-align: top;
-  height: double($inuit-base-spacing-unit);
+  height: tools4.double(settings.$inuit-base-spacing-unit);
 }
 
-.#{$grommet-namespace}search__drop--controlled {
-  .#{$grommet-namespace}search__drop-contents {
+.#{settings.$grommet-namespace}search__drop--controlled {
+  .#{settings.$grommet-namespace}search__drop-contents {
     display: inline-block;
   }
 }
 
-.#{$grommet-namespace}search__drop--large {
-  line-height: quadruple($inuit-base-spacing-unit);
+.#{settings.$grommet-namespace}search__drop--large {
+  line-height: tools4.quadruple(settings.$inuit-base-spacing-unit);
 }
 
-.#{$grommet-namespace}search--inline {
+.#{settings.$grommet-namespace}search--inline {
   position: relative;
 
-  .#{$grommet-namespace}search__input {
+  .#{settings.$grommet-namespace}search__input {
     width: 100%;
     box-sizing:  border-box;
-    padding-left: (halve($inuit-base-spacing-unit) - $input-border-width);
-    padding-right: (double($inuit-base-spacing-unit) - $input-border-width);
-    padding-top: halve($inuit-base-spacing-unit);
-    padding-bottom: halve($inuit-base-spacing-unit);
+    padding-left: (tools4.halve(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
+    padding-right: (tools4.double(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
+    padding-top: tools4.halve(settings.$inuit-base-spacing-unit);
+    padding-bottom: tools4.halve(settings.$inuit-base-spacing-unit);
     border-radius: 0;
     -webkit-appearance: none;
 
     &:focus {
-      padding-left: (halve($inuit-base-spacing-unit) - ($input-border-width + 1));
-      padding-right: (double($inuit-base-spacing-unit) - ($input-border-width + 1));
-      padding-top: (halve($inuit-base-spacing-unit) - $input-border-width);
-      padding-bottom: (halve($inuit-base-spacing-unit) - $input-border-width);
+      padding-left: (tools4.halve(settings.$inuit-base-spacing-unit) - (settings.$input-border-width + 1));
+      padding-right: (tools4.double(settings.$inuit-base-spacing-unit) - (settings.$input-border-width + 1));
+      padding-top: (tools4.halve(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
+      padding-bottom: (tools4.halve(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
     }
 
     html.rtl & {
-      padding-right: (halve($inuit-base-spacing-unit) - $input-border-width);
-      padding-left: (double($inuit-base-spacing-unit) - $input-border-width);
+      padding-right: (tools4.halve(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
+      padding-left: (tools4.double(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
 
       &:focus {
-        padding-right: (halve($inuit-base-spacing-unit) - $input-border-width);
-        padding-left: (double($inuit-base-spacing-unit) - ($input-border-width + 1));
+        padding-right: (tools4.halve(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
+        padding-left: (tools4.double(settings.$inuit-base-spacing-unit) - (settings.$input-border-width + 1));
       }
     }
 
-    .#{$grommet-namespace}header &:not(:focus) {
+    .#{settings.$grommet-namespace}header &:not(:focus) {
       border-color: transparent;
     }
   }
 
-  .#{$grommet-namespace}control-icon-search {
+  .#{settings.$grommet-namespace}control-icon-search {
     position: absolute;
-    right: halve($inuit-base-spacing-unit);
+    right: tools4.halve(settings.$inuit-base-spacing-unit);
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
 
     html.rtl & {
       right: auto;
-      left: halve($inuit-base-spacing-unit);
+      left: tools4.halve(settings.$inuit-base-spacing-unit);
     }
   }
 }
 
-.#{$grommet-namespace}search--small {
-  .#{$grommet-namespace}search__input {
-    @include inuit-font-size($input-small-font-size, normal);
-    padding: (($inuit-base-spacing-unit - $control-font-size) - $input-border-width)
-      ($control-font-size - $input-border-width);
-    padding-right: ($inuit-base-spacing-unit - $input-border-width);
+.#{settings.$grommet-namespace}search--small {
+  .#{settings.$grommet-namespace}search__input {
+    @include tools2.inuit-font-size(settings3.$input-small-font-size, normal);
+    padding: ((settings.$inuit-base-spacing-unit - settings3.$control-font-size) - settings.$input-border-width)
+      (settings3.$control-font-size - settings.$input-border-width);
+    padding-right: (settings.$inuit-base-spacing-unit - settings.$input-border-width);
 
     &:focus {
-      padding: (($inuit-base-spacing-unit - $control-font-size) - $input-focus-border-width)
-        ($control-font-size - $input-focus-border-width);
-      padding-right: ($inuit-base-spacing-unit - $input-focus-border-width);
+      padding: ((settings.$inuit-base-spacing-unit - settings3.$control-font-size) - settings.$input-focus-border-width)
+        (settings3.$control-font-size - settings.$input-focus-border-width);
+      padding-right: (settings.$inuit-base-spacing-unit - settings.$input-focus-border-width);
     }
   }
 }
 
-.#{$grommet-namespace}search--medium {
-  .#{$grommet-namespace}search__input {
-    @include inuit-font-size($input-medium-font-size, normal);
+.#{settings.$grommet-namespace}search--medium {
+  .#{settings.$grommet-namespace}search__input {
+    @include tools2.inuit-font-size(settings3.$input-medium-font-size, normal);
   }
 }
 
-.#{$grommet-namespace}search--large {
-  .#{$grommet-namespace}search__input {
-    @include inuit-font-size($input-large-font-size, normal);
-    padding: halve($inuit-base-spacing-unit) ($inuit-base-spacing-unit);
-    padding-right: ($inuit-base-spacing-unit * 3);
+.#{settings.$grommet-namespace}search--large {
+  .#{settings.$grommet-namespace}search__input {
+    @include tools2.inuit-font-size(settings3.$input-large-font-size, normal);
+    padding: tools4.halve(settings.$inuit-base-spacing-unit) (settings.$inuit-base-spacing-unit);
+    padding-right: (settings.$inuit-base-spacing-unit * 3);
 
     &:focus {
-      padding: (halve($inuit-base-spacing-unit) - $input-border-width)
-        ($inuit-base-spacing-unit * 3 - $input-border-width);
-      padding-left: ($inuit-base-spacing-unit - $input-border-width);
+      padding: (tools4.halve(settings.$inuit-base-spacing-unit) - settings.$input-border-width)
+        (settings.$inuit-base-spacing-unit * 3 - settings.$input-border-width);
+      padding-left: (settings.$inuit-base-spacing-unit - settings.$input-border-width);
 
-      @include media-query(palm) {
-        padding: (halve($inuit-base-spacing-unit) - ($input-border-width + 1))
-          ($inuit-base-spacing-unit - ($input-border-width + 1));
-        padding-right: (double($inuit-base-spacing-unit) - ($input-border-width + 1));
+      @include tools3.media-query(palm) {
+        padding: (tools4.halve(settings.$inuit-base-spacing-unit) - (settings.$input-border-width + 1))
+          (settings.$inuit-base-spacing-unit - (settings.$input-border-width + 1));
+        padding-right: (tools4.double(settings.$inuit-base-spacing-unit) - (settings.$input-border-width + 1));
       }
     }
 
-    @include media-query(palm) {
+    @include tools3.media-query(palm) {
       font-size: inherit;
-      padding: (halve($inuit-base-spacing-unit) - ($input-border-width))
-        ($inuit-base-spacing-unit - $input-border-width);
-      padding-right: (double($inuit-base-spacing-unit) - $input-border-width);
+      padding: (tools4.halve(settings.$inuit-base-spacing-unit) - (settings.$input-border-width))
+        (settings.$inuit-base-spacing-unit - settings.$input-border-width);
+      padding-right: (tools4.double(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
       line-height: 1.5;
     }
   }
 
-  .#{$grommet-namespace}control-icon-search {
-    right: $inuit-base-spacing-unit;
-    width: double($inuit-base-spacing-unit);
-    height: double($inuit-base-spacing-unit);
+  .#{settings.$grommet-namespace}control-icon-search {
+    right: settings.$inuit-base-spacing-unit;
+    width: tools4.double(settings.$inuit-base-spacing-unit);
+    height: tools4.double(settings.$inuit-base-spacing-unit);
 
-    @include media-query(palm) {
-      right: halve($inuit-base-spacing-unit);
-      width: $inuit-base-spacing-unit;
-      height: $inuit-base-spacing-unit;
+    @include tools3.media-query(palm) {
+      right: tools4.halve(settings.$inuit-base-spacing-unit);
+      width: settings.$inuit-base-spacing-unit;
+      height: settings.$inuit-base-spacing-unit;
     }
 
-    @include media-query(lap-and-up) {
+    @include tools3.media-query(lap-and-up) {
       // prevent icon from growing on resize from 719px
       transition: none;
     }
   }
 }
 
-.#{$grommet-namespace}search--icon-align-start {
-  &.#{$grommet-namespace}search--inline {
-    .#{$grommet-namespace}search__input {
-      padding-left: (double($inuit-base-spacing-unit) - $input-border-width);
-      padding-right: ($inuit-base-spacing-unit - $input-border-width);
+.#{settings.$grommet-namespace}search--icon-align-start {
+  &.#{settings.$grommet-namespace}search--inline {
+    .#{settings.$grommet-namespace}search__input {
+      padding-left: (tools4.double(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
+      padding-right: (settings.$inuit-base-spacing-unit - settings.$input-border-width);
 
       &:focus {
-        padding-left: (double($inuit-base-spacing-unit) - ($input-border-width + 1));
-        padding-right: ($inuit-base-spacing-unit - $input-border-width);
+        padding-left: (tools4.double(settings.$inuit-base-spacing-unit) - (settings.$input-border-width + 1));
+        padding-right: (settings.$inuit-base-spacing-unit - settings.$input-border-width);
       }
     }
 
-    .#{$grommet-namespace}control-icon-search {
-      left: halve($inuit-base-spacing-unit);
+    .#{settings.$grommet-namespace}control-icon-search {
+      left: tools4.halve(settings.$inuit-base-spacing-unit);
     }
   }
 
-  &.#{$grommet-namespace}search--large {
-    .#{$grommet-namespace}search__input {
-      padding-left: ($inuit-base-spacing-unit * 3);
-      padding-right: $inuit-base-spacing-unit;
+  &.#{settings.$grommet-namespace}search--large {
+    .#{settings.$grommet-namespace}search__input {
+      padding-left: (settings.$inuit-base-spacing-unit * 3);
+      padding-right: settings.$inuit-base-spacing-unit;
 
       &:focus {
-        padding-left: ($inuit-base-spacing-unit * 3 - $input-border-width);
-        padding-right: ($inuit-base-spacing-unit - $input-border-width);
+        padding-left: (settings.$inuit-base-spacing-unit * 3 - settings.$input-border-width);
+        padding-right: (settings.$inuit-base-spacing-unit - settings.$input-border-width);
 
-        @include media-query(palm) {
-          padding: (halve($inuit-base-spacing-unit) - ($input-border-width + 1))
-            ($inuit-base-spacing-unit - ($input-border-width + 1));
-          padding-left: (double($inuit-base-spacing-unit) - ($input-border-width + 1));
+        @include tools3.media-query(palm) {
+          padding: (tools4.halve(settings.$inuit-base-spacing-unit) - (settings.$input-border-width + 1))
+            (settings.$inuit-base-spacing-unit - (settings.$input-border-width + 1));
+          padding-left: (tools4.double(settings.$inuit-base-spacing-unit) - (settings.$input-border-width + 1));
         }
       }
 
-      @include media-query(palm) {
-        padding: (halve($inuit-base-spacing-unit) - $input-border-width)
-        ($inuit-base-spacing-unit - $input-border-width);
-        padding-left: (double($inuit-base-spacing-unit) - $input-border-width);
+      @include tools3.media-query(palm) {
+        padding: (tools4.halve(settings.$inuit-base-spacing-unit) - settings.$input-border-width)
+        (settings.$inuit-base-spacing-unit - settings.$input-border-width);
+        padding-left: (tools4.double(settings.$inuit-base-spacing-unit) - settings.$input-border-width);
       }
     }
   }
 }
 
-.#{$grommet-namespace}search--fill {
+.#{settings.$grommet-namespace}search--fill {
   // width: 100%;
   max-width: none;
   //used to add full height for button inside a flex container
   flex-grow: 1;
 }
 
-.#{$grommet-namespace}search--pad-medium.#{$grommet-namespace}search--inline {
-  .#{$grommet-namespace}search__input {
-    padding-left: ($inuit-base-spacing-unit - $input-border-width);
-    padding-right: ($inuit-base-spacing-unit - $input-border-width);
+.#{settings.$grommet-namespace}search--pad-medium.#{settings.$grommet-namespace}search--inline {
+  .#{settings.$grommet-namespace}search__input {
+    padding-left: (settings.$inuit-base-spacing-unit - settings.$input-border-width);
+    padding-right: (settings.$inuit-base-spacing-unit - settings.$input-border-width);
   }
 
-  .#{$grommet-namespace}control-icon-search {
-    right: $inuit-base-spacing-unit;
+  .#{settings.$grommet-namespace}control-icon-search {
+    right: settings.$inuit-base-spacing-unit;
   }
 }

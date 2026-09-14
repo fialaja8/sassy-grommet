@@ -1,14 +1,14 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-@import "settings";
+@use "settings";
 
 // Generic
-@import "generic.normalize";
-@import "generic.reset";
-@import "generic.shared";
+@use "generic.normalize";
+@use "generic.reset" as generic2;
+@use "generic.shared" as generic3;
 
 // Base
-@import "base";
+@use "base";
 
 // Objects
-@import "objects";
+@use "objects";

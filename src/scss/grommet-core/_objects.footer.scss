@@ -1,27 +1,31 @@
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.functions";
+
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
-.#{$grommet-namespace}footer {
-  min-height: $footer-height;
+.#{settings.$grommet-namespace}footer {
+  min-height: settings.$footer-height;
   width: 100%;
 }
 
-.#{$grommet-namespace}footer--small {
-  min-height: $small-footer-height;
+.#{settings.$grommet-namespace}footer--small {
+  min-height: settings.$small-footer-height;
 }
 
-.#{$grommet-namespace}footer--large {
-  min-height: $large-footer-height;
+.#{settings.$grommet-namespace}footer--large {
+  min-height: settings.$large-footer-height;
 }
 
-.#{$grommet-namespace}footer__content {
+.#{settings.$grommet-namespace}footer__content {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-left: $inuit-base-spacing-unit;
-  padding-right: $inuit-base-spacing-unit;
+  padding-left: settings.$inuit-base-spacing-unit;
+  padding-right: settings.$inuit-base-spacing-unit;
 
   > * {
-    margin-right: double($inuit-base-spacing-unit);
+    margin-right: tools.double(settings.$inuit-base-spacing-unit);
 
     &:last-child {
       margin-right: 0px;
@@ -30,19 +34,19 @@
   }
 }
 
-.#{$grommet-namespace}footer--primary {
+.#{settings.$grommet-namespace}footer--primary {
   height: auto;
-  padding: $inuit-base-spacing-unit;
+  padding: settings.$inuit-base-spacing-unit;
 
-  .#{$grommet-namespace}footer__content {
+  .#{settings.$grommet-namespace}footer__content {
     position: relative;
-    color: $secondary-text-color;
+    color: settings2.$secondary-text-color;
     display: block;
   }
 }
 
-.#{$grommet-namespace}footer--centered {
-  .#{$grommet-namespace}footer__content {
+.#{settings.$grommet-namespace}footer--centered {
+  .#{settings.$grommet-namespace}footer__content {
     display: block;
     text-align: center;
 
@@ -54,16 +58,16 @@
   }
 }
 
-.#{$grommet-namespace}footer--flush {
-  .#{$grommet-namespace}footer__content,
-  .#{$grommet-namespace}footer__wrapper {
+.#{settings.$grommet-namespace}footer--flush {
+  .#{settings.$grommet-namespace}footer__content,
+  .#{settings.$grommet-namespace}footer__wrapper {
     padding-left: 0px;
     padding-right: 0px;
   }
 }
 
-.#{$grommet-namespace}footer--fixed {
-  .#{$grommet-namespace}footer__wrapper {
+.#{settings.$grommet-namespace}footer--fixed {
+  .#{settings.$grommet-namespace}footer__wrapper {
     position: absolute;
     bottom: 0px;
     left: 0px;
@@ -71,52 +75,52 @@
     z-index: 3;
   }
 
-  .#{$grommet-namespace}footer__wrapper--fill {
-    .#{$grommet-namespace}footer__wrapper {
-      background-color: $footer-background-color;
+  .#{settings.$grommet-namespace}footer__wrapper--fill {
+    .#{settings.$grommet-namespace}footer__wrapper {
+      background-color: settings2.$footer-background-color;
     }
   }
 }
 
-.#{$grommet-namespace}footer--fixed.#{$grommet-namespace}footer--primary {
-  .#{$grommet-namespace}footer__wrapper {
+.#{settings.$grommet-namespace}footer--fixed.#{settings.$grommet-namespace}footer--primary {
+  .#{settings.$grommet-namespace}footer__wrapper {
     position: fixed;
   }
 
-  .#{$grommet-namespace}footer__wrapper--fill {
-    .#{$grommet-namespace}footer__wrapper {
-      background-color: $footer-background-color;
+  .#{settings.$grommet-namespace}footer__wrapper--fill {
+    .#{settings.$grommet-namespace}footer__wrapper {
+      background-color: settings2.$footer-background-color;
     }
   }
 
-  .#{$grommet-namespace}footer__content {
+  .#{settings.$grommet-namespace}footer__content {
     position: static;
     background-color: transparent;
   }
 }
 
-.#{$grommet-namespace}footer__container {
+.#{settings.$grommet-namespace}footer__container {
   flex-shrink: 0;
 }
 
-.#{$grommet-namespace}footer__container--float {
+.#{settings.$grommet-namespace}footer__container--float {
   position: absolute;
   bottom: 0px;
   left: 0px;
   right: 0px;
 }
 
-.#{$grommet-namespace}footer__container--fill {
-  .#{$grommet-namespace}footer {
-    background-color: $footer-background-color;
+.#{settings.$grommet-namespace}footer__container--fill {
+  .#{settings.$grommet-namespace}footer {
+    background-color: settings2.$footer-background-color;
   }
 }
 
-.#{$grommet-namespace}footer__container--fixed {
+.#{settings.$grommet-namespace}footer__container--fixed {
   position: relative;
   width: 100%;
 
-  .#{$grommet-namespace}footer__wrapper {
+  .#{settings.$grommet-namespace}footer__wrapper {
     position: absolute;
     bottom: 0px;
     left: 0px;
@@ -125,19 +129,19 @@
   }
 }
 
-.#{$grommet-namespace}footer__wrapper {
-  height: $footer-height;
+.#{settings.$grommet-namespace}footer__wrapper {
+  height: settings.$footer-height;
 }
 
-.#{$grommet-namespace}footer__wrapper--large {
-  height: $large-footer-height;
+.#{settings.$grommet-namespace}footer__wrapper--large {
+  height: settings.$large-footer-height;
 }
 
-.#{$grommet-namespace}footer__wrapper--small {
-  height: $small-footer-height;
+.#{settings.$grommet-namespace}footer__wrapper--small {
+  height: settings.$small-footer-height;
 }
 
-*:not(.#{$grommet-namespace}footer__container--float) > .#{$grommet-namespace}footer--float {
+*:not(.#{settings.$grommet-namespace}footer__container--float) > .#{settings.$grommet-namespace}footer--float {
   position: fixed;
   bottom: 0px;
   left: 0px;

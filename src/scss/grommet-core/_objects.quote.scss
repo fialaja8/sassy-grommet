@@ -1,9 +1,12 @@
-.#{$grommet-namespace}quote {
-  border-width: $inuit-base-spacing-unit;
+@use "settings.defaults";
+@use "tools.functions";
+
+.#{settings.$grommet-namespace}quote {
+  border-width: settings.$inuit-base-spacing-unit;
   border-style: solid;
   max-width: 100%;
 }
 
-.#{$grommet-namespace}quote--small {
-  border-width: halve($inuit-base-spacing-unit);
+.#{settings.$grommet-namespace}quote--small {
+  border-width: tools.halve(settings.$inuit-base-spacing-unit);
 }

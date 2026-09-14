@@ -1,7 +1,11 @@
-// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
-@use "sass:math";
+@use "sass:list";
+@use "settings.color" as settings2;
+@use "settings.defaults";
+@use "tools.functions";
 
-$base-size: double($inuit-base-spacing-unit);
+// (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
+
+$base-size: tools.double(settings.$inuit-base-spacing-unit);
 
 @mixin scale-up-fade-out($duration, $delay) {
   -webkit-animation-name: scale-up-fade-out;
@@ -32,7 +36,7 @@ $base-size: double($inuit-base-spacing-unit);
   }
 }
 
-.#{$grommet-namespace}pulse {
+.#{settings.$grommet-namespace}pulse {
   display: inline-block;
   height: $base-size;
   width: $base-size;
@@ -42,29 +46,29 @@ $base-size: double($inuit-base-spacing-unit);
   transform-origin: center;
 }
 
-.#{$grommet-namespace}pulse:hover {
+.#{settings.$grommet-namespace}pulse:hover {
   // `rotate` is used to trick the browser into rendering the image better
   transform: scale(1.2) rotate(0.0001deg);
   cursor: pointer;
 
-  .#{$grommet-namespace}pulse__icon-anim {
+  .#{settings.$grommet-namespace}pulse__icon-anim {
     -webkit-animation: none;
     animation: none;
   }
 }
 
-.#{$grommet-namespace}pulse__icon {
+.#{settings.$grommet-namespace}pulse__icon {
   svg {
     width: $base-size;
     height: $base-size;
     border-radius: $base-size;
-    padding: math.div($inuit-base-spacing-unit, 2);
-    background-color: nth($brand-accent-colors, 1);
-    stroke: nth($brand-grey-colors, 1);
+    padding: settings.$inuit-base-spacing-unit * 0.5;
+    background-color: list.nth(settings2.$brand-accent-colors, 1);
+    stroke: list.nth(settings2.$brand-grey-colors, 1);
   }
 }
 
-.#{$grommet-namespace}pulse__icon-anim {
+.#{settings.$grommet-namespace}pulse__icon-anim {
   display: block;
   width: $base-size;
   height: $base-size;
@@ -74,7 +78,7 @@ $base-size: double($inuit-base-spacing-unit);
   box-sizing: border-box;
   transform-origin: center;
   border: 1px solid;
-  border-color: nth($brand-accent-colors, 1);
+  border-color: list.nth(settings2.$brand-accent-colors, 1);
   border-radius: $base-size;
   @include scale-up-fade-out(1.5s, 0.2s);
 }
