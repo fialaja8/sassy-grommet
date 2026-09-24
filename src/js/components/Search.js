@@ -91,6 +91,7 @@ class Search extends Component {
       document.removeEventListener('click', this._onClickBody);
       KeyboardAccelerators.stopListeningToKeyboard(this._controlRef,
         activeKeyboardHandlers);
+      this._dropInputRef = null;
       this.setState({drop: null});
     }
 
@@ -102,8 +103,9 @@ class Search extends Component {
       if (this._controlRef) {
         baseElement = this._controlRef;
       } else {
-        baseElement = this._inputRef;
+        baseElement = this._dropInputRef || this._inputRef;
       }
+      this._dropInputRef = null;
       const align = dropAlign || {
         top: (inline ? 'bottom' : 'top'),
         left: 'left'
@@ -111,10 +113,11 @@ class Search extends Component {
       this.setState({drop: {control:baseElement, opts:{
         align: align,
         focusControl: ! inline,
-        responsive: false // so suggestion changes don't re-align
-      }}},() => {
-        document.addEventListener('click', this._onClickBody);
-      });
+        responsive: false, // so suggestion changes don't re-align
+        callback: () => {
+          document.addEventListener('click', this._onClickBody);
+        }
+      }}});
     }
 
     if (announceChange && suggestions) {
@@ -141,14 +144,14 @@ class Search extends Component {
   }
 
   focus () {
-    const input = this._inputRef;
+    const input = this._dropInputRef || this._inputRef;
     if (input) {
       (input).focus();
     }
   }
 
   _stopPropagation () {
-    if (document.activeElement === this._inputRef) {
+    if (document.activeElement === (this._dropInputRef || this._inputRef)) {
       return true;
     }
   }
@@ -173,7 +176,7 @@ class Search extends Component {
     }
     if (!dropActive && onSelect && event.keyCode === enter) {
       onSelect({
-        target: this._inputRef || this._controlRef
+        target: this._dropInputRef || this._inputRef || this._controlRef
       }, false);
     }
     if (onKeyDown) {
@@ -183,7 +186,7 @@ class Search extends Component {
 
   _onClickBody (event) {
     // don't close drop when clicking on input
-    if (event.target !== this._inputRef) {
+    if (this._dropInputRef && event.target !== this._dropInputRef) {
       this._onRemoveDrop();
     }
   }
@@ -219,7 +222,7 @@ class Search extends Component {
       event = document.createEvent('Event');
       event.initEvent('change', true, true);
     }
-    const target = this._inputRef;
+    const target = this._dropInputRef || this._inputRef;
     target.dispatchEvent(event);
     onDOMChange(event);
   }
@@ -278,13 +281,13 @@ class Search extends Component {
       });
       if (onSelect) {
         onSelect({
-          target: this._inputRef || this._controlRef,
+          target: this._dropInputRef || this._inputRef || this._controlRef,
           suggestion: suggestion
         }, true);
       }
     } else if (onSelect) {
       onSelect({
-        target: this._inputRef || this._controlRef
+        target: this._dropInputRef || this._inputRef || this._controlRef
       }, false);
     }
 
@@ -296,7 +299,7 @@ class Search extends Component {
     this._onRemoveDrop();
     if (onSelect) {
       onSelect({
-        target: this._inputRef || this._controlRef,
+        target: this._dropInputRef || this._inputRef || this._controlRef,
         suggestion: suggestion
       }, true);
     }
@@ -351,7 +354,7 @@ class Search extends Component {
     let input;
     if (!inline) {
       input = (
-        <input {...restProps} key='input' ref={(ref) => this._inputRef = ref}
+        <input {...restProps} key='input' ref={(ref) => this._dropInputRef = ref}
           type='search' autoComplete='off' value={value}
           defaultValue={defaultValue} onChange={this._onChangeInput}
           className={`${INPUT} ${CLASS_ROOT}__input`}
@@ -460,8 +463,11 @@ class Search extends Component {
           id={id} className={className} icon={<SearchIcon />}
           onClick={this._onAddDrop} />
         {drop ? <PortalDrop content={this._renderDropContent()} control={drop.control} opts={drop.opts} afterRender={() => {
-          if (this._inputRef) {
-            this._inputRef.focus();
+          if (this._dropInputRef) {
+            this._dropInputRef.focus();
+          }
+          if (drop.callback) {
+            drop.callback();
           }
         }} /> : null}
         </>
