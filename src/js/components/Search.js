@@ -422,7 +422,7 @@ class Search extends Component {
   render () {
     const {
       className, defaultValue, iconAlign, id, fill, pad, placeHolder, size,
-      value
+      value, onPaste
     } = this.props;
     const { inline, drop } = this.state;
     const restProps = Props.omit(this.props, Object.keys(Search.propTypes));
@@ -438,7 +438,12 @@ class Search extends Component {
       },
       className
     );
-
+    const handlePaste = (evt) => {
+      if (onPaste) {
+        onPaste(evt);
+      }
+      InputPaste.getInputOnPaste('search')(evt);
+    };
     if (inline) {
       return (
         <div className={classes}>
@@ -452,7 +457,7 @@ class Search extends Component {
             onChange={this._onChangeInput}
             onMouseUp={this._onMouseUp}
             onKeyDown={this._onInputKeyDown}
-            onPaste={InputPaste.getInputOnPaste('search')} />
+            onPaste={handlePaste} />
           <SearchIcon />
         </div>
       );
@@ -497,6 +502,7 @@ Search.propTypes = {
   inline: PropTypes.bool,
   onDOMChange: PropTypes.func,
   onSelect: PropTypes.func,
+  onPaste: PropTypes.func,
   onKeyDown: PropTypes.func,
   pad: PropTypes.oneOf(['small', 'medium']),
   placeHolder: PropTypes.string,
