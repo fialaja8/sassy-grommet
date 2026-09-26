@@ -439,10 +439,10 @@ class Search extends Component {
       className
     );
     const handlePaste = (evt) => {
+      InputPaste.getInputOnPaste('search')(evt);
       if (onPaste) {
         onPaste(evt);
       }
-      InputPaste.getInputOnPaste('search')(evt);
     };
     if (inline) {
       return (
